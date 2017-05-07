@@ -2,6 +2,8 @@
 package reseau.usekryonet;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,12 +36,21 @@ public class ServerProgram
 
 		server.start();
 
-		server.bind(this.portTCP);
+		// Choix du port
+		//server.bind(this.portTCP);
 
-		customListener = new CustomListenerServer(this, JFrameHome.getInstance()); // TODO Ajouter jframe
+		// Port par défaut
+		server.bind(this.portTCP, ServerProgram.PORT_UDP);
+
+		customListener = new CustomListenerServer(this, JFrameHome.getInstance());
 		server.addListener(customListener);
 
 		System.out.println("Server ready");
+		}
+
+	public ServerProgram() throws IOException
+		{
+		this(ServerProgram.PORT_TCP);
 		}
 
 	/*------------------------------------------------------------------*\
@@ -57,6 +68,7 @@ public class ServerProgram
 		else
 			{
 			this.listClient.add(connection);
+			System.out.println("New client connected!");
 			System.out.println(this.listClient);
 			return true;
 			}
@@ -71,6 +83,25 @@ public class ServerProgram
 	public void envoiPaquet(PacketMessage paquet)
 		{
 		this.listClient.get(0).sendTCP(paquet);
+		}
+
+	/*------------------------------*\
+	|*			  Static			*|
+	\*------------------------------*/
+
+	public static String getIp()
+		{
+		try
+			{
+			InetAddress IP;
+			IP = InetAddress.getLocalHost();
+			return IP.getHostAddress();
+			}
+		catch (UnknownHostException e1)
+			{
+			e1.printStackTrace();
+			}
+		return "";
 		}
 
 	/*------------------------------*\
@@ -96,4 +127,13 @@ public class ServerProgram
 	private Server server;
 	private CustomListener customListener;
 	private List<Connection> listClient;
+
+	/*------------------------------*\
+	|*			  Static			*|
+	\*------------------------------*/
+
+	public static final int PORT_TCP = 54778;
+	public static final int PORT_UDP = 54777;
+	private static final int MAX_WAITING_MS = 5000;
+
 	}

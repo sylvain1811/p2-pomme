@@ -2,6 +2,8 @@
 package reseau.usekryonet;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.util.List;
 
 import com.esotericsoftware.kryonet.Client;
 
@@ -28,6 +30,16 @@ public class ClientProgram
 		startKryoClient();
 		}
 
+	public ClientProgram()
+		{
+		startKryoClient();
+		}
+
+	public ClientProgram(String addresseServer)
+		{
+		this(addresseServer, ClientProgram.PORT_TCP);
+		}
+
 	private void startKryoClient()
 		{
 		client = new Client();
@@ -35,17 +47,46 @@ public class ClientProgram
 
 		client.start();
 
-		customListener = new CustomListenerClient(JFrameHome.getInstance()); // TODO Ajouter jframe
+		customListener = new CustomListenerClient(JFrameHome.getInstance());
 		client.addListener(customListener);
 
-		try
+		//DEBUG
+		/*
 			{
-			client.connect(4000, ClientProgram.this.addresseServer, ClientProgram.this.portTCP);
+			try
+				{
+				InetAddress IP;
+				IP = InetAddress.getLocalHost();
+				System.out.println("IP of my system is := " + IP.getHostAddress());
+				}
+			catch (UnknownHostException e1)
+				{
+				e1.printStackTrace();
+				}
+			}*/
+
+		if (addresseServer == null)
+			{
+			this.listServerDispo = client.discoverHosts(ClientProgram.PORT_UDP, ClientProgram.MAX_WAITING_MS);
+			System.out.println(listServerDispo);
+
 			}
-		catch (IOException e)
+		else
 			{
-			System.err.println("Impossible de démarrer le client (client.connect())");
-			e.printStackTrace();
+			try
+				{
+				// Choix du port
+				//client.connect(ClientProgram.MAX_WAITING_MS, ClientProgram.this.addresseServer, ClientProgram.this.portTCP);
+
+				// Port par défaut
+				client.connect(ClientProgram.MAX_WAITING_MS, ClientProgram.this.addresseServer, ClientProgram.PORT_TCP, ClientProgram.PORT_UDP);
+				//System.out.println("Port par défaut client. Addr srv : " + addresseServer);
+				}
+			catch (IOException e)
+				{
+				System.err.println("Impossible de démarrer le client (client.connect())");
+				e.printStackTrace();
+				}
 			}
 
 		}
@@ -82,5 +123,13 @@ public class ClientProgram
 	// Tools
 	private Client client;
 	private CustomListener customListener;
+	private List<InetAddress> listServerDispo;
 
+	/*------------------------------*\
+	|*			  Static			*|
+	\*------------------------------*/
+
+	private static final int PORT_TCP = 54778;
+	private static final int PORT_UDP = 54777;
+	private static final int MAX_WAITING_MS = 5000;
 	}

@@ -36,18 +36,19 @@ public class JFrameHome extends JFrame
 	private JPanel panelMain;
 	private JLabel lblJeuDeLa;
 	private JTabbedPane tabbedPaneCenter;
-	private JLabel lblNewLabel;
+	private JLabel lblPortCreer;
 	private JTextField textFieldPortCreer;
 	private JPanel panelTab1Srv;
 	private JPanel panelTab2Client;
 	private JLabel label;
-	private JTextField textFieldPortSrv;
+	private JTextField textFieldPortRejoindre;
 	private JButton btnCreerPartie;
 	private JLabel lblAddrSrv;
 	private JTextField textFieldAddrSrv;
-	private JPanel panelPort;
+	private JPanel panelPortRejoindre;
 	private JPanel panelAddr;
 	private JButton btnRejoindre;
+	private JPanel panelInputRejoindre;
 
 	/**
 	 * Launch the application. Generate with WindowBuilder.
@@ -105,10 +106,11 @@ public class JFrameHome extends JFrame
 
 		panelTab1Srv = new JPanel();
 		panelTab1Srv.setBackground(Color.WHITE);
-		tabbedPaneCenter.addTab("Cr\u00E9er partie", null, panelTab1Srv, null);
+		tabbedPaneCenter.addTab("Créer partie", null, panelTab1Srv, null);
 
-		lblNewLabel = new JLabel("Port :");
-		panelTab1Srv.add(lblNewLabel);
+		lblPortCreer = new JLabel("Port :");
+
+		panelTab1Srv.add(lblPortCreer);
 
 		textFieldPortCreer = new JTextField();
 		textFieldPortCreer.setText("55555");
@@ -116,17 +118,19 @@ public class JFrameHome extends JFrame
 		panelTab1Srv.add(textFieldPortCreer);
 		textFieldPortCreer.setColumns(10);
 
-		btnCreerPartie = new JButton("Cr\u00E9er partie");
+		btnCreerPartie = new JButton("Créer partie");
 		btnCreerPartie.addActionListener(new ActionListener()
 			{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 				{
-				int port = Integer.getInteger(textFieldPortCreer.getText(), 60000);
+				//int port = getPort(textFieldPortCreer);
 				try
 					{
-					JFrameHome.this.server = new ServerProgram(port);
+					// JFrameHome.this.server = new ServerProgram(port);
+					JFrameHome.this.server = new ServerProgram();
+
 					attendreClient();
 					}
 				catch (IOException e)
@@ -137,6 +141,7 @@ public class JFrameHome extends JFrame
 				}
 
 			});
+
 		panelTab1Srv.add(btnCreerPartie);
 
 		panelTab2Client = new JPanel();
@@ -144,26 +149,26 @@ public class JFrameHome extends JFrame
 		tabbedPaneCenter.addTab("Rejoindre partie", null, panelTab2Client, null);
 		panelTab2Client.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
-		JPanel panelInput = new JPanel();
-		panelTab2Client.add(panelInput);
-		panelInput.setLayout(new GridLayout(0, 1, 0, 0));
+		panelInputRejoindre = new JPanel();
+		panelTab2Client.add(panelInputRejoindre);
+		panelInputRejoindre.setLayout(new GridLayout(0, 1, 0, 0));
 
-		panelPort = new JPanel();
-		panelInput.add(panelPort);
-		panelPort.setBackground(Color.WHITE);
-		panelPort.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		panelPortRejoindre = new JPanel();
+		panelInputRejoindre.add(panelPortRejoindre);
+		panelPortRejoindre.setBackground(Color.WHITE);
+		panelPortRejoindre.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		label = new JLabel("Port :");
-		panelPort.add(label);
+		panelPortRejoindre.add(label);
 
-		textFieldPortSrv = new JTextField();
-		textFieldPortSrv.setText("55555");
-		textFieldPortSrv.selectAll();
-		panelPort.add(textFieldPortSrv);
-		textFieldPortSrv.setColumns(10);
+		textFieldPortRejoindre = new JTextField();
+		textFieldPortRejoindre.setText("55555");
+		textFieldPortRejoindre.selectAll();
+		panelPortRejoindre.add(textFieldPortRejoindre);
+		textFieldPortRejoindre.setColumns(10);
 
 		panelAddr = new JPanel();
-		panelInput.add(panelAddr);
+		panelInputRejoindre.add(panelAddr);
 		panelAddr.setBackground(Color.WHITE);
 		panelAddr.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
@@ -177,7 +182,7 @@ public class JFrameHome extends JFrame
 		textFieldAddrSrv.setColumns(10);
 
 		JPanel panel = new JPanel();
-		panelInput.add(panel);
+		panelInputRejoindre.add(panel);
 		panel.setBackground(Color.WHITE);
 
 		btnRejoindre = new JButton("Rejoindre");
@@ -188,12 +193,83 @@ public class JFrameHome extends JFrame
 			public void actionPerformed(ActionEvent e)
 				{
 				String addresseServer = textFieldAddrSrv.getText();
-				int port = Integer.getInteger(textFieldPortCreer.getText(), 60000);
-				client = new ClientProgram(addresseServer, port);
+
+				//int port = getPort(textFieldPortRejoindre);
+
+				//client = new ClientProgram(addresseServer, port);
+				client = new ClientProgram(addresseServer);
 				JFrameHome.this.commencerPartie();
 				}
 			});
 		panel.add(btnRejoindre);
+
+		panelTab3ClientDiscover = new JPanel();
+		panelTab3ClientDiscover.setBackground(Color.WHITE);
+		tabbedPaneCenter.addTab("Rechercher serveur", null, panelTab3ClientDiscover, null);
+		panelTab3ClientDiscover.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
+		panelDicover = new JPanel();
+		panelTab3ClientDiscover.add(panelDicover);
+		panelDicover.setLayout(new GridLayout(0, 1, 0, 0));
+
+		panelPortDiscover = new JPanel();
+		panelPortDiscover.setBackground(Color.WHITE);
+		panelDicover.add(panelPortDiscover);
+		panelPortDiscover.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
+		labelPortRechercher = new JLabel("Port :");
+		panelPortDiscover.add(labelPortRechercher);
+
+		textFieldPortDiscover = new JTextField();
+		textFieldPortDiscover.setText("55555");
+		textFieldPortDiscover.setColumns(10);
+		panelPortDiscover.add(textFieldPortDiscover);
+
+		panelButtonDiscover = new JPanel();
+		panelButtonDiscover.setBackground(Color.WHITE);
+		panelDicover.add(panelButtonDiscover);
+
+		buttonRechercher = new JButton("Rechercher");
+		buttonRechercher.addActionListener(new ActionListener()
+			{
+
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+				{
+				// TODO Générer liste des serveurs
+				client = new ClientProgram();
+				JFrameHome.this.commencerPartie();
+				}
+			});
+
+		panelButtonDiscover.add(buttonRechercher);
+
+		// Port automatique
+		disableManualPort();
+		}
+
+	private void disableManualPort()
+		{
+		panelTab1Srv.remove(lblPortCreer);
+		panelTab1Srv.remove(textFieldPortCreer);
+		panelInputRejoindre.remove(panelPortRejoindre);
+		panelDicover.remove(panelPortDiscover);
+		revalidate();
+		//repaint();
+		}
+
+	private int getPort(JTextField field)
+		{
+		try
+			{
+			return Integer.parseInt(field.getText());
+			}
+		catch (NumberFormatException e)
+			{
+			e.printStackTrace();
+			return ServerProgram.PORT_TCP;
+			}
+
 		}
 
 	public static JFrameHome getInstance()
@@ -237,4 +313,11 @@ public class JFrameHome extends JFrame
 	private JPanelAttente jPanelAttente;
 
 	private static JFrameHome INSTANCE = null;
+	private JPanel panelTab3ClientDiscover;
+	private JPanel panelDicover;
+	private JPanel panelPortDiscover;
+	private JLabel labelPortRechercher;
+	private JTextField textFieldPortDiscover;
+	private JPanel panelButtonDiscover;
+	private JButton buttonRechercher;
 	}

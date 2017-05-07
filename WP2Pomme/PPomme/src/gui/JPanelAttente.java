@@ -1,10 +1,13 @@
 
 package gui;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import reseau.usekryonet.ServerProgram;
 
 public class JPanelAttente extends JPanel
 	{
@@ -39,14 +42,11 @@ public class JPanelAttente extends JPanel
 	private void geometry()
 		{
 		// JComponent : Instanciation
-		this.labelAttente = new JLabel("Attente d'un joueur");
+		this.labelAttente = new JLabel("<html><div style=\"text-align:center;\"><br>Attente d'un joueur...<br><br>Adresse IP : " + ServerProgram.getIp() + "</div>");
 		// Layout : Specification
 			{
-			FlowLayout flowlayout = new FlowLayout(FlowLayout.CENTER);
-			setLayout(flowlayout);
-
-			// flowlayout.setHgap(20);
-			// flowlayout.setVgap(20);
+			FlowLayout flowLayout = new FlowLayout(FlowLayout.CENTER);
+			setLayout(flowLayout);
 			}
 
 		// JComponent : add
@@ -60,7 +60,7 @@ public class JPanelAttente extends JPanel
 
 	private void appearance()
 		{
-		// rien
+		setBackground(Color.WHITE);
 		}
 
 	/*------------------------------------------------------------------*\

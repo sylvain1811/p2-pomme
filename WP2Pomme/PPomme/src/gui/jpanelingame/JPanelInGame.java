@@ -1,6 +1,7 @@
 
 package gui.jpanelingame;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
@@ -62,7 +63,7 @@ public abstract class JPanelInGame extends JPanel
 
 	private void appearance()
 		{
-		// rien
+		setBackground(Color.WHITE);
 		}
 
 	/*------------------------------------------------------------------*\
