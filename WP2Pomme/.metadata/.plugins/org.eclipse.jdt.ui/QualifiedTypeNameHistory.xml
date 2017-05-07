@@ -1,2 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="reseau.JFramePointsChaud"/>
+<fullyQualifiedTypeName name="reseau.usekryonet.Packet"/>
+<fullyQualifiedTypeName name="com.esotericsoftware.kryonet.Server"/>
+<fullyQualifiedTypeName name="com.esotericsoftware.kryonet.Client"/>
+<fullyQualifiedTypeName name="com.esotericsoftware.kryo.Kryo"/>
+<fullyQualifiedTypeName name="reseau.usekryonet.Paquet"/>
+<fullyQualifiedTypeName name="reseau.usekryonet.example.ClientProgramExample"/>
+<fullyQualifiedTypeName name="reseau.usekryonet.example.ServerProgramExample"/>
+<fullyQualifiedTypeName name="reseau.usekryonet.CustomListener"/>
+<fullyQualifiedTypeName name="reseau.usekryonet.example.PacketMessage"/>
+<fullyQualifiedTypeName name="reseau.usekryonet.example.listener.CustomListener"/>
+<fullyQualifiedTypeName name="reseau.usekryonet.example.listener.CustomListenerClient"/>
+<fullyQualifiedTypeName name="reseau.usekryonet.example.listener.CustomListenerServer"/>
+<fullyQualifiedTypeName name="com.esotericsoftware.kryonet.Listener"/>
+<fullyQualifiedTypeName name="java.io.Serializable"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.awt.List"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="com.esotericsoftware.kryonet.Connection"/>
+<fullyQualifiedTypeName name="java.lang.Thread"/>
+<fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
+<fullyQualifiedTypeName name="reseau.usekryonet.ServerProgram"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="java.lang.String"/>
+<fullyQualifiedTypeName name="reseau.usekryonet.ClientProgram"/>
+<fullyQualifiedTypeName name="javax.swing.JPanel"/>
+<fullyQualifiedTypeName name="java.awt.FlowLayout"/>
+<fullyQualifiedTypeName name="java.awt.Image"/>
+<fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
+<fullyQualifiedTypeName name="java.io.InputStream"/>
+<fullyQualifiedTypeName name="javax.swing.ImageIcon"/>
+<fullyQualifiedTypeName name="javax.swing.JButton"/>
+<fullyQualifiedTypeName name="gui.JButtonCartes"/>
+<fullyQualifiedTypeName name="cartes.Carte"/>
+<fullyQualifiedTypeName name="reseau.usekryonet.PacketMessage"/>
+<fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
+<fullyQualifiedTypeName name="java.io.IOException"/>
+<fullyQualifiedTypeName name="javax.swing.JFrame"/>
+<fullyQualifiedTypeName name="gui.JFrameHome"/>
+<fullyQualifiedTypeName name="javax.swing.JLabel"/>
+<fullyQualifiedTypeName name="gui.JPanelAttente"/>
+<fullyQualifiedTypeName name="gui.JPanelInGame"/>
+</qualifiedTypeNameHistroy>

@@ -1,6 +1,8 @@
 Console.highWaterMark=88000
 Console.width=200
 Console.wrap=true
+DEBUG.consoleOpenOnErr=false
+DEBUG.consoleOpenOnOut=false
 eclipse.preferences.version=1
 last_selected=Java Application
 org.eclipse.debug.ui.MemoryView.viewPanesVisibility=org.eclipse.debug.ui.MemoryView.MemoryBlocksTreeViewPane,org.eclipse.debug.ui.MemoryView.RenderingViewPane.1,
