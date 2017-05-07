@@ -38,6 +38,7 @@ public class CustomListenerClient extends CustomListener
 	@Override
 	protected void traiterPaquet(PacketMessage paquet)
 		{
+		// Si le code est vaut 100 ou plus alors c'est une erruer.
 		if (paquet.getCode() < PacketMessage.ERROR_SERVER_FULL)
 			{
 			System.out.println("Message received from server: " + paquet.getMessage());

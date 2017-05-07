@@ -5,11 +5,12 @@ import java.io.IOException;
 
 import com.esotericsoftware.kryonet.Client;
 
+import gui.JFrameHome;
 import reseau.usekryonet.listener.CustomListener;
 import reseau.usekryonet.listener.CustomListenerClient;
 
 /**
- * Implémentation d'un client. Il se connecte à un serveur et envoie et reçoit des messages.
+ * Implémentation d'un client. Il se connecte à un serveur pour envoyer et recevoir des messages.
  * @author sylvain.renaud
  */
 public class ClientProgram
@@ -34,7 +35,7 @@ public class ClientProgram
 
 		client.start();
 
-		customListener = new CustomListenerClient(null); // TODO Ajouter jframe
+		customListener = new CustomListenerClient(JFrameHome.getInstance()); // TODO Ajouter jframe
 		client.addListener(customListener);
 
 		try

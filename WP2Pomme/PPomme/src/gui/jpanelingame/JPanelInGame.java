@@ -1,38 +1,31 @@
 
-package reseau.usekryonet.listener;
+package gui.jpanelingame;
 
-import com.esotericsoftware.kryonet.Connection;
-import com.esotericsoftware.kryonet.Listener;
+import java.awt.FlowLayout;
 
-import gui.JFrameHome;
-import reseau.usekryonet.PacketMessage;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
-public abstract class CustomListener extends Listener
+import gui.JButtonCartes;
+
+public abstract class JPanelInGame extends JPanel
 	{
 
 	/*------------------------------------------------------------------*\
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	public CustomListener(JFrameHome frame)
+	public JPanelInGame()
 		{
-		super();
-		this.jFrameHome = frame;
+		geometry();
+		control();
+		appearance();
 		}
 
 	/*------------------------------------------------------------------*\
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
 
-	@Override
-	public void received(Connection connection, Object object)
-		{
-		if (object instanceof PacketMessage)
-			{
-			PacketMessage paquet = (PacketMessage)object;
-			traiterPaquet(paquet);
-			}
-		}
 	/*------------------------------*\
 	|*				Set				*|
 	\*------------------------------*/
@@ -45,11 +38,39 @@ public abstract class CustomListener extends Listener
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/
 
-	protected abstract void traiterPaquet(PacketMessage paquet);
+	private void geometry()
+		{
+		// JComponent : Instanciation
+		this.btnFinTour = new JButton("Fin du tour");
+		// Layout : Specification
+			{
+			FlowLayout flowlayout = new FlowLayout(FlowLayout.CENTER);
+			setLayout(flowlayout);
+
+			// flowlayout.setHgap(20);
+			// flowlayout.setVgap(20);
+			}
+
+		// JComponent : add
+		add(this.btnFinTour);
+		}
+
+	private void control()
+		{
+		// rien
+		}
+
+	private void appearance()
+		{
+		// rien
+		}
 
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
 
-	protected JFrameHome jFrameHome;
+	// Tools
+	protected JButton btnFinTour;
+	protected JButtonCartes[] tabBtnCartes;
+
 	}

@@ -23,6 +23,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
+import gui.jpanelingame.JPanelInGame;
+import gui.jpanelingame.JPanelInGameClient;
+import gui.jpanelingame.JPanelInGameServer;
 import reseau.usekryonet.ClientProgram;
 import reseau.usekryonet.ServerProgram;
 
@@ -47,7 +50,7 @@ public class JFrameHome extends JFrame
 	private JButton btnRejoindre;
 
 	/**
-	 * Launch the application.
+	 * Launch the application. Generate with WindowBuilder.
 	 */
 	public static void main(String[] args)
 		{
@@ -59,7 +62,7 @@ public class JFrameHome extends JFrame
 				{
 				try
 					{
-					JFrameHome frame = new JFrameHome();
+					JFrameHome frame = JFrameHome.getInstance();
 					frame.setVisible(true);
 					}
 				catch (Exception e)
@@ -73,7 +76,7 @@ public class JFrameHome extends JFrame
 	/**
 	 * Create the frame.
 	 */
-	public JFrameHome()
+	private JFrameHome()
 		{
 		String imgPath = "pomme_logo.png";
 		URL iconURL = getClass().getResource(imgPath);
@@ -187,17 +190,34 @@ public class JFrameHome extends JFrame
 				String addresseServer = textFieldAddrSrv.getText();
 				int port = Integer.getInteger(textFieldPortCreer.getText(), 60000);
 				client = new ClientProgram(addresseServer, port);
-				// JFrameHome.this.conte
+				JFrameHome.this.commencerPartie();
 				}
 			});
 		panel.add(btnRejoindre);
 		}
 
+	public static JFrameHome getInstance()
+		{
+		if (INSTANCE == null)
+			{
+			INSTANCE = new JFrameHome();
+			}
+		return INSTANCE;
+		}
+
 	public void commencerPartie()
 		{
-		this.panelMain.remove(jPanelAttente);
-		this.jPanelInGame = new JPanelInGame();
-		this.add(this.jPanelInGame);
+		if (server != null)
+			{
+			this.panelMain.remove(jPanelAttente);
+			this.jPanelInGame = new JPanelInGameServer(server);
+			}
+		else
+			{
+			this.panelMain.remove(tabbedPaneCenter);
+			this.jPanelInGame = new JPanelInGameClient(client);
+			}
+		this.panelMain.add(this.jPanelInGame);
 		revalidate();
 		//repaint();
 		}
@@ -215,4 +235,6 @@ public class JFrameHome extends JFrame
 	private ServerProgram server;
 	private JPanelInGame jPanelInGame;
 	private JPanelAttente jPanelAttente;
+
+	private static JFrameHome INSTANCE = null;
 	}

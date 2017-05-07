@@ -14,14 +14,15 @@ public class CustomListenerServer extends CustomListener
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	/*------------------------------------------------------------------*\
-	|*							Methodes Public							*|
-	\*------------------------------------------------------------------*/
 	public CustomListenerServer(ServerProgram serverProgram, JFrameHome frame)
 		{
 		super(frame);
 		this.serverProgram = serverProgram;
 		}
+
+	/*------------------------------------------------------------------*\
+	|*							Methodes Public							*|
+	\*------------------------------------------------------------------*/
 
 	@Override
 	public void disconnected(Connection connection)
@@ -38,7 +39,7 @@ public class CustomListenerServer extends CustomListener
 			System.out.println("A client connected succefully!");
 			PacketMessage message = new PacketMessage("Welcome");
 			connection.sendTCP(message);
-			this.frame.commencerPartie();
+			this.jFrameHome.commencerPartie();
 			}
 
 		}
@@ -60,6 +61,7 @@ public class CustomListenerServer extends CustomListener
 		{
 		System.out.println("Message received from client: " + paquet.getMessage());
 		}
+
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/

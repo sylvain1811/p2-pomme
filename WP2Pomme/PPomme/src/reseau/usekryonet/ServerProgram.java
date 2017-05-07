@@ -8,6 +8,7 @@ import java.util.List;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Server;
 
+import gui.JFrameHome;
 import reseau.usekryonet.listener.CustomListener;
 import reseau.usekryonet.listener.CustomListenerServer;
 
@@ -35,7 +36,7 @@ public class ServerProgram
 
 		server.bind(this.portTCP);
 
-		customListener = new CustomListenerServer(this, null); // TODO Ajouter jframe
+		customListener = new CustomListenerServer(this, JFrameHome.getInstance()); // TODO Ajouter jframe
 		server.addListener(customListener);
 
 		System.out.println("Server ready");
@@ -65,6 +66,11 @@ public class ServerProgram
 		{
 		this.listClient.remove(connection);
 		System.out.println(listClient);
+		}
+
+	public void envoiPaquet(PacketMessage paquet)
+		{
+		this.listClient.get(0).sendTCP(paquet);
 		}
 
 	/*------------------------------*\

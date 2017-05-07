@@ -1,38 +1,30 @@
 
-package reseau.usekryonet.listener;
+package gui.jpanelingame;
 
-import com.esotericsoftware.kryonet.Connection;
-import com.esotericsoftware.kryonet.Listener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import gui.JFrameHome;
+import reseau.usekryonet.ClientProgram;
 import reseau.usekryonet.PacketMessage;
 
-public abstract class CustomListener extends Listener
+public class JPanelInGameClient extends JPanelInGame
 	{
 
 	/*------------------------------------------------------------------*\
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	public CustomListener(JFrameHome frame)
+	public JPanelInGameClient(ClientProgram clientProgram)
 		{
 		super();
-		this.jFrameHome = frame;
+		this.clientProgram = clientProgram;
+		controlBtnFinTour();
 		}
 
 	/*------------------------------------------------------------------*\
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
 
-	@Override
-	public void received(Connection connection, Object object)
-		{
-		if (object instanceof PacketMessage)
-			{
-			PacketMessage paquet = (PacketMessage)object;
-			traiterPaquet(paquet);
-			}
-		}
 	/*------------------------------*\
 	|*				Set				*|
 	\*------------------------------*/
@@ -45,11 +37,25 @@ public abstract class CustomListener extends Listener
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/
 
-	protected abstract void traiterPaquet(PacketMessage paquet);
+	private void controlBtnFinTour()
+		{
+		this.btnFinTour.addActionListener(new ActionListener()
+			{
+
+			@Override
+			public void actionPerformed(ActionEvent e)
+				{
+				PacketMessage paquet = new PacketMessage(PacketMessage.END_OF_TURN);
+				clientProgram.envoiPaquet(paquet);
+				}
+			});
+		}
 
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
 
-	protected JFrameHome jFrameHome;
+	// Tools
+	private ClientProgram clientProgram;
+
 	}

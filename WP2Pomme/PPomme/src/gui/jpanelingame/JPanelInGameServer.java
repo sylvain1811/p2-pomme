@@ -1,23 +1,24 @@
 
-package gui;
+package gui.jpanelingame;
 
-import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import reseau.usekryonet.PacketMessage;
+import reseau.usekryonet.ServerProgram;
 
-public class JPanelInGame extends JPanel
+public class JPanelInGameServer extends JPanelInGame
 	{
 
 	/*------------------------------------------------------------------*\
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	public JPanelInGame()
+	public JPanelInGameServer(ServerProgram serverProgram)
 		{
-		geometry();
-		control();
-		appearance();
+		super();
+		this.serverProgram = serverProgram;
+		controlBtnFinTour();
 		}
 
 	/*------------------------------------------------------------------*\
@@ -35,32 +36,18 @@ public class JPanelInGame extends JPanel
 	/*------------------------------------------------------------------*\
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/
-
-	private void geometry()
+	private void controlBtnFinTour()
 		{
-		// JComponent : Instanciation
-
-		// Layout : Specification
+		this.btnFinTour.addActionListener(new ActionListener()
 			{
-			FlowLayout flowlayout = new FlowLayout(FlowLayout.CENTER);
-			setLayout(flowlayout);
 
-			// flowlayout.setHgap(20);
-			// flowlayout.setVgap(20);
-			}
-
-		// JComponent : add
-
-		}
-
-	private void control()
-		{
-		// rien
-		}
-
-	private void appearance()
-		{
-		// rien
+			@Override
+			public void actionPerformed(ActionEvent e)
+				{
+				PacketMessage paquet = new PacketMessage(PacketMessage.END_OF_TURN);
+				serverProgram.envoiPaquet(paquet);
+				}
+			});
 		}
 
 	/*------------------------------------------------------------------*\
@@ -68,7 +55,6 @@ public class JPanelInGame extends JPanel
 	\*------------------------------------------------------------------*/
 
 	// Tools
-	private JButton btnFinTour;
-	private JButtonCartes tabBtnCartes;
+	private ServerProgram serverProgram;
 
 	}
