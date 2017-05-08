@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 
 import gui.jpanelingame.JPanelInGame;
@@ -63,6 +64,8 @@ public class JFrameHome extends JFrame
 				{
 				try
 					{
+					UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+					//UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 					JFrameHome frame = JFrameHome.getInstance();
 					frame.setVisible(true);
 					}
@@ -272,7 +275,7 @@ public class JFrameHome extends JFrame
 
 		}
 
-	public static JFrameHome getInstance()
+	public static synchronized JFrameHome getInstance()
 		{
 		if (INSTANCE == null)
 			{
