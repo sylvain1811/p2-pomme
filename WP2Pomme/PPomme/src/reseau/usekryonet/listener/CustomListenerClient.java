@@ -4,7 +4,6 @@ package reseau.usekryonet.listener;
 import javax.swing.JOptionPane;
 
 import cartes.Carte;
-import gui.JFrameHome;
 import reseau.usekryonet.PacketMessage;
 
 public class CustomListenerClient extends CustomListener
@@ -14,9 +13,9 @@ public class CustomListenerClient extends CustomListener
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	public CustomListenerClient(JFrameHome frame)
+	public CustomListenerClient()
 		{
-		super(frame);
+		super();
 		}
 
 	/*------------------------------------------------------------------*\
@@ -52,6 +51,7 @@ public class CustomListenerClient extends CustomListener
 					break;
 				}
 			}
+
 		else
 			{
 			switch(paquet.getCode())

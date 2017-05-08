@@ -33,4 +33,12 @@ public class Carte
 		{
 		return this.couleur;
 		}
+
+	@Override
+	public String toString()
+		{
+		//return "Carte [number=" + this.number + ", couleur=" + this.couleur + ", valeur=" + this.valeur + "]";
+		return "[Carte]:" + TABLE_VALEUR[number] + " de " + TABLE_COULEUR[couleur];
+		}
+
 	}

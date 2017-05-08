@@ -10,7 +10,6 @@ import java.util.List;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Server;
 
-import gui.JFrameHome;
 import reseau.usekryonet.listener.CustomListener;
 import reseau.usekryonet.listener.CustomListenerServer;
 
@@ -42,7 +41,7 @@ public class ServerProgram
 		// Port par défaut
 		server.bind(this.portTCP, ServerProgram.PORT_UDP);
 
-		customListener = new CustomListenerServer(this, JFrameHome.getInstance());
+		customListener = new CustomListenerServer(this);
 		server.addListener(customListener);
 
 		System.out.println("Server ready");

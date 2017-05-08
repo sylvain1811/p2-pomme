@@ -7,7 +7,6 @@ import java.util.List;
 
 import com.esotericsoftware.kryonet.Client;
 
-import gui.JFrameHome;
 import reseau.usekryonet.listener.CustomListener;
 import reseau.usekryonet.listener.CustomListenerClient;
 
@@ -47,23 +46,8 @@ public class ClientProgram
 
 		client.start();
 
-		customListener = new CustomListenerClient(JFrameHome.getInstance());
+		customListener = new CustomListenerClient();
 		client.addListener(customListener);
-
-		//DEBUG
-		/*
-			{
-			try
-				{
-				InetAddress IP;
-				IP = InetAddress.getLocalHost();
-				System.out.println("IP of my system is := " + IP.getHostAddress());
-				}
-			catch (UnknownHostException e1)
-				{
-				e1.printStackTrace();
-				}
-			}*/
 
 		if (addresseServer == null)
 			{

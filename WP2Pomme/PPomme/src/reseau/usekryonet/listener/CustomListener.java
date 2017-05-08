@@ -4,7 +4,6 @@ package reseau.usekryonet.listener;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 
-import gui.JFrameHome;
 import reseau.usekryonet.PacketMessage;
 
 public abstract class CustomListener extends Listener
@@ -14,10 +13,9 @@ public abstract class CustomListener extends Listener
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	public CustomListener(JFrameHome frame)
+	public CustomListener()
 		{
 		super();
-		this.jFrameHome = frame;
 		}
 
 	/*------------------------------------------------------------------*\
@@ -51,5 +49,4 @@ public abstract class CustomListener extends Listener
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
 
-	protected JFrameHome jFrameHome;
 	}

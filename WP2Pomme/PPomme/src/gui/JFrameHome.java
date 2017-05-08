@@ -298,6 +298,8 @@ public class JFrameHome extends JFrame
 			}
 		this.panelMain.add(this.jPanelInGame);
 		revalidate();
+
+
 		//repaint();
 		}
 

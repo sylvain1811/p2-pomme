@@ -10,9 +10,23 @@ public class Game
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
+	private Game()
+		{
+		init();
+		}
+
 	/*------------------------------------------------------------------*\
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
+
+	public static Game getInstance()
+		{
+		if (Game.INSTANCE == null)
+			{
+			INSTANCE = new Game();
+			}
+		return INSTANCE;
+		}
 
 	/*------------------------------*\
 	|*				Set				*|
@@ -29,6 +43,7 @@ public class Game
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
+	private static Game INSTANCE = null;
 
 	static Carte[] carte = new Carte[36];
 	static Carte[] carteJoueur1 = new Carte[12];
@@ -41,7 +56,45 @@ public class Game
 	static int SommeJ2 = 0;
 	static int numeroAtout;
 
-	public static void main(String[] args)
+	//	public static void main(String[] args)
+	//		{
+	//		int k = 0; // indice pour les numbers
+	//		for(int i = 0; i < 4; i++) // boucle pour les couleurs
+	//			{
+	//			for(int j = 0; j < 9; j++) // boucle pour les valeurs
+	//				{
+	//				Carte cartes = new Carte(k, i, j);
+	//				carte[k] = cartes;
+	//				k++;
+	//				}
+	//			}
+	//
+	//		distribution();
+	//
+	//		for(int i = 0; i < 12; i++)
+	//			{
+	//			System.out.println("Joueur 1  ::  number : " + carteJoueur1[i].number() + "  couleur : " + Carte.TABLE_COULEUR[carteJoueur1[i].couleur()] + "  Valeur : " + Carte.TABLE_VALEUR[carteJoueur1[i].valeur()]);
+	//			}
+	//		for(int i = 0; i < 12; i++)
+	//			{
+	//			System.out.println("Joueur 2  ::  number : " + carteJoueur2[i].number() + "  couleur : " + Carte.TABLE_COULEUR[carteJoueur2[i].couleur()] + "  Valeur : " + Carte.TABLE_VALEUR[carteJoueur2[i].valeur()]);
+	//			}
+	//		System.out.println("Atout  ::  number : " + carte[numeroAtout].number() + "  couleur : " + Carte.TABLE_COULEUR[carte[numeroAtout].couleur()] + "  Valeur : " + Carte.TABLE_VALEUR[carte[numeroAtout].valeur()]);
+	//
+	//		echangeSixAtout();
+	//		cartePose[0] = 1; //Joueur qui pose en premier	(1)
+	//		cartePose[1] = 2; //Joueur qui pose en deuxieme	(2)
+	//
+	//		//Calcul de qui a gagné la manche
+	//		calculScoreManche();
+	//
+	//		//calcul des points
+	//		SommeJ1 = comptagePointsFinal(carteGagneJoueur1);
+	//		SommeJ1 = comptagePointsFinal(carteGagneJoueur2);
+	//
+	//		}
+
+	private static void init()
 		{
 		int k = 0; // indice pour les numbers
 		for(int i = 0; i < 4; i++) // boucle pour les couleurs
@@ -54,24 +107,26 @@ public class Game
 				}
 			}
 
-		Distribution();
-
-		for(int i = 0; i < 12; i++)
-			{
-			System.out.println("Joueur 1  ::  number : " + carteJoueur1[i].number() + "  couleur : " + Carte.TABLE_COULEUR[carteJoueur1[i].couleur()] + "  Valeur : " + Carte.TABLE_VALEUR[carteJoueur1[i].valeur()]);
-			}
-		for(int i = 0; i < 12; i++)
-			{
-			System.out.println("Joueur 2  ::  number : " + carteJoueur2[i].number() + "  couleur : " + Carte.TABLE_COULEUR[carteJoueur2[i].couleur()] + "  Valeur : " + Carte.TABLE_VALEUR[carteJoueur2[i].valeur()]);
-			}
-		System.out.println("Atout  ::  number : " + carte[numeroAtout].number() + "  couleur : " + Carte.TABLE_COULEUR[carte[numeroAtout].couleur()] + "  Valeur : " + Carte.TABLE_VALEUR[carte[numeroAtout].valeur()]);
+		distribution();
+		/*
+				for(int i = 0; i < 12; i++)
+					{
+					System.out.println("Joueur 1  ::  number : " + carteJoueur1[i].number() + "  couleur : " + Carte.TABLE_COULEUR[carteJoueur1[i].couleur()] + "  Valeur : " + Carte.TABLE_VALEUR[carteJoueur1[i].valeur()]);
+					}
+				for(int i = 0; i < 12; i++)
+					{
+					System.out.println("Joueur 2  ::  number : " + carteJoueur2[i].number() + "  couleur : " + Carte.TABLE_COULEUR[carteJoueur2[i].couleur()] + "  Valeur : " + Carte.TABLE_VALEUR[carteJoueur2[i].valeur()]);
+					}
+				System.out.println("Atout  ::  number : " + carte[numeroAtout].number() + "  couleur : " + Carte.TABLE_COULEUR[carte[numeroAtout].couleur()] + "  Valeur : " + Carte.TABLE_VALEUR[carte[numeroAtout].valeur()]);
+		*/
 
 		echangeSixAtout();
+
 		cartePose[0] = 1; //Joueur qui pose en premier	(1)
 		cartePose[1] = 2; //Joueur qui pose en deuxieme	(2)
 
 		//Calcul de qui a gagné la manche
-		calculManche();
+		calculGagnantTour();
 
 		//calcul des points
 		SommeJ1 = comptagePointsFinal(carteGagneJoueur1);
@@ -79,14 +134,15 @@ public class Game
 
 		}
 
-	//Calcul de qui prend la manche
-	private static void calculManche()
+	//Calcul de qui prend le tour
+	private static int calculGagnantTour()
 		{
 		if (carte[cartePose[0]].couleur() == carte[numeroAtout].couleur())
 			{
 			if (carte[cartePose[0]].couleur() != carte[numeroAtout].couleur())
 				{
 				//Joueur 1 gagne !
+				return 0;
 				}
 			else
 				{
@@ -96,27 +152,29 @@ public class Game
 					{
 					case 5:
 						//le joueur 1 gagne
-						break;
+						return 0;
 					case 3:
 						if (carte[cartePose[1]].valeur() == 5)
 							{
 							//le joueur 2 prend le 9 d'atout
+							return 1;
 							}
 						else
 							{
 							//le 9 d'atout prend tout
+							return 0;
 							}
-						break;
 					default:
 						if (carte[cartePose[1]].valeur() > carte[cartePose[0]].valeur())
 							{
 							// Le joueur 1 gagne
+							return 0;
 							}
 						else
 							{
 							// Le joueur 2 gagne
+							return 1;
 							}
-						break;
 					}
 				}
 			}
@@ -126,6 +184,7 @@ public class Game
 			if (carte[cartePose[1]].couleur() == carte[numeroAtout].couleur())
 				{
 				// joueur 2 gagne, il a jouer atout
+				return 1;
 				}
 			else if (carte[cartePose[0]].couleur() == carte[cartePose[1]].couleur())
 				{
@@ -133,15 +192,18 @@ public class Game
 				if (carte[cartePose[0]].valeur() > carte[cartePose[1]].valeur())
 					{
 					//Le joueur 1 gagne
+					return 0;
 					}
 				else
 					{
 					//Le joueur 2 gagne, il y une plus grande carte
+					return 1;
 					}
 				}
 			else
 				{
 				// le joueur 1 gagne, le deux a pas suivi la couleur
+				return 0;
 				}
 			}
 		}
@@ -172,7 +234,7 @@ public class Game
 			}
 		}
 
-	public static void Distribution()
+	public static void distribution()
 		{
 		Random rand = new Random();
 		int random;

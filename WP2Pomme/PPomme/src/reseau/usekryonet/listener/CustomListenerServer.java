@@ -14,9 +14,9 @@ public class CustomListenerServer extends CustomListener
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	public CustomListenerServer(ServerProgram serverProgram, JFrameHome frame)
+	public CustomListenerServer(ServerProgram serverProgram)
 		{
-		super(frame);
+		super();
 		this.serverProgram = serverProgram;
 		}
 
@@ -39,7 +39,7 @@ public class CustomListenerServer extends CustomListener
 			System.out.println("A client connected succefully!");
 			PacketMessage message = new PacketMessage("Welcome");
 			connection.sendTCP(message);
-			this.jFrameHome.commencerPartie();
+			JFrameHome.getInstance().commencerPartie();
 			}
 
 		}
