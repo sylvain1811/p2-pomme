@@ -16,7 +16,7 @@ public class JButtonCartes extends JButton
 		{
 		super();
 		this.carte = carte;
-		setText(carte.getName());
+		//setText(carte.getName());
 		}
 
 	/*------------------------------------------------------------------*\

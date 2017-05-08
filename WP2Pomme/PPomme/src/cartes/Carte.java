@@ -5,17 +5,32 @@ public class Carte
 	{
 
 	private int number;
-	private boolean isAtout;
 	private int couleur;
 	private int valeur;
 
-	public Carte(int num)
-		{
+	public static String[] TABLE_COULEUR = { "carreaux", "coeur", "pique", "trèfle" };
 
+	public static String[] TABLE_VALEUR = { "6", "7", "8", "9", "10", "valais", "dame", "roi", "as" };
+
+	public Carte(int number, int couleur, int valeur)
+		{
+		this.number = number;
+		this.couleur = couleur;
+		this.valeur = valeur;
 		}
 
-	public String getName()
+	public int number()
 		{
-		return "Nom arbitraire";
+		return this.number;
+		}
+
+	public int valeur()
+		{
+		return this.valeur;
+		}
+
+	public int couleur()
+		{
+		return this.couleur;
 		}
 	}
