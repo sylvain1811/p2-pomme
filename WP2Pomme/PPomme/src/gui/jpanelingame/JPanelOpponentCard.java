@@ -1,24 +1,21 @@
 
 package gui.jpanelingame;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.FlowLayout;
+import java.net.URL;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 
-import gui.JButtonCartes;
-
-public abstract class JPanelInGame extends JPanel
+public class JPanelOpponentCard extends JPanel
 	{
 
 	/*------------------------------------------------------------------*\
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	public JPanelInGame()
+	public JPanelOpponentCard()
 		{
 		geometry();
 		control();
@@ -44,27 +41,29 @@ public abstract class JPanelInGame extends JPanel
 	private void geometry()
 		{
 		// JComponent : Instanciation
-		this.btnFinTour = new JButton("Fin du tour");
-		blackline = BorderFactory.createLineBorder(Color.black);
-		jPanelBoard = new JPanelBoard();
-		jPanelBoard.setBorder(blackline);
-		jPanelMyCard = new JPanelMyCard();
-		jPanelOpponentCard = new JPanelOpponentCard();
+		tabOpponentCard = new JLabel[9];
+		String imgPath = "../pomme_logo_100x100.png";
+		URL iconURL = getClass().getResource(imgPath);
+		icon = new ImageIcon(iconURL);
 
+		for(int i = 0; i < 9; i++)
+			{
+			tabOpponentCard[i] = new JLabel(icon);
+			}
 		// Layout : Specification
 			{
-			BorderLayout borderlayout = new BorderLayout();
-			setLayout(borderlayout);
+			FlowLayout flowlayout = new FlowLayout(FlowLayout.CENTER);
+			setLayout(flowlayout);
 
 			// flowlayout.setHgap(20);
 			// flowlayout.setVgap(20);
 			}
 
 		// JComponent : add
-		add(this.btnFinTour, BorderLayout.EAST);
-		add(jPanelBoard, BorderLayout.CENTER);
-		add(jPanelOpponentCard, BorderLayout.NORTH);
-		add(jPanelMyCard, BorderLayout.SOUTH);
+		for(int i = 0; i < 9; i++)
+			{
+			add(tabOpponentCard[i]);
+			}
 		}
 
 	private void control()
@@ -74,7 +73,7 @@ public abstract class JPanelInGame extends JPanel
 
 	private void appearance()
 		{
-		setBackground(Color.WHITE);
+		// rien
 		}
 
 	/*------------------------------------------------------------------*\
@@ -82,11 +81,6 @@ public abstract class JPanelInGame extends JPanel
 	\*------------------------------------------------------------------*/
 
 	// Tools
-	Border blackline;
-	protected JButton btnFinTour;
-	protected JButtonCartes[] tabBtnCartes;
-	private JPanelBoard jPanelBoard;
-	private JPanelMyCard jPanelMyCard;
-	private JPanelOpponentCard jPanelOpponentCard;
-
+	private JLabel[] tabOpponentCard;
+	private  ImageIcon icon;
 	}
