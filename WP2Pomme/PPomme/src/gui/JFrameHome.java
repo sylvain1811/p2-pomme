@@ -196,11 +196,7 @@ public class JFrameHome extends JFrame
 			public void actionPerformed(ActionEvent e)
 				{
 				String addresseServer = textFieldAddrSrv.getText();
-
-				//int port = getPort(textFieldPortRejoindre);
-
-				//client = new ClientProgram(addresseServer, port);
-				client = new ClientProgram(addresseServer);
+				demarrerClient(addresseServer);
 				JFrameHome.this.commencerPartie();
 				}
 			});
@@ -239,9 +235,9 @@ public class JFrameHome extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 				{
-				// TODO Générer liste des serveurs
+				buttonRechercher.setText("Recherche en cours, patientez...");
 				client = new ClientProgram();
-				JFrameHome.this.commencerPartie();
+				JFrameHome.this.afficherServerDispo();
 				}
 			});
 
@@ -284,6 +280,22 @@ public class JFrameHome extends JFrame
 		return INSTANCE;
 		}
 
+	protected void afficherServerDispo()
+		{
+		this.panelMain.remove(tabbedPaneCenter);
+		this.jPanelListServer = new JPanelListServer(client);
+		this.panelMain.add(jPanelListServer);
+		revalidate();
+		}
+
+	public void demarrerClient(String addresseServer)
+		{
+		//int port = getPort(textFieldPortRejoindre);
+
+		//client = new ClientProgram(addresseServer, port);
+		client = new ClientProgram(addresseServer);
+		}
+
 	public void commencerPartie()
 		{
 		if (server != null)
@@ -293,12 +305,18 @@ public class JFrameHome extends JFrame
 			}
 		else
 			{
-			this.panelMain.remove(tabbedPaneCenter);
+			if (tabbedPaneCenter != null)
+				{
+				this.panelMain.remove(tabbedPaneCenter);
+				}
+			if (jPanelListServer != null)
+				{
+				this.panelMain.remove(jPanelListServer);
+				}
 			this.jPanelInGame = new JPanelInGameClient(client);
 			}
 		this.panelMain.add(this.jPanelInGame);
 		revalidate();
-
 
 		//repaint();
 		}
@@ -325,4 +343,6 @@ public class JFrameHome extends JFrame
 	private JTextField textFieldPortDiscover;
 	private JPanel panelButtonDiscover;
 	private JButton buttonRechercher;
+	private JPanelListServer jPanelListServer;
+
 	}

@@ -52,8 +52,7 @@ public class ClientProgram
 		if (addresseServer == null)
 			{
 			this.listServerDispo = client.discoverHosts(ClientProgram.PORT_UDP, ClientProgram.MAX_WAITING_MS);
-			System.out.println(listServerDispo);
-
+			//System.out.println(listServerDispo);
 			}
 		else
 			{
@@ -82,6 +81,24 @@ public class ClientProgram
 	public void envoiPaquet(PacketMessage paquet)
 		{
 		client.sendTCP(paquet);
+		}
+
+	public List<InetAddress> getListServer()
+		{
+		return listServerDispo;
+		}
+
+	public void connectToServer(String addresse)
+		{
+		try
+			{
+			client.connect(ClientProgram.MAX_WAITING_MS, addresse, ClientProgram.PORT_TCP, ClientProgram.PORT_UDP);
+			}
+		catch (IOException e)
+			{
+			System.err.println("Unable to connect to " + addresse);
+			e.printStackTrace();
+			}
 		}
 
 	/*------------------------------*\
@@ -115,5 +132,6 @@ public class ClientProgram
 
 	private static final int PORT_TCP = 54778;
 	private static final int PORT_UDP = 54777;
-	private static final int MAX_WAITING_MS = 5000;
+	private static final int MAX_WAITING_MS = 2500;
+
 	}
