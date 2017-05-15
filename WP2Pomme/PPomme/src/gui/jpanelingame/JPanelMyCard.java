@@ -1,39 +1,24 @@
 
-package gui;
+package gui.jpanelingame;
 
-import java.awt.Dimension;
+import java.awt.FlowLayout;
 
-import javax.swing.JButton;
+import javax.swing.JPanel;
 
-import cartes.Carte;
+import gui.JButtonCartes;
 
-public class JButtonCartes extends JButton
+public class JPanelMyCard extends JPanel
 	{
 
 	/*------------------------------------------------------------------*\
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	/*public JButtonCartes(Carte carte)
+	public JPanelMyCard()
 		{
-		super();
-		this.carte = carte;
-		Dimension size  = new Dimension(100,100);
-		setPreferredSize(size);
-		setMinimumSize(size);
-		setMaximumSize(size);
-		//setText(carte.getName());
-		}*/
-
-	//temporary const :
-	public JButtonCartes(String text)
-		{
-		super();
-		Dimension size  = new Dimension(100,100);
-		setPreferredSize(size);
-		setMinimumSize(size);
-		setMaximumSize(size);
-		setText(text);
+		geometry();
+		control();
+		appearance();
 		}
 
 	/*------------------------------------------------------------------*\
@@ -52,8 +37,45 @@ public class JButtonCartes extends JButton
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/
 
+	private void geometry()
+		{
+		// JComponent : Instanciation
+		tabMyCard = new JButtonCartes[9];
+		for(int i = 0; i < 9; i++)
+			{
+			tabMyCard[i] = new JButtonCartes("Carte");
+			}
+		// Layout : Specification
+			{
+			FlowLayout flowlayout = new FlowLayout(FlowLayout.CENTER);
+			setLayout(flowlayout);
+
+			// flowlayout.setHgap(20);
+			// flowlayout.setVgap(20);
+			}
+
+		// JComponent : add
+		for(int i = 0; i < 9; i++)
+			{
+			add(tabMyCard[i]);
+			}
+		}
+
+	private void control()
+		{
+		// rien
+		}
+
+	private void appearance()
+		{
+		// rien
+		}
+
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
-	private Carte carte;
+
+	// Tools
+	private JButtonCartes[] tabMyCard;
+
 	}

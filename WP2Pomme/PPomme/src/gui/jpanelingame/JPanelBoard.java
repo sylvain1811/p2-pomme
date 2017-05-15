@@ -1,39 +1,23 @@
+package gui.jpanelingame;
 
-package gui;
+import java.awt.GridLayout;
 
-import java.awt.Dimension;
+import javax.swing.JPanel;
 
-import javax.swing.JButton;
+import gui.JButtonCartes;
 
-import cartes.Carte;
-
-public class JButtonCartes extends JButton
+public class JPanelBoard extends JPanel
 	{
 
 	/*------------------------------------------------------------------*\
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	/*public JButtonCartes(Carte carte)
+	public JPanelBoard()
 		{
-		super();
-		this.carte = carte;
-		Dimension size  = new Dimension(100,100);
-		setPreferredSize(size);
-		setMinimumSize(size);
-		setMaximumSize(size);
-		//setText(carte.getName());
-		}*/
-
-	//temporary const :
-	public JButtonCartes(String text)
-		{
-		super();
-		Dimension size  = new Dimension(100,100);
-		setPreferredSize(size);
-		setMinimumSize(size);
-		setMaximumSize(size);
-		setText(text);
+		geometry();
+		control();
+		appearance();
 		}
 
 	/*------------------------------------------------------------------*\
@@ -52,8 +36,46 @@ public class JButtonCartes extends JButton
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/
 
+	private void geometry()
+		{
+		// JComponent : Instanciation
+		opponentCard =  new JButtonCartes("Ta carte");
+		opponentCard.setEnabled(false);
+		myCard =  new JButtonCartes("Ma carte");
+		myCard.setEnabled(false);
+
+
+		// Layout : Specification
+			{
+			GridLayout gridlayout = new GridLayout(2,1);
+			setLayout(gridlayout);
+
+			// flowlayout.setHgap(20);
+			// flowlayout.setVgap(20);
+			}
+
+		// JComponent : add
+			add(opponentCard);
+			add(myCard);
+
+		}
+
+	private void control()
+		{
+		// rien
+		}
+
+	private void appearance()
+		{
+		// rien
+		}
+
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
-	private Carte carte;
+
+	// Tools
+	JButtonCartes opponentCard;
+	JButtonCartes myCard;
+
 	}
