@@ -1,3 +1,4 @@
+
 package gui;
 
 import java.awt.BorderLayout;
@@ -315,6 +316,7 @@ public class JFrameHome extends JFrame
 			this.jPanelInGame = new JPanelInGameClient(client);
 			}
 		this.panelMain.add(this.jPanelInGame);
+		this.setSize(1000, 800);
 		revalidate();
 
 		//repaint();
