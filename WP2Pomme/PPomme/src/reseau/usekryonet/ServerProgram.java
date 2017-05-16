@@ -24,9 +24,9 @@ public class ServerProgram
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	public ServerProgram(int portTCP) throws IOException
+	public ServerProgram(String pseudo, int portTCP) throws IOException
 		{
-
+		this.pseudo = pseudo;
 		this.portTCP = portTCP;
 		listClient = new ArrayList<>();
 		server = new Server();
@@ -44,12 +44,12 @@ public class ServerProgram
 		customListener = new CustomListenerServer(this);
 		server.addListener(customListener);
 
-		System.out.println("Server ready");
+		log("Server ready");
 		}
 
-	public ServerProgram() throws IOException
+	public ServerProgram(String pseudo) throws IOException
 		{
-		this(ServerProgram.PORT_TCP);
+		this(pseudo, ServerProgram.PORT_TCP);
 		}
 
 	/*------------------------------------------------------------------*\
@@ -60,15 +60,15 @@ public class ServerProgram
 		{
 		if (listClient.size() > 0)
 			{
-			connection.sendTCP(new PacketMessage(PacketMessage.ERROR_SERVER_FULL));
+			connection.sendTCP(new PacketMessage(this.pseudo, PacketMessage.ERROR_SERVER_FULL));
 			connection.close();
 			return false;
 			}
 		else
 			{
 			this.listClient.add(connection);
-			System.out.println("New client connected!");
-			System.out.println(this.listClient);
+			log("New client connected!");
+			//System.out.println(this.listClient);
 			return true;
 			}
 		}
@@ -76,7 +76,7 @@ public class ServerProgram
 	public void removeClient(Connection connection)
 		{
 		this.listClient.remove(connection);
-		System.out.println(listClient);
+		//System.out.println(listClient);
 		}
 
 	public void envoiPaquet(PacketMessage paquet)
@@ -111,9 +111,24 @@ public class ServerProgram
 	|*				Get				*|
 	\*------------------------------*/
 
+	public String getPseudo()
+		{
+		return this.pseudo;
+		}
+
 	/*------------------------------------------------------------------*\
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/
+
+	public void log(String message)
+		{
+		System.out.println("[<server> " + this.pseudo + " say ]: " + message);
+		}
+
+	public void logErr(String message)
+		{
+		System.err.println("[<server> " + this.pseudo + " say ]: " + message);
+		}
 
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
@@ -121,6 +136,8 @@ public class ServerProgram
 
 	// Inputs
 	private int portTCP;
+
+	private String pseudo;
 
 	// Tools
 	private Server server;

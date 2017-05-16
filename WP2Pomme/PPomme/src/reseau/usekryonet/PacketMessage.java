@@ -18,33 +18,44 @@ public class PacketMessage implements Serializable
 
 	public PacketMessage()
 		{
+		this.pseudoFrom = "";
 		this.message = "";
 		}
 
-	public PacketMessage(String message)
+	public PacketMessage(String pseudo, String message)
 		{
+		this.pseudoFrom = pseudo;
 		this.message = message;
 		}
 
-	public PacketMessage(int code)
+	public PacketMessage(String pseudo, int code)
 		{
+		this.pseudoFrom = pseudo;
 		this.code = code;
 		}
 
-	public PacketMessage(int code, Carte carte)
+	public PacketMessage(String pseudo, int code, Carte carte)
 		{
+		this.pseudoFrom = pseudo;
 		this.code = code;
 		this.carte = carte;
 		}
 
-	public PacketMessage(int code, Carte[] carte)
+	public PacketMessage(String pseudo, int code, Carte[] carte)
 		{
+		this.pseudoFrom = pseudo;
 		this.code = code;
 		}
 
 	/*------------------------------*\
 	|*				Set				*|
 	\*------------------------------*/
+
+
+	public String getPseudoFrom()
+		{
+		return this.pseudoFrom;
+		}
 
 	public void setMessage(String mess)
 		{
@@ -85,6 +96,7 @@ public class PacketMessage implements Serializable
 	\*------------------------------------------------------------------*/
 
 	private String message = null;
+	private String pseudoFrom;
 	private int code;
 	private Carte[] tabCarte = null;
 	private Carte carte = null;

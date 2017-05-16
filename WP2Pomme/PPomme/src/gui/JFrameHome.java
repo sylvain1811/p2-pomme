@@ -50,6 +50,8 @@ public class JFrameHome extends JFrame
 	private JPanel panelAddr;
 	private JButton btnRejoindre;
 	private JPanel panelInputRejoindre;
+	private JPanelUserName jPanelUserName;
+	private JPanel jPanelStart;
 
 	/**
 	 * Launch the application. Generate with WindowBuilder.
@@ -89,6 +91,9 @@ public class JFrameHome extends JFrame
 		setTitle("Jeu de la pomme");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
+
+		this.jPanelUserName = new JPanelUserName();
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		setContentPane(contentPane);
@@ -105,7 +110,16 @@ public class JFrameHome extends JFrame
 		panelMain.add(lblJeuDeLa, BorderLayout.NORTH);
 
 		tabbedPaneCenter = new JTabbedPane(SwingConstants.LEFT);
-		panelMain.add(tabbedPaneCenter, BorderLayout.CENTER);
+		tabbedPaneCenter.setBackground(Color.WHITE);
+		//panelMain.add(tabbedPaneCenter, BorderLayout.CENTER);
+
+		// Panel de démarrage du jeu, contient le champ pseudo et le tabbedPane pour lancer le jeu et srv ou client.
+		this.jPanelStart = new JPanel();
+		this.jPanelStart.setBackground(Color.WHITE);
+		this.jPanelStart.setLayout(new BorderLayout());
+		this.jPanelStart.add(tabbedPaneCenter, BorderLayout.CENTER);
+		this.jPanelStart.add(this.jPanelUserName, BorderLayout.SOUTH);
+		panelMain.add(jPanelStart);
 
 		panelTab1Srv = new JPanel();
 		panelTab1Srv.setBackground(Color.WHITE);
@@ -122,29 +136,6 @@ public class JFrameHome extends JFrame
 		textFieldPortCreer.setColumns(10);
 
 		btnCreerPartie = new JButton("Créer partie");
-		btnCreerPartie.addActionListener(new ActionListener()
-			{
-
-			@Override
-			public void actionPerformed(ActionEvent arg0)
-				{
-				//int port = getPort(textFieldPortCreer);
-				try
-					{
-					// JFrameHome.this.server = new ServerProgram(port);
-					JFrameHome.this.server = new ServerProgram();
-
-					attendreClient();
-					}
-				catch (IOException e)
-					{
-					JOptionPane.showMessageDialog(JFrameHome.this, "Port indisponible", "Port indisponible", JOptionPane.ERROR_MESSAGE);
-					e.printStackTrace();
-					}
-				}
-
-			});
-
 		panelTab1Srv.add(btnCreerPartie);
 
 		panelTab2Client = new JPanel();
@@ -189,17 +180,7 @@ public class JFrameHome extends JFrame
 		panel.setBackground(Color.WHITE);
 
 		btnRejoindre = new JButton("Rejoindre");
-		btnRejoindre.addActionListener(new ActionListener()
-			{
 
-			@Override
-			public void actionPerformed(ActionEvent e)
-				{
-				String addresseServer = textFieldAddrSrv.getText();
-				demarrerClient(addresseServer);
-				JFrameHome.this.commencerPartie();
-				}
-			});
 		panel.add(btnRejoindre);
 
 		panelTab3ClientDiscover = new JPanel();
@@ -229,6 +210,53 @@ public class JFrameHome extends JFrame
 		panelDicover.add(panelButtonDiscover);
 
 		buttonRechercher = new JButton("Rechercher");
+
+		panelButtonDiscover.add(buttonRechercher);
+
+		// Port automatique
+		disableManualPort();
+
+		/*------------------------------------------------------------------*\
+		|*							Buttons listener						*|
+		\*------------------------------------------------------------------*/
+
+		// Bouton créer partie
+		btnCreerPartie.addActionListener(new ActionListener()
+			{
+
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+				{
+				//int port = getPort(textFieldPortCreer);
+				try
+					{
+					// JFrameHome.this.server = new ServerProgram(port);
+					JFrameHome.this.server = new ServerProgram(JFrameHome.this.jPanelUserName.getPseudo());
+					attendreClient();
+					}
+				catch (IOException e)
+					{
+					JOptionPane.showMessageDialog(JFrameHome.this, "Port indisponible", "Port indisponible", JOptionPane.ERROR_MESSAGE);
+					e.printStackTrace();
+					}
+				}
+
+			});
+
+		// Bouton rejoindre partie
+		btnRejoindre.addActionListener(new ActionListener()
+			{
+
+			@Override
+			public void actionPerformed(ActionEvent e)
+				{
+				String addresseServer = textFieldAddrSrv.getText();
+				demarrerClient(addresseServer);
+				JFrameHome.this.commencerPartie();
+				}
+			});
+
+		// Rechercher partie
 		buttonRechercher.addActionListener(new ActionListener()
 			{
 
@@ -236,15 +264,10 @@ public class JFrameHome extends JFrame
 			public void actionPerformed(ActionEvent arg0)
 				{
 				buttonRechercher.setText("Recherche en cours, patientez...");
-				client = new ClientProgram();
+				client = new ClientProgram(JFrameHome.this.jPanelUserName.getPseudo());
 				JFrameHome.this.afficherServerDispo();
 				}
 			});
-
-		panelButtonDiscover.add(buttonRechercher);
-
-		// Port automatique
-		disableManualPort();
 		}
 
 	private void disableManualPort()
@@ -282,7 +305,7 @@ public class JFrameHome extends JFrame
 
 	protected void afficherServerDispo()
 		{
-		this.panelMain.remove(tabbedPaneCenter);
+		this.panelMain.remove(jPanelStart);
 		this.jPanelListServer = new JPanelListServer(client);
 		this.panelMain.add(jPanelListServer);
 		revalidate();
@@ -293,7 +316,7 @@ public class JFrameHome extends JFrame
 		//int port = getPort(textFieldPortRejoindre);
 
 		//client = new ClientProgram(addresseServer, port);
-		client = new ClientProgram(addresseServer);
+		client = new ClientProgram(JFrameHome.this.jPanelUserName.getPseudo(), addresseServer);
 		}
 
 	public void commencerPartie()
@@ -307,7 +330,7 @@ public class JFrameHome extends JFrame
 			{
 			if (tabbedPaneCenter != null)
 				{
-				this.panelMain.remove(tabbedPaneCenter);
+				this.panelMain.remove(jPanelStart);
 				}
 			if (jPanelListServer != null)
 				{
@@ -324,7 +347,7 @@ public class JFrameHome extends JFrame
 
 	private void attendreClient()
 		{
-		this.panelMain.remove(tabbedPaneCenter);
+		this.panelMain.remove(jPanelStart);
 		this.jPanelAttente = new JPanelAttente();
 		this.panelMain.add(jPanelAttente);
 		revalidate();

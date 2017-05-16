@@ -21,22 +21,23 @@ public class ClientProgram
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	public ClientProgram(String addresseServer, int portTCP)
+	public ClientProgram(String pseudo, String addresseServer, int portTCP)
 		{
+		this.pseudo = pseudo;
 		this.addresseServer = addresseServer;
 		this.portTCP = portTCP;
-
 		startKryoClient();
 		}
 
-	public ClientProgram()
+	public ClientProgram(String pseudo)
 		{
+		this.pseudo = pseudo;
 		startKryoClient();
 		}
 
-	public ClientProgram(String addresseServer)
+	public ClientProgram(String pseudo, String addresseServer)
 		{
-		this(addresseServer, ClientProgram.PORT_TCP);
+		this(pseudo, addresseServer, ClientProgram.PORT_TCP);
 		}
 
 	private void startKryoClient()
@@ -46,7 +47,7 @@ public class ClientProgram
 
 		client.start();
 
-		customListener = new CustomListenerClient();
+		customListener = new CustomListenerClient(this);
 		client.addListener(customListener);
 
 		if (addresseServer == null)
@@ -56,22 +57,8 @@ public class ClientProgram
 			}
 		else
 			{
-			try
-				{
-				// Choix du port
-				//client.connect(ClientProgram.MAX_WAITING_MS, ClientProgram.this.addresseServer, ClientProgram.this.portTCP);
-
-				// Port par défaut
-				client.connect(ClientProgram.MAX_WAITING_MS, ClientProgram.this.addresseServer, ClientProgram.PORT_TCP, ClientProgram.PORT_UDP);
-				//System.out.println("Port par défaut client. Addr srv : " + addresseServer);
-				}
-			catch (IOException e)
-				{
-				System.err.println("Impossible de démarrer le client (client.connect())");
-				e.printStackTrace();
-				}
+			connectToServer(this.addresseServer);
 			}
-
 		}
 
 	/*------------------------------------------------------------------*\
@@ -93,10 +80,11 @@ public class ClientProgram
 		try
 			{
 			client.connect(ClientProgram.MAX_WAITING_MS, addresse, ClientProgram.PORT_TCP, ClientProgram.PORT_UDP);
+			log("Connected to server at " + addresse);
 			}
 		catch (IOException e)
 			{
-			System.err.println("Unable to connect to " + addresse);
+			logErr("Unable to connect to " + addresse);
 			e.printStackTrace();
 			}
 		}
@@ -113,13 +101,30 @@ public class ClientProgram
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/
 
+	public void log(String message)
+		{
+		System.out.println("[<client> " + this.pseudo + " say ]: " + message);
+		}
+
+	public void logErr(String message)
+		{
+		System.err.println("[<client> " + this.pseudo + " say ]: " + message);
+		}
+
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
 
 	// Inputs
 	private String addresseServer;
+
+	public String getPseudo()
+		{
+		return this.pseudo;
+		}
+
 	private int portTCP;
+	private String pseudo;
 
 	// Tools
 	private Client client;

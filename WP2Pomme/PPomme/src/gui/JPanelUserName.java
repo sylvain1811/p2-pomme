@@ -1,26 +1,24 @@
 
-package reseau.usekryonet.tests;
+package gui;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.util.Random;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
-import reseau.usekryonet.ClientProgram;
-import reseau.usekryonet.PacketMessage;
-
-public class JFrameKryo extends JFrame
+public class JPanelUserName extends JPanel
 	{
 
 	/*------------------------------------------------------------------*\
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	public JFrameKryo(ClientProgram c)
+	public JPanelUserName()
 		{
-		client = c;
 		geometry();
 		control();
 		appearance();
@@ -29,6 +27,22 @@ public class JFrameKryo extends JFrame
 	/*------------------------------------------------------------------*\
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
+
+	/**
+	 * Retourne le pseudo entré dans le JTextField ou, s'il est vide, un pseudo aléatoire
+	 */
+	public String getPseudo()
+		{
+		if (!jTextFieldUserName.getText().trim().equals(""))
+			{
+			return jTextFieldUserName.getText().trim();
+			}
+		else
+			{
+			// Pseudo aléatoire
+			return "user-" + random.nextInt(10000);
+			}
+		}
 
 	/*------------------------------*\
 	|*				Set				*|
@@ -45,40 +59,31 @@ public class JFrameKryo extends JFrame
 	private void geometry()
 		{
 		// JComponent : Instanciation
-		btnSend = new JButton("Envoi");
+		this.labelUserName = new JLabel("Pseudo : ");
+		this.jTextFieldUserName = new JTextField();
 		// Layout : Specification
 			{
-			BorderLayout borderLayout = new BorderLayout();
-			setLayout(borderLayout);
+			FlowLayout flowlayout = new FlowLayout(FlowLayout.CENTER);
+			setLayout(flowlayout);
 
-			// borderLayout.setHgap(20);
-			// borderLayout.setVgap(20);
+			// flowlayout.setHgap(20);
+			// flowlayout.setVgap(20);
 			}
 
 		// JComponent : add
-		add(btnSend, BorderLayout.CENTER);
+		add(labelUserName);
+		add(jTextFieldUserName);
 		}
 
 	private void control()
 		{
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-		btnSend.addActionListener(new ActionListener()
-			{
-
-			@Override
-			public void actionPerformed(ActionEvent e)
-				{
-				client.envoiPaquet(new PacketMessage("pseudo", "btnPressed"));
-				}
-			});
+		// rien
 		}
 
 	private void appearance()
 		{
-		setSize(600, 400);
-		setLocationRelativeTo(null); // frame centrer
-		setVisible(true); // last!
+		jTextFieldUserName.setPreferredSize(new Dimension(200, 30));
+		this.setBackground(Color.WHITE);
 		}
 
 	/*------------------------------------------------------------------*\
@@ -86,8 +91,7 @@ public class JFrameKryo extends JFrame
 	\*------------------------------------------------------------------*/
 
 	// Tools
-	private JButton btnSend;
-
-	private ClientProgram client;
-
+	private static Random random = new Random();
+	private JTextField jTextFieldUserName;
+	private JLabel labelUserName;
 	}
