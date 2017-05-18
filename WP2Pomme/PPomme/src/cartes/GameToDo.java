@@ -22,7 +22,7 @@ public class GameToDo
 
 	public void distribuer()
 		{
-		// R�partir 24 cartes entre deux tableaux al�atoirement. Les cartes doivent �tre uniques. Garder une carte pour l'atout.
+		// Répartir 24 cartes entre deux tableaux aléatoirement. Les cartes doivent être uniques. Garder une carte pour l'atout.
 		// Ces tableaux sont des variables de la classe.
 		Random rand = new Random();
 		int random;
@@ -97,7 +97,7 @@ public class GameToDo
 
 	public void jouerCarte(Carte carteJouee)
 		{
-		// On passe une carte que le joueur choisi. Si c'est le dernier joueur � poser une carte, on regarde qui gagne. (m�thode private s�par�e)
+		// On passe une carte que le joueur choisi. Si c'est le dernier joueur à poser une carte, on regarde qui gagne. (méthode private séparée)
 		// Si c'est le premier, on bloque les cartes que le prochain joueur ne pourra pas jouer.
 
 		}
@@ -171,7 +171,7 @@ public class GameToDo
 			else
 				{
 				//5 : valet, 3 : 9
-				// les deux joueurs ont jou� atouts
+				// les deux joueurs ont joué atouts
 				switch(tabCartes[tabIndexCartePose[0]].valeur())
 					{
 					case 5:
@@ -235,13 +235,13 @@ public class GameToDo
 	|*			  Static			*|
 	\*------------------------------*/
 
-	// M�thode appel�e selon choix du joueur
+	// M�thode appelée selon choix du joueur
 	public static Carte[] echangerTroisCartes(Carte[] tabCartesSources, Carte[] indexCartesARemplacer)
 		{
-		// Input : tableau 12 cartes, tableau de 3 int (index des cartes � remplacer, max 8). Retourne un tableau de 9 cartes.
-		//On passe le tableau de 12 carte, et le tableau des 3 carts a remplacé.
-		//on retourne un tableau de 12 ou de 9 ( A CHOISIR AVEC LE RESTE DES METHODE)
-		//tabCartesSources 9,10 et 11 seront les carte remplacé
+		// Input : tableau 12 cartes, tableau de 3 int (index des cartes à remplacer, max 8). Retourne un tableau de 9 cartes.
+		// On passe le tableau de 12 carte, et le tableau des 3 carts à remplacer.
+		// On retourne un tableau de 12 ou de 9 ( A CHOISIR AVEC LE RESTE DES METHODE)
+		// tabCartesSources 9,10 et 11 seront les carte remplacées
 		int a = 9;
 		for(int i = 0; i < 9; i++)
 			{
@@ -259,7 +259,7 @@ public class GameToDo
 		return tabCartesSources;
 		}
 
-	// M�thode appel�e selon choix du joueur
+	// Méhode appelée selon choix du joueur
 	public static Carte[] echangerSixAtout(Carte[] jeu)
 		{
 		// Place la carte d'atout dans le jeu. Enleve le 6.
