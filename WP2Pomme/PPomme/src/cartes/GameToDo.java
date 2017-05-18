@@ -310,15 +310,15 @@ public class GameToDo
 		{
 		// Initialiser les cartes;
 		int k = 0; // indice pour les numbers
-			for(int i = 0; i < 4; i++) // boucle pour les couleurs
+		for(int i = 0; i < 4; i++) // boucle pour les couleurs
+			{
+			for(int j = 0; j < 9; j++) // boucle pour les valeurs
 				{
-				for(int j = 0; j < 9; j++) // boucle pour les valeurs
-					{
-					Carte cartes = new Carte(k, i, j);
-					carte[k] = cartes;
-					k++;
-					}
+				Carte cartes = new Carte(k, i, j);
+				tabCartes[k] = cartes;
+				k++;
 				}
+			}
 		}
 
 	/*------------------------------------------------------------------*\
