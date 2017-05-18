@@ -29,6 +29,7 @@ public class CustomListenerServer extends CustomListener
 		{
 		this.serverProgram.removeClient(connection);
 		serverProgram.log("A client disconnected!");
+		// TODO: gérer l'arrêt de la partie, retour au menu
 		}
 
 	@Override
@@ -36,7 +37,7 @@ public class CustomListenerServer extends CustomListener
 		{
 		if (this.serverProgram.addClient(connection))
 			{
-			serverProgram.log("A client connected succefully!");
+			serverProgram.log("Client connected successfully");
 			PacketMessage message = new PacketMessage(serverProgram.getPseudo(), "Welcome");
 			connection.sendTCP(message);
 			JFrameHome.getInstance().commencerPartie();

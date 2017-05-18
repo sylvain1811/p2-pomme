@@ -35,9 +35,6 @@ public class ServerProgram
 
 		server.start();
 
-		// Choix du port
-		//server.bind(this.portTCP);
-
 		// Port par défaut
 		server.bind(this.portTCP, ServerProgram.PORT_UDP);
 
@@ -67,7 +64,6 @@ public class ServerProgram
 		else
 			{
 			this.listClient.add(connection);
-			log("New client connected!");
 			//System.out.println(this.listClient);
 			return true;
 			}

@@ -3,6 +3,8 @@ package reseau.usekryonet.listener;
 
 import javax.swing.JOptionPane;
 
+import com.esotericsoftware.kryonet.Connection;
+
 import cartes.Carte;
 import reseau.usekryonet.ClientProgram;
 import reseau.usekryonet.PacketMessage;
@@ -23,6 +25,12 @@ public class CustomListenerClient extends CustomListener
 	/*------------------------------------------------------------------*\
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
+
+	@Override
+	public void disconnected(Connection connection)
+		{
+		// TODO : Gérer l'arrêt de la partie
+		}
 
 	/*------------------------------*\
 	|*				Set				*|
