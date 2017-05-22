@@ -135,10 +135,10 @@ public class GameToDo
 		int somme = 0;
 		for(int i = 0; i < 18; i++)
 			{
-			if (cJoueur[i].couleur() == tabCartes[numeroAtout].couleur())
+			if (cJoueur[i].getCouleur() == tabCartes[numeroAtout].getCouleur())
 				{
 				//atout
-				switch(cJoueur[i].valeur())
+				switch(cJoueur[i].getValeur())
 					{
 					case 3:
 						somme += 14;
@@ -147,13 +147,13 @@ public class GameToDo
 						somme += 20;
 						break;
 					default: //comptage normal
-						somme += methodeComptage(cJoueur[i].valeur());
+						somme += methodeComptage(cJoueur[i].getValeur());
 						break;
 					}
 				}
 			else
 				{
-				somme += methodeComptage(cJoueur[i].valeur());
+				somme += methodeComptage(cJoueur[i].getValeur());
 				}
 			}
 		return somme;
@@ -161,9 +161,9 @@ public class GameToDo
 
 	private int calculGagnantTour()
 		{
-		if (tabCartes[tabIndexCartePose[0]].couleur() == tabCartes[numeroAtout].couleur())
+		if (tabCartes[tabIndexCartePose[0]].getCouleur() == tabCartes[numeroAtout].getCouleur())
 			{
-			if (tabCartes[tabIndexCartePose[0]].couleur() != tabCartes[numeroAtout].couleur())
+			if (tabCartes[tabIndexCartePose[0]].getCouleur() != tabCartes[numeroAtout].getCouleur())
 				{
 				//Joueur 1 gagne !
 				return 0;
@@ -172,13 +172,13 @@ public class GameToDo
 				{
 				//5 : valet, 3 : 9
 				// les deux joueurs ont jouÃ© atouts
-				switch(tabCartes[tabIndexCartePose[0]].valeur())
+				switch(tabCartes[tabIndexCartePose[0]].getValeur())
 					{
 					case 5:
 						//le joueur 1 gagne
 						return 0;
 					case 3:
-						if (tabCartes[tabIndexCartePose[1]].valeur() == 5)
+						if (tabCartes[tabIndexCartePose[1]].getValeur() == 5)
 							{
 							//le joueur 2 prend le 9 d'atout
 							return 1;
@@ -189,7 +189,7 @@ public class GameToDo
 							return 0;
 							}
 					default:
-						if (tabCartes[tabIndexCartePose[1]].valeur() > tabCartes[tabIndexCartePose[0]].valeur())
+						if (tabCartes[tabIndexCartePose[1]].getValeur() > tabCartes[tabIndexCartePose[0]].getValeur())
 							{
 							// Le joueur 1 gagne
 							return 0;
@@ -205,15 +205,15 @@ public class GameToDo
 		else
 			{
 			//Pas atout
-			if (tabCartes[tabIndexCartePose[1]].couleur() == tabCartes[numeroAtout].couleur())
+			if (tabCartes[tabIndexCartePose[1]].getCouleur() == tabCartes[numeroAtout].getCouleur())
 				{
 				// joueur 2 gagne, il a jouer atout
 				return 1;
 				}
-			else if (tabCartes[tabIndexCartePose[0]].couleur() == tabCartes[tabIndexCartePose[1]].couleur())
+			else if (tabCartes[tabIndexCartePose[0]].getCouleur() == tabCartes[tabIndexCartePose[1]].getCouleur())
 				{
 				//le joueur a suivi la couleur
-				if (tabCartes[tabIndexCartePose[0]].valeur() > tabCartes[tabIndexCartePose[1]].valeur())
+				if (tabCartes[tabIndexCartePose[0]].getValeur() > tabCartes[tabIndexCartePose[1]].getValeur())
 					{
 					//Le joueur 1 gagne
 					return 0;
@@ -235,7 +235,7 @@ public class GameToDo
 	|*			  Static			*|
 	\*------------------------------*/
 
-	// Méthode appelée selon choix du joueur
+	// MÃ©thode appelÃ©e selon choix du joueur
 	public static Carte[] echangerTroisCartes(Carte[] tabCartesSources, Carte[] indexCartesARemplacer)
 		{
 		// Input : tableau 12 cartes, tableau de 3 int (index des cartes Ã  remplacer, max 8). Retourne un tableau de 9 cartes.
@@ -259,16 +259,16 @@ public class GameToDo
 		return tabCartesSources;
 		}
 
-	// Méthode appelee selon choix du joueur
+	// MÃ©thode appelee selon choix du joueur
 	public static Carte[] echangerSixAtout(Carte[] jeu, Carte atout)
 		{
 		// Place la carte d'atout dans le jeu. Enleve le 6.
 		for(int i = 0; i < 9; i++)
 			{
 			//Comparaison avec le deck du joueur concernant la couleur
-			if (jeu[i].couleur() == atout.couleur())
+			if (jeu[i].getCouleur() == atout.getCouleur())
 				{
-				if (jeu[i].valeur() == 6)
+				if (jeu[i].getValeur() == 6)
 					{
 					Carte temp = jeu[i];
 					jeu[i] = atout;
