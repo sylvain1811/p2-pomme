@@ -82,7 +82,7 @@ public abstract class JPanelInGame extends JPanel
 	\*------------------------------------------------------------------*/
 
 	// Tools
-	Border blackline;
+	private Border blackline;
 	protected JButton btnFinTour;
 	protected JButtonCartes[] tabBtnCartes;
 	private JPanelBoard jPanelBoard;
