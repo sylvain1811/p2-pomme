@@ -14,6 +14,7 @@ public class GameToDo
 		{
 		//this.serverProgram = serverProgram;
 		this.init();
+		this.distribuer();
 		}
 
 	/*------------------------------------------------------------------*\
@@ -285,13 +286,19 @@ public class GameToDo
 	\*------------------------------*/
 
 	// Set sur tous les attributs (pour l'instant)
-
+	public void setTabCarteJoueur1(Carte[] tabCarteJoueur1)
+		{
+		this.tabCarteJoueur1 = tabCarteJoueur1;
+		}
 	/*------------------------------*\
 	|*				Get				*|
 	\*------------------------------*/
 
 	// Get sur tous les attributs (pour l'instant)
-
+	public Carte[] getTabCarteJoueur1()
+		{
+		return this.tabCarteJoueur1;
+		}
 	/*------------------------------------------------------------------*\
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/
