@@ -240,7 +240,7 @@ public class JFrameHome extends JFrame
 			this.jPanelInGame = new JPanelInGameClient(client);
 			}
 		this.jPanelMain.add(this.jPanelInGame);
-		this.setSize(1000, 800);
+		this.setSize(1200, 800);
 		revalidate();
 		repaint();
 		}

@@ -45,7 +45,7 @@ public class JPanelOpponentCard extends JPanel
 		String imgPath = "../pomme_logo_100x100.png";
 		URL iconURL = getClass().getResource(imgPath);
 		dosDeCarte = new ImageIcon(iconURL);
-		imgPath = "../3carte.png";
+		imgPath = "../3carteB.png";
 		iconURL = getClass().getResource(imgPath);
 		troisCartesPic= new ImageIcon(iconURL);
 		troisCarte = new JLabel(troisCartesPic);
