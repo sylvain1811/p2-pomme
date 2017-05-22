@@ -14,6 +14,7 @@ public class Game
 		{
 		//this.serverProgram = serverProgram;
 		this.init();
+		this.distribuer();
 		}
 
 	/*------------------------------------------------------------------*\
@@ -22,7 +23,7 @@ public class Game
 
 	public void distribuer()
 		{
-		// Répartir 24 cartes entre deux tableaux aléatoirement. Les cartes doivent être uniques. Garder une carte pour l'atout.
+		// RÃ©partir 24 cartes entre deux tableaux alÃ©atoirement. Les cartes doivent Ãªtre uniques. Garder une carte pour l'atout.
 		// Ces tableaux sont des variables de la classe.
 		Random rand = new Random();
 		int random;
@@ -97,7 +98,7 @@ public class Game
 
 	public void jouerCarte(Carte carteJouee)
 		{
-		// On passe une carte que le joueur choisi. Si c'est le dernier joueur à poser une carte, on regarde qui gagne. (méthode private séparée)
+		// On passe une carte que le joueur choisi. Si c'est le dernier joueur Ã  poser une carte, on regarde qui gagne. (mÃ©thode private sÃ©parÃ©e)
 		// Si c'est le premier, on bloque les cartes que le prochain joueur ne pourra pas jouer.
 
 		}
@@ -171,7 +172,7 @@ public class Game
 			else
 				{
 				//5 : valet, 3 : 9
-				// les deux joueurs ont joué atouts
+				// les deux joueurs ont jouÃ© atouts
 				switch(tabCartes[tabIndexCartePose[0]].getValeur())
 					{
 					case 5:
@@ -235,13 +236,13 @@ public class Game
 	|*			  Static			*|
 	\*------------------------------*/
 
-	// Méthode appelée selon choix du joueur
+	// MÃ©thode appelÃ©e selon choix du joueur
 	public static Carte[] echangerTroisCartes(Carte[] tabCartesSources, Carte[] indexCartesARemplacer)
 		{
-		// Input : tableau 12 cartes, tableau de 3 int (index des cartes à remplacer, max 8). Retourne un tableau de 9 cartes.
-		// On passe le tableau de 12 carte, et le tableau des 3 carts à remplacer.
+		// Input : tableau 12 cartes, tableau de 3 int (index des cartes Ã  remplacer, max 8). Retourne un tableau de 9 cartes.
+		// On passe le tableau de 12 carte, et le tableau des 3 carts Ã  remplacer.
 		// On retourne un tableau de 12 ou de 9 ( A CHOISIR AVEC LE RESTE DES METHODE)
-		// tabCartesSources 9,10 et 11 seront les carte remplacées
+		// tabCartesSources 9,10 et 11 seront les carte remplacÃ©es
 		int a = 9;
 		for(int i = 0; i < 9; i++)
 			{
@@ -259,7 +260,7 @@ public class Game
 		return tabCartesSources;
 		}
 
-	// Méthode appelee selon choix du joueur
+	// MÃ©thode appelee selon choix du joueur
 	public static Carte[] echangerSixAtout(Carte[] jeu, Carte atout)
 		{
 		// Place la carte d'atout dans le jeu. Enleve le 6.
@@ -285,13 +286,19 @@ public class Game
 	\*------------------------------*/
 
 	// Set sur tous les attributs (pour l'instant)
-
+	public void setTabCarteJoueur1(Carte[] tabCarteJoueur1)
+		{
+		this.tabCarteJoueur1 = tabCarteJoueur1;
+		}
 	/*------------------------------*\
 	|*				Get				*|
 	\*------------------------------*/
 
 	// Get sur tous les attributs (pour l'instant)
-
+	public Carte[] getTabCarteJoueur1()
+		{
+		return this.tabCarteJoueur1;
+		}
 	/*------------------------------------------------------------------*\
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/
