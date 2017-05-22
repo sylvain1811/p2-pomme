@@ -105,7 +105,7 @@ public class GameToDo
 	public int[] calculScore()
 		{
 		// Calcul des scores pour J1 et J2. Retourne un tableau avec les scores des deux joueurs.
-		// Faire un get qui retourne le score avec la mÃ©thode de comptage
+		// Faire un get qui retourne le score avec la méthode de comptage
 
 		return null;
 		}
