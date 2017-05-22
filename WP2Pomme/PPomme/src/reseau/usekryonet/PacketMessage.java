@@ -22,12 +22,22 @@ public class PacketMessage implements Serializable
 		this.message = "";
 		}
 
+	/**
+	 * Message simple.
+	 * @param pseudo
+	 * @param message
+	 */
 	public PacketMessage(String pseudo, String message)
 		{
 		this.pseudoFrom = pseudo;
 		this.message = message;
 		}
 
+	/**
+	 *
+	 * @param pseudo
+	 * @param code
+	 */
 	public PacketMessage(String pseudo, int code)
 		{
 		this.pseudoFrom = pseudo;
