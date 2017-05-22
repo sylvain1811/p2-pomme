@@ -258,6 +258,15 @@ public class JFrameHome extends JFrame
 		return INSTANCE;
 		}
 
+	/*------------------------------*\
+	|*				Get				*|
+	\*------------------------------*/
+
+	public JPanelInGame getjPanelInGame()
+		{
+		return this.jPanelInGame;
+		}
+
 	/*------------------------------------------------------------------*\
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/

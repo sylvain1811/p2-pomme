@@ -6,6 +6,8 @@ import javax.swing.JOptionPane;
 import com.esotericsoftware.kryonet.Connection;
 
 import cartes.Carte;
+import gui.JFrameHome;
+import gui.jpanelingame.JPanelInGameClient;
 import reseau.usekryonet.ClientProgram;
 import reseau.usekryonet.PacketMessage;
 
@@ -81,6 +83,8 @@ public class CustomListenerClient extends CustomListener
 	private void traiterCasDistribution(Carte[] tabCartes)
 		{
 		// TODO
+		jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());
+		jPanelInGameClient.setCarteJoueurClient(tabCartes);
 		}
 
 	/*------------------------------------------------------------------*\
@@ -89,4 +93,5 @@ public class CustomListenerClient extends CustomListener
 
 	// Input
 	private ClientProgram clientProgram;
+	private JPanelInGameClient jPanelInGameClient;
 	}

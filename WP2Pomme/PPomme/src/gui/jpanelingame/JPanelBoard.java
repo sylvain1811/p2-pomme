@@ -40,7 +40,7 @@ public class JPanelBoard extends JPanel
 	private void geometry()
 		{
 		// JComponent : Instanciation
-		atout =  new JLabelCartes(carte);
+		//atout =  new JLabelCartes(carte);
 
 		// Layout : Specification
 			{

@@ -51,10 +51,11 @@ public class PacketMessage implements Serializable
 		this.carte = carte;
 		}
 
-	public PacketMessage(String pseudo, int code, Carte[] carte)
+	public PacketMessage(String pseudo, int code, Carte[] tabCarte)
 		{
 		this.pseudoFrom = pseudo;
 		this.code = code;
+		this.tabCarte = tabCarte;
 		}
 
 	/*------------------------------*\

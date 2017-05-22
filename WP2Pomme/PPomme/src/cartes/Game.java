@@ -14,7 +14,6 @@ public class Game
 		{
 		//this.serverProgram = serverProgram;
 		this.init();
-		this.distribuer();
 		}
 
 	/*------------------------------------------------------------------*\
@@ -290,15 +289,28 @@ public class Game
 		{
 		this.tabCarteJoueur1 = tabCarteJoueur1;
 		}
+
+	public void setTabCarteGagneJoueur2(Carte[] tabCarteGagneJoueur2)
+		{
+		this.tabCarteGagneJoueur2 = tabCarteGagneJoueur2;
+		}
+
 	/*------------------------------*\
 	|*				Get				*|
 	\*------------------------------*/
 
 	// Get sur tous les attributs (pour l'instant)
+
 	public Carte[] getTabCarteJoueur1()
 		{
 		return this.tabCarteJoueur1;
 		}
+
+	public Carte[] getTabCarteJoueur2()
+		{
+		return this.tabCarteJoueur2;
+		}
+
 	/*------------------------------------------------------------------*\
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/

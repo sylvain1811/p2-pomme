@@ -32,7 +32,8 @@ public class ServerProgram
 		server = new Server();
 
 		server.getKryo().register(PacketMessage.class);
-
+		server.getKryo().register(cartes.Carte[].class);
+		server.getKryo().register(cartes.Carte.class);
 		server.start();
 
 		// Port par défaut
