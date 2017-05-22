@@ -44,11 +44,15 @@ public class JPanelOpponentCard extends JPanel
 		tabOpponentCard = new JLabel[9];
 		String imgPath = "../pomme_logo_100x100.png";
 		URL iconURL = getClass().getResource(imgPath);
-		icon = new ImageIcon(iconURL);
+		dosDeCarte = new ImageIcon(iconURL);
+		imgPath = "../3carte.png";
+		iconURL = getClass().getResource(imgPath);
+		troisCartesPic= new ImageIcon(iconURL);
+		troisCarte = new JLabel(troisCartesPic);
 
 		for(int i = 0; i < 9; i++)
 			{
-			tabOpponentCard[i] = new JLabel(icon);
+			tabOpponentCard[i] = new JLabel(dosDeCarte);
 			}
 		// Layout : Specification
 			{
@@ -64,6 +68,7 @@ public class JPanelOpponentCard extends JPanel
 			{
 			add(tabOpponentCard[i]);
 			}
+		add(troisCarte);
 		}
 
 	private void control()
@@ -82,5 +87,7 @@ public class JPanelOpponentCard extends JPanel
 
 	// Tools
 	private JLabel[] tabOpponentCard;
-	private  ImageIcon icon;
+	private ImageIcon dosDeCarte;
+	private ImageIcon troisCartesPic;
+	private JLabel troisCarte;
 	}
