@@ -9,7 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-import cartes.GameToDo;
+import cartes.Game;
 import gui.JButtonCartes;
 
 public abstract class JPanelInGame extends JPanel
@@ -21,7 +21,7 @@ public abstract class JPanelInGame extends JPanel
 
 	public JPanelInGame()
 		{
-		gameToDo = new GameToDo();
+		game = new Game();
 		geometry();
 		control();
 		appearance();
@@ -50,7 +50,7 @@ public abstract class JPanelInGame extends JPanel
 		blackline = BorderFactory.createLineBorder(Color.black);
 		jPanelBoard = new JPanelBoard();
 		jPanelBoard.setBorder(blackline);
-		jPanelMyCard = new JPanelMyCard(gameToDo);
+		jPanelMyCard = new JPanelMyCard(game);
 		jPanelOpponentCard = new JPanelOpponentCard();
 
 		// Layout : Specification
@@ -84,11 +84,11 @@ public abstract class JPanelInGame extends JPanel
 	\*------------------------------------------------------------------*/
 
 	// Tools
-	Border blackline;
+	private Border blackline;
 	protected JButton btnFinTour;
 	protected JButtonCartes[] tabBtnCartes;
 	private JPanelBoard jPanelBoard;
 	private JPanelMyCard jPanelMyCard;
 	private JPanelOpponentCard jPanelOpponentCard;
-	protected GameToDo gameToDo;
+	protected Game game;
 	}
