@@ -21,7 +21,7 @@ public class UseServerKryo
 		{
 		try
 			{
-			new ServerProgram(54444);
+			new ServerProgram("pseudo",54444);
 			}
 		catch (IOException e)
 			{

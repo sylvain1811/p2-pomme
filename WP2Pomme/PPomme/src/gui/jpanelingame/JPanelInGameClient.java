@@ -45,7 +45,7 @@ public class JPanelInGameClient extends JPanelInGame
 			@Override
 			public void actionPerformed(ActionEvent e)
 				{
-				PacketMessage paquet = new PacketMessage(PacketMessage.END_OF_TURN);
+				PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.END_OF_TURN);
 				clientProgram.envoiPaquet(paquet);
 				}
 			});

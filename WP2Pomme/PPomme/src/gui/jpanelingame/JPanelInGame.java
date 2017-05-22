@@ -46,10 +46,10 @@ public abstract class JPanelInGame extends JPanel
 		// JComponent : Instanciation
 		this.btnFinTour = new JButton("Fin du tour");
 		blackline = BorderFactory.createLineBorder(Color.black);
-		jPanelBoard =  new JPanelBoard();
+		jPanelBoard = new JPanelBoard();
 		jPanelBoard.setBorder(blackline);
-		jPanelMyCard =  new JPanelMyCard();
-		jPanelOpponentCard =  new JPanelOpponentCard();
+		jPanelMyCard = new JPanelMyCard();
+		jPanelOpponentCard = new JPanelOpponentCard();
 
 		// Layout : Specification
 			{
@@ -61,10 +61,10 @@ public abstract class JPanelInGame extends JPanel
 			}
 
 		// JComponent : add
-		add(this.btnFinTour,BorderLayout.EAST);
-		add(jPanelBoard,BorderLayout.CENTER);
-		add(jPanelOpponentCard,BorderLayout.NORTH);
-		add(jPanelMyCard,BorderLayout.SOUTH);
+		add(this.btnFinTour, BorderLayout.EAST);
+		add(jPanelBoard, BorderLayout.CENTER);
+		add(jPanelOpponentCard, BorderLayout.NORTH);
+		add(jPanelMyCard, BorderLayout.SOUTH);
 		}
 
 	private void control()

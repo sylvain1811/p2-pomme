@@ -3,7 +3,10 @@ package reseau.usekryonet.listener;
 
 import javax.swing.JOptionPane;
 
+import com.esotericsoftware.kryonet.Connection;
+
 import cartes.Carte;
+import reseau.usekryonet.ClientProgram;
 import reseau.usekryonet.PacketMessage;
 
 public class CustomListenerClient extends CustomListener
@@ -13,14 +16,21 @@ public class CustomListenerClient extends CustomListener
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	public CustomListenerClient()
+	public CustomListenerClient(ClientProgram clientProgram)
 		{
 		super();
+		this.clientProgram = clientProgram;
 		}
 
 	/*------------------------------------------------------------------*\
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
+
+	@Override
+	public void disconnected(Connection connection)
+		{
+		// TODO : Gérer l'arrêt de la partie
+		}
 
 	/*------------------------------*\
 	|*				Set				*|
@@ -40,7 +50,8 @@ public class CustomListenerClient extends CustomListener
 		// Si le code est vaut 100 ou plus alors c'est une erruer.
 		if (paquet.getCode() < PacketMessage.ERROR_SERVER_FULL)
 			{
-			System.out.println("Message received from server: " + paquet.getMessage());
+			clientProgram.log("New message from " + paquet.getPseudoFrom() + " : " + paquet.getMessage());
+			//System.out.println("[" + paquet.getPseudoFrom() + " say ]: Message received from server : " + paquet.getMessage());
 			switch(paquet.getCode())
 				{
 				case PacketMessage.START_GAME_DISTRIBUTION:
@@ -57,7 +68,7 @@ public class CustomListenerClient extends CustomListener
 			switch(paquet.getCode())
 				{
 				case PacketMessage.ERROR_SERVER_FULL:
-					System.out.println("Serveur plein, impossible de se connecter");
+					clientProgram.logErr("Serveur plein, impossible de se connecter");
 					JOptionPane.showMessageDialog(null, "Serveur plein, impossible de se connecter.", "Serveur plein", JOptionPane.ERROR_MESSAGE);
 					break;
 
@@ -75,4 +86,7 @@ public class CustomListenerClient extends CustomListener
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
+
+	// Input
+	private ClientProgram clientProgram;
 	}

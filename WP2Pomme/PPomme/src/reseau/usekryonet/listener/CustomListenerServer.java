@@ -28,7 +28,8 @@ public class CustomListenerServer extends CustomListener
 	public void disconnected(Connection connection)
 		{
 		this.serverProgram.removeClient(connection);
-		System.out.println("A client disconnected!");
+		serverProgram.log("A client disconnected!");
+		// TODO: gérer l'arrêt de la partie, retour au menu
 		}
 
 	@Override
@@ -36,12 +37,11 @@ public class CustomListenerServer extends CustomListener
 		{
 		if (this.serverProgram.addClient(connection))
 			{
-			System.out.println("A client connected succefully!");
-			PacketMessage message = new PacketMessage("Welcome");
+			serverProgram.log("Client connected successfully");
+			PacketMessage message = new PacketMessage(serverProgram.getPseudo(), "Welcome");
 			connection.sendTCP(message);
 			JFrameHome.getInstance().commencerPartie();
 			}
-
 		}
 
 	/*------------------------------*\
@@ -59,7 +59,7 @@ public class CustomListenerServer extends CustomListener
 	@Override
 	protected void traiterPaquet(PacketMessage paquet)
 		{
-		System.out.println("Message received from client: " + paquet.getMessage());
+		serverProgram.log("Message received from " + paquet.getPseudoFrom() + " : " + paquet.getMessage());
 		}
 
 	/*------------------------------------------------------------------*\

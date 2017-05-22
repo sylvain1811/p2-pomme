@@ -1,3 +1,4 @@
+
 package gui;
 
 import java.awt.BorderLayout;
@@ -32,24 +33,6 @@ import reseau.usekryonet.ServerProgram;
 public class JFrameHome extends JFrame
 	{
 
-	private JPanel contentPane;
-	private JPanel panelMain;
-	private JLabel lblJeuDeLa;
-	private JTabbedPane tabbedPaneCenter;
-	private JLabel lblPortCreer;
-	private JTextField textFieldPortCreer;
-	private JPanel panelTab1Srv;
-	private JPanel panelTab2Client;
-	private JLabel label;
-	private JTextField textFieldPortRejoindre;
-	private JButton btnCreerPartie;
-	private JLabel lblAddrSrv;
-	private JTextField textFieldAddrSrv;
-	private JPanel panelPortRejoindre;
-	private JPanel panelAddr;
-	private JButton btnRejoindre;
-	private JPanel panelInputRejoindre;
-
 	/**
 	 * Launch the application. Generate with WindowBuilder.
 	 */
@@ -76,11 +59,13 @@ public class JFrameHome extends JFrame
 			});
 		}
 
-	/**
-	 * Create the frame.
-	 */
+	/*------------------------------------------------------------------*\
+	|*							Constructeurs							*|
+	\*------------------------------------------------------------------*/
+
 	private JFrameHome()
 		{
+		// Icon, title
 		String imgPath = "pomme_logo.png";
 		URL iconURL = getClass().getResource(imgPath);
 		ImageIcon icon = new ImageIcon(iconURL);
@@ -88,106 +73,118 @@ public class JFrameHome extends JFrame
 		setTitle("Jeu de la pomme");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
 
-		panelMain = new JPanel();
-		panelMain.setBackground(Color.WHITE);
-		contentPane.add(panelMain);
-		panelMain.setLayout(new BorderLayout(0, 0));
+		// Panel
+		this.jPanelUserName = new JPanelUserName();
+
+		jPanelContentPane = new JPanel();
+		jPanelContentPane.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		setContentPane(jPanelContentPane);
+		jPanelContentPane.setLayout(new BorderLayout(0, 0));
+
+		jPanelMain = new JPanel();
+		jPanelMain.setBackground(Color.WHITE);
+		jPanelContentPane.add(jPanelMain);
+		jPanelMain.setLayout(new BorderLayout(0, 0));
 
 		lblJeuDeLa = new JLabel("Jeu de la pomme");
 		lblJeuDeLa.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblJeuDeLa.setHorizontalAlignment(SwingConstants.CENTER);
-		panelMain.add(lblJeuDeLa, BorderLayout.NORTH);
+		jPanelMain.add(lblJeuDeLa, BorderLayout.NORTH);
 
-		tabbedPaneCenter = new JTabbedPane(SwingConstants.LEFT);
-		panelMain.add(tabbedPaneCenter, BorderLayout.CENTER);
+		jTabbedPaneCenter = new JTabbedPane(SwingConstants.LEFT);
+		jTabbedPaneCenter.setBackground(Color.WHITE);
+		//panelMain.add(tabbedPaneCenter, BorderLayout.CENTER);
 
-		panelTab1Srv = new JPanel();
-		panelTab1Srv.setBackground(Color.WHITE);
-		tabbedPaneCenter.addTab("Créer partie", null, panelTab1Srv, null);
+		// Panel de démarrage du jeu, contient le champ pseudo et le tabbedPane pour lancer le jeu et srv ou client.
+		this.jPanelStart = new JPanel();
+		this.jPanelStart.setBackground(Color.WHITE);
+		this.jPanelStart.setLayout(new BorderLayout());
+		this.jPanelStart.add(jTabbedPaneCenter, BorderLayout.CENTER);
+		this.jPanelStart.add(this.jPanelUserName, BorderLayout.SOUTH);
+		jPanelMain.add(jPanelStart);
 
-		lblPortCreer = new JLabel("Port :");
-
-		panelTab1Srv.add(lblPortCreer);
-
-		textFieldPortCreer = new JTextField();
-		textFieldPortCreer.setText("55555");
-		textFieldPortCreer.selectAll();
-		panelTab1Srv.add(textFieldPortCreer);
-		textFieldPortCreer.setColumns(10);
+		jPanelTab1Srv = new JPanel();
+		jPanelTab1Srv.setBackground(Color.WHITE);
+		jTabbedPaneCenter.addTab("Créer partie", null, jPanelTab1Srv, null);
 
 		btnCreerPartie = new JButton("Créer partie");
+		jPanelTab1Srv.add(btnCreerPartie);
+
+		jPanelTab2Client = new JPanel();
+		jPanelTab2Client.setBackground(Color.WHITE);
+		jTabbedPaneCenter.addTab("Rejoindre partie", null, jPanelTab2Client, null);
+		jPanelTab2Client.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
+		jPanelInputRejoindre = new JPanel();
+		jPanelTab2Client.add(jPanelInputRejoindre);
+		jPanelInputRejoindre.setLayout(new GridLayout(0, 1, 0, 0));
+
+		jPanelAddr = new JPanel();
+		jPanelInputRejoindre.add(jPanelAddr);
+		jPanelAddr.setBackground(Color.WHITE);
+		jPanelAddr.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
+		lblAddrSrv = new JLabel("Adresse serveur :");
+		jPanelAddr.add(lblAddrSrv);
+
+		textFieldAddrSrv = new JTextField();
+		textFieldAddrSrv.setText("127.0.0.1");
+		textFieldAddrSrv.selectAll();
+		jPanelAddr.add(textFieldAddrSrv);
+		textFieldAddrSrv.setColumns(10);
+
+		JPanel jPanelButtonRejoindre = new JPanel();
+		jPanelInputRejoindre.add(jPanelButtonRejoindre);
+		jPanelButtonRejoindre.setBackground(Color.WHITE);
+
+		btnRejoindre = new JButton("Rejoindre");
+
+		jPanelButtonRejoindre.add(btnRejoindre);
+
+		jPanelTab3ClientDiscover = new JPanel();
+		jPanelTab3ClientDiscover.setBackground(Color.WHITE);
+		jTabbedPaneCenter.addTab("Rechercher serveur", null, jPanelTab3ClientDiscover, null);
+		jPanelTab3ClientDiscover.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
+		jPanelDicover = new JPanel();
+		jPanelTab3ClientDiscover.add(jPanelDicover);
+		jPanelDicover.setLayout(new GridLayout(0, 1, 0, 0));
+
+		jPanelButtonDiscover = new JPanel();
+		jPanelButtonDiscover.setBackground(Color.WHITE);
+		jPanelDicover.add(jPanelButtonDiscover);
+
+		buttonRechercher = new JButton("Rechercher");
+
+		jPanelButtonDiscover.add(buttonRechercher);
+
+		/*------------------------------------------------------------------*\
+		|*							Buttons listener						*|
+		\*------------------------------------------------------------------*/
+
+		// Bouton créer partie
 		btnCreerPartie.addActionListener(new ActionListener()
 			{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 				{
-				//int port = getPort(textFieldPortCreer);
 				try
 					{
-					// JFrameHome.this.server = new ServerProgram(port);
-					JFrameHome.this.server = new ServerProgram();
-
+					JFrameHome.this.server = new ServerProgram(JFrameHome.this.jPanelUserName.getPseudo());
 					attendreClient();
 					}
 				catch (IOException e)
 					{
 					JOptionPane.showMessageDialog(JFrameHome.this, "Port indisponible", "Port indisponible", JOptionPane.ERROR_MESSAGE);
-					e.printStackTrace();
+					//e.printStackTrace();
 					}
 				}
 
 			});
 
-		panelTab1Srv.add(btnCreerPartie);
-
-		panelTab2Client = new JPanel();
-		panelTab2Client.setBackground(Color.WHITE);
-		tabbedPaneCenter.addTab("Rejoindre partie", null, panelTab2Client, null);
-		panelTab2Client.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-
-		panelInputRejoindre = new JPanel();
-		panelTab2Client.add(panelInputRejoindre);
-		panelInputRejoindre.setLayout(new GridLayout(0, 1, 0, 0));
-
-		panelPortRejoindre = new JPanel();
-		panelInputRejoindre.add(panelPortRejoindre);
-		panelPortRejoindre.setBackground(Color.WHITE);
-		panelPortRejoindre.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-
-		label = new JLabel("Port :");
-		panelPortRejoindre.add(label);
-
-		textFieldPortRejoindre = new JTextField();
-		textFieldPortRejoindre.setText("55555");
-		textFieldPortRejoindre.selectAll();
-		panelPortRejoindre.add(textFieldPortRejoindre);
-		textFieldPortRejoindre.setColumns(10);
-
-		panelAddr = new JPanel();
-		panelInputRejoindre.add(panelAddr);
-		panelAddr.setBackground(Color.WHITE);
-		panelAddr.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-
-		lblAddrSrv = new JLabel("Adresse serveur :");
-		panelAddr.add(lblAddrSrv);
-
-		textFieldAddrSrv = new JTextField();
-		textFieldAddrSrv.setText("127.0.0.1");
-		textFieldAddrSrv.selectAll();
-		panelAddr.add(textFieldAddrSrv);
-		textFieldAddrSrv.setColumns(10);
-
-		JPanel panel = new JPanel();
-		panelInputRejoindre.add(panel);
-		panel.setBackground(Color.WHITE);
-
-		btnRejoindre = new JButton("Rejoindre");
+		// Bouton rejoindre partie
 		btnRejoindre.addActionListener(new ActionListener()
 			{
 
@@ -195,84 +192,62 @@ public class JFrameHome extends JFrame
 			public void actionPerformed(ActionEvent e)
 				{
 				String addresseServer = textFieldAddrSrv.getText();
-
-				//int port = getPort(textFieldPortRejoindre);
-
-				//client = new ClientProgram(addresseServer, port);
-				client = new ClientProgram(addresseServer);
+				demarrerClient(addresseServer);
 				JFrameHome.this.commencerPartie();
 				}
 			});
-		panel.add(btnRejoindre);
 
-		panelTab3ClientDiscover = new JPanel();
-		panelTab3ClientDiscover.setBackground(Color.WHITE);
-		tabbedPaneCenter.addTab("Rechercher serveur", null, panelTab3ClientDiscover, null);
-		panelTab3ClientDiscover.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-
-		panelDicover = new JPanel();
-		panelTab3ClientDiscover.add(panelDicover);
-		panelDicover.setLayout(new GridLayout(0, 1, 0, 0));
-
-		panelPortDiscover = new JPanel();
-		panelPortDiscover.setBackground(Color.WHITE);
-		panelDicover.add(panelPortDiscover);
-		panelPortDiscover.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-
-		labelPortRechercher = new JLabel("Port :");
-		panelPortDiscover.add(labelPortRechercher);
-
-		textFieldPortDiscover = new JTextField();
-		textFieldPortDiscover.setText("55555");
-		textFieldPortDiscover.setColumns(10);
-		panelPortDiscover.add(textFieldPortDiscover);
-
-		panelButtonDiscover = new JPanel();
-		panelButtonDiscover.setBackground(Color.WHITE);
-		panelDicover.add(panelButtonDiscover);
-
-		buttonRechercher = new JButton("Rechercher");
+		// Rechercher partie
 		buttonRechercher.addActionListener(new ActionListener()
 			{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 				{
-				// TODO Générer liste des serveurs
-				client = new ClientProgram();
-				JFrameHome.this.commencerPartie();
+				buttonRechercher.setText("Recherche en cours, patientez...");
+				client = new ClientProgram(JFrameHome.this.jPanelUserName.getPseudo());
+				JFrameHome.this.afficherServerDispo();
 				}
 			});
-
-		panelButtonDiscover.add(buttonRechercher);
-
-		// Port automatique
-		disableManualPort();
 		}
 
-	private void disableManualPort()
+	/*------------------------------------------------------------------*\
+	|*							Methodes Public							*|
+	\*------------------------------------------------------------------*/
+
+	public void demarrerClient(String addresseServer)
 		{
-		panelTab1Srv.remove(lblPortCreer);
-		panelTab1Srv.remove(textFieldPortCreer);
-		panelInputRejoindre.remove(panelPortRejoindre);
-		panelDicover.remove(panelPortDiscover);
+		client = new ClientProgram(JFrameHome.this.jPanelUserName.getPseudo(), addresseServer);
+		}
+
+	public void commencerPartie()
+		{
+		if (server != null)
+			{
+			this.jPanelMain.remove(jPanelAttente);
+			this.jPanelInGame = new JPanelInGameServer(server);
+			}
+		else
+			{
+			if (jTabbedPaneCenter != null)
+				{
+				this.jPanelMain.remove(jPanelStart);
+				}
+			if (jPanelListServer != null)
+				{
+				this.jPanelMain.remove(jPanelListServer);
+				}
+			this.jPanelInGame = new JPanelInGameClient(client);
+			}
+		this.jPanelMain.add(this.jPanelInGame);
+		this.setSize(1000, 800);
 		revalidate();
-		//repaint();
+		repaint();
 		}
 
-	private int getPort(JTextField field)
-		{
-		try
-			{
-			return Integer.parseInt(field.getText());
-			}
-		catch (NumberFormatException e)
-			{
-			e.printStackTrace();
-			return ServerProgram.PORT_TCP;
-			}
-
-		}
+	/*------------------------------*\
+	|*			  Static			*|
+	\*------------------------------*/
 
 	public static synchronized JFrameHome getInstance()
 		{
@@ -283,45 +258,67 @@ public class JFrameHome extends JFrame
 		return INSTANCE;
 		}
 
-	public void commencerPartie()
+	/*------------------------------------------------------------------*\
+	|*							Methodes Private						*|
+	\*------------------------------------------------------------------*/
+
+	private void afficherServerDispo()
 		{
-		if (server != null)
-			{
-			this.panelMain.remove(jPanelAttente);
-			this.jPanelInGame = new JPanelInGameServer(server);
-			}
-		else
-			{
-			this.panelMain.remove(tabbedPaneCenter);
-			this.jPanelInGame = new JPanelInGameClient(client);
-			}
-		this.panelMain.add(this.jPanelInGame);
+		this.jPanelMain.remove(jPanelStart);
+		this.jPanelListServer = new JPanelListServer(client);
+		this.jPanelMain.add(jPanelListServer);
 		revalidate();
-
-
-		//repaint();
+		repaint();
 		}
 
 	private void attendreClient()
 		{
-		this.panelMain.remove(tabbedPaneCenter);
+		this.jPanelMain.remove(jPanelStart);
 		this.jPanelAttente = new JPanelAttente();
-		this.panelMain.add(jPanelAttente);
+		this.jPanelMain.add(jPanelAttente);
 		revalidate();
-		//repaint();
+		repaint();
 		}
 
-	private ClientProgram client;
-	private ServerProgram server;
+	/*------------------------------------------------------------------*\
+	|*							Attributs Private						*|
+	\*------------------------------------------------------------------*/
+
+	// JPanel
+	private JPanel jPanelContentPane;
+	private JPanel jPanelMain;
+	private JPanel jPanelTab1Srv;
+	private JPanel jPanelTab2Client;
+	private JPanel jPanelAddr;
+	private JPanel jPanelInputRejoindre;
+	private JPanel jPanelTab3ClientDiscover;
+	private JPanel jPanelDicover;
+	private JPanelUserName jPanelUserName;
+	private JPanel jPanelStart;
 	private JPanelInGame jPanelInGame;
 	private JPanelAttente jPanelAttente;
+	private JPanel jPanelButtonDiscover;
+	private JPanelListServer jPanelListServer;
+	private JTabbedPane jTabbedPaneCenter;
+
+	// JLabel
+	private JLabel lblJeuDeLa;
+	private JLabel lblAddrSrv;
+	private JTextField textFieldAddrSrv;
+
+	//JButton
+	private JButton btnCreerPartie;
+	private JButton btnRejoindre;
+	private JButton buttonRechercher;
+
+	// Network
+	private ClientProgram client;
+	private ServerProgram server;
+
+	/*------------------------------*\
+	|*			  Static			*|
+	\*------------------------------*/
 
 	private static JFrameHome INSTANCE = null;
-	private JPanel panelTab3ClientDiscover;
-	private JPanel panelDicover;
-	private JPanel panelPortDiscover;
-	private JLabel labelPortRechercher;
-	private JTextField textFieldPortDiscover;
-	private JPanel panelButtonDiscover;
-	private JButton buttonRechercher;
+
 	}

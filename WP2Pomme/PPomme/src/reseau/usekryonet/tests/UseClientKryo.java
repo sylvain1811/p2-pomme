@@ -18,10 +18,10 @@ public class UseClientKryo
 
 	public static void main()
 		{
-		ClientProgram client = new ClientProgram("localhost", 54444);
+		ClientProgram client = new ClientProgram("user", "localhost", 54444);
 
 		// PacketMessage paquet = new PacketMessage();
-		PacketMessage paquet = new PacketMessage("Hello");
+		PacketMessage paquet = new PacketMessage("pseudo", "Hello");
 		client.envoiPaquet(paquet);
 		paquet.setMessage("Comment va ?");
 		client.envoiPaquet(paquet);
