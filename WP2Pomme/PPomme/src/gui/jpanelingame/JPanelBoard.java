@@ -2,6 +2,7 @@ package gui.jpanelingame;
 
 import java.awt.GridLayout;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import gui.JButtonCartes;
@@ -39,7 +40,7 @@ public class JPanelBoard extends JPanel
 	private void geometry()
 		{
 		// JComponent : Instanciation
-		opponentCard =  new JButtonCartes("Ta carte");
+		opponentCard =  new JLabel("Ta carte");
 		opponentCard.setEnabled(false);
 		myCard =  new JButtonCartes("Ma carte");
 		myCard.setEnabled(false);
@@ -75,7 +76,7 @@ public class JPanelBoard extends JPanel
 	\*------------------------------------------------------------------*/
 
 	// Tools
-	JButtonCartes opponentCard;
+	JLabel opponentCard;
 	JButtonCartes myCard;
 
 	}
