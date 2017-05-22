@@ -2,10 +2,10 @@ package gui.jpanelingame;
 
 import java.awt.GridLayout;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import gui.JButtonCartes;
+import cartes.Carte;
+import gui.JLabelCartes;
 
 public class JPanelBoard extends JPanel
 	{
@@ -40,15 +40,11 @@ public class JPanelBoard extends JPanel
 	private void geometry()
 		{
 		// JComponent : Instanciation
-		opponentCard =  new JLabel("Ta carte");
-		opponentCard.setEnabled(false);
-		myCard =  new JButtonCartes("Ma carte");
-		myCard.setEnabled(false);
-
+		atout =  new JLabelCartes(carte);
 
 		// Layout : Specification
 			{
-			GridLayout gridlayout = new GridLayout(2,1);
+			gridlayout = new GridLayout(2,1);
 			setLayout(gridlayout);
 
 			// flowlayout.setHgap(20);
@@ -56,8 +52,6 @@ public class JPanelBoard extends JPanel
 			}
 
 		// JComponent : add
-			add(opponentCard);
-			add(myCard);
 
 		}
 
@@ -70,13 +64,26 @@ public class JPanelBoard extends JPanel
 		{
 		// rien
 		}
+	private void addCarteMyCard(Carte carte){
+		myCard =  new JLabelCartes(carte);
+	}
+	private void addOpponentCard(Carte carte){
+		opponentCard =  new JLabelCartes(carte);
+		add(opponentCard);
+	}
+	private void addAtout(Carte carte){
+		atout =  new JLabelCartes(carte);
+		add(atout);
+	}
+
 
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
 
 	// Tools
-	JLabel opponentCard;
-	JButtonCartes myCard;
-
+	JLabelCartes opponentCard;
+	JLabelCartes myCard;
+	JLabelCartes atout;
+	GridLayout gridlayout;
 	}
