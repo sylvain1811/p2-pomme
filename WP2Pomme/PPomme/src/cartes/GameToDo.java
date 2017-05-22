@@ -76,7 +76,7 @@ public class GameToDo
 			} while(dejaDistribue == true);
 		}
 
-	public static boolean estDejaDistribuer(int random)
+	public boolean estDejaDistribuer(int random)
 		{
 		for(int y = 0; y < tabIndexCarte.length; y++)
 			{
@@ -85,12 +85,12 @@ public class GameToDo
 		return false;
 		}
 
-	public static void distributionJoueur1(int alea, int pos)
+	public void distributionJoueur1(int alea, int pos)
 		{
 		tabCarteJoueur1[pos] = tabCartes[alea];
 		}
 
-	public static void distributionJoueur2(int alea, int pos)
+	public void distributionJoueur2(int alea, int pos)
 		{
 		tabCarteJoueur2[pos] = tabCartes[alea];
 		}
@@ -111,7 +111,7 @@ public class GameToDo
 		}
 
 	//calcul des points
-	private static int methodeComptage(int c1)
+	private int methodeComptage(int c1)
 		{
 		switch(c1)
 			{
@@ -130,7 +130,7 @@ public class GameToDo
 			}
 		}
 
-	public static int comptagePointsFinal(Carte[] cJoueur)
+	public int comptagePointsFinal(Carte[] cJoueur)
 		{
 		int somme = 0;
 		for(int i = 0; i < 18; i++)
@@ -159,7 +159,7 @@ public class GameToDo
 		return somme;
 		}
 
-	private static int calculGagnantTour()
+	private int calculGagnantTour()
 		{
 		if (tabCartes[tabIndexCartePose[0]].couleur() == tabCartes[numeroAtout].couleur())
 			{
@@ -235,7 +235,7 @@ public class GameToDo
 	|*			  Static			*|
 	\*------------------------------*/
 
-	// Mï¿½thode appelÃ©e selon choix du joueur
+	// Méthode appelée selon choix du joueur
 	public static Carte[] echangerTroisCartes(Carte[] tabCartesSources, Carte[] indexCartesARemplacer)
 		{
 		// Input : tableau 12 cartes, tableau de 3 int (index des cartes Ã  remplacer, max 8). Retourne un tableau de 9 cartes.
@@ -259,35 +259,25 @@ public class GameToDo
 		return tabCartesSources;
 		}
 
-	// MÃ©hode appelÃ©e selon choix du joueur
-	public static Carte[] echangerSixAtout(Carte[] jeu)
+	// Méthode appelee selon choix du joueur
+	public static Carte[] echangerSixAtout(Carte[] jeu, Carte atout)
 		{
 		// Place la carte d'atout dans le jeu. Enleve le 6.
 		for(int i = 0; i < 9; i++)
 			{
 			//Comparaison avec le deck du joueur concernant la couleur
-			if (jeu[i].couleur() == tabCartes[numeroAtout].couleur())
+			if (jeu[i].couleur() == atout.couleur())
 				{
 				if (jeu[i].valeur() == 6)
 					{
 					Carte temp = jeu[i];
-					jeu[i] = tabCartes[numeroAtout];
-					tabCartes[numeroAtout] = temp;
+					jeu[i] = atout;
+					atout = temp;
 					}
 				}
-			/**
-			if (carteJoueur2[i].couleur() == carte[numeroAtout].couleur())
-			{
-				if (carteJoueur2[i].valeur() == 6)
-				{
-					Carte temp = carteJoueur2[i];
-					carteJoueur2[i] = carte[numeroAtout];
-					carte[numeroAtout] = temp;
-				}
-			}
-			 */
 			}
 		return jeu;
+		//Si le jeu a changer, on met le 6 en tant que atout sur le tas
 		}
 
 	/*------------------------------*\
@@ -331,15 +321,15 @@ public class GameToDo
 	|*			  Static			*|
 	\*------------------------------*/
 
-	private static Carte[] tabCartes = new Carte[36];
-	private static Carte[] tabCarteJoueur1 = new Carte[12];
-	private static Carte[] tabCarteJoueur2 = new Carte[12];
-	private static Carte[] tabCarteGagneJoueur1 = new Carte[18];
-	private static Carte[] tabCarteGagneJoueur2 = new Carte[18];
-	private static int[] tabIndexCarte = new int[24];
-	private static int[] tabIndexCartePose = new int[2];
-	private static int sommeJ1 = 0;
-	private static int sommeJ2 = 0;
-	private static int numeroAtout;
+	private Carte[] tabCartes = new Carte[36];
+	private Carte[] tabCarteJoueur1 = new Carte[12];
+	private Carte[] tabCarteJoueur2 = new Carte[12];
+	private Carte[] tabCarteGagneJoueur1 = new Carte[18];
+	private Carte[] tabCarteGagneJoueur2 = new Carte[18];
+	private int[] tabIndexCarte = new int[24];
+	private int[] tabIndexCartePose = new int[2];
+	private int sommeJ1 = 0;
+	private int sommeJ2 = 0;
+	private int numeroAtout;
 
 	}
