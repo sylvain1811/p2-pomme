@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import cartes.GameToDo;
 import gui.JButtonCartes;
 
 public class JPanelMyCard extends JPanel
@@ -21,8 +22,9 @@ public class JPanelMyCard extends JPanel
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	public JPanelMyCard()
+	public JPanelMyCard(GameToDo gameToDo)
 		{
+		this.gameToDo = gameToDo;
 		geometry();
 		control();
 		appearance();
@@ -70,6 +72,7 @@ public class JPanelMyCard extends JPanel
 		// JComponent : add
 		for(int i = 0; i < 9; i++)
 			{
+			tabMyCard[i].setText(String.valueOf(gameToDo.getTabCarteJoueur1()[i].getNumber()));
 			add(tabMyCard[i]);
 			}
 		add(troisCartes);
@@ -100,6 +103,6 @@ public class JPanelMyCard extends JPanel
 
 	// Tools
 	private JButtonCartes[] tabMyCard;
+	private GameToDo gameToDo;
 	private JButton troisCartes;
-
 	}
