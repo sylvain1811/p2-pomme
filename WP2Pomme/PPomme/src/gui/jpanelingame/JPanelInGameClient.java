@@ -56,6 +56,13 @@ public class JPanelInGameClient extends JPanelInGame
 		tourServeurOuTourJoueur();
 		}
 
+	public void setChangementTour(GameState stateRecup)
+		{
+		stateServeur = stateRecup;
+		ajusterStateServeurVersClient();
+		tourServeurOuTourJoueur();
+		}
+
 	private void ajusterStateServeurVersClient()
 		{
 		state = stateServeur;
@@ -69,7 +76,7 @@ public class JPanelInGameClient extends JPanelInGame
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/
 
-	private void tourServeurOuTourJoueur()
+	public void tourServeurOuTourJoueur()
 		{
 		if (state == GameState.TOURSERVEUR)
 			{
@@ -95,7 +102,7 @@ public class JPanelInGameClient extends JPanelInGame
 		clientProgram.envoiPaquet(paquet);
 		}
 
-	private void sendStateClient()
+	public void sendStateClient()
 		{
 		PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.SEND_STATE_CLIENT_TO_SERVER, state);
 		clientProgram.envoiPaquet(paquet);
@@ -112,11 +119,20 @@ public class JPanelInGameClient extends JPanelInGame
 				PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.END_OF_TURN);
 				clientProgram.envoiPaquet(paquet);
 				state = GameState.TOURSERVEUR;
+				stateServeur = GameState.TOURSERVEUR;	// on force pour l'affichage
+				sendStateServerChangementTour();
 				}
 			});
 		}
 
-	private void changerAffichageBouton()
+	private void sendStateServerChangementTour()
+	{
+	PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.SEND_STATE_CLIENT_TO_SERVER, state);
+	clientProgram.envoiPaquet(paquet);
+	tourServeurOuTourJoueur();
+	}
+
+	public void changerAffichageBouton()
 		{
 		// TODO Auto-generated method stub
 		for(int i = 0; i < 9; i++)

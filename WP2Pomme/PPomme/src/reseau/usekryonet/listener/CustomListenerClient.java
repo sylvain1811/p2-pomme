@@ -63,6 +63,9 @@ public class CustomListenerClient extends CustomListener
 				case PacketMessage.SEND_STATE_SERVER_TO_CLIENT:
 					traiterState(paquet.getState());
 					break;
+				case PacketMessage.END_OF_TURN:
+					traiterStateFinDeTour(paquet.getState());
+					break;
 				default:
 					break;
 				}
@@ -107,6 +110,13 @@ public class CustomListenerClient extends CustomListener
 		// TODO
 		jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());
 		jPanelInGameClient.setStateUpdate(state);
+		}
+
+	private void traiterStateFinDeTour(GameState state)
+		{
+		// TODO
+		jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());
+		jPanelInGameClient.setChangementTour(state);
 		}
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|

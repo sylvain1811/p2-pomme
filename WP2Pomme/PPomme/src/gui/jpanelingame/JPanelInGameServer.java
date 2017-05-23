@@ -58,6 +58,38 @@ public class JPanelInGameServer extends JPanelInGame
 		stateClient = gameState;
 		tourServeurOuTourJoueur();
 		}
+	public void changerAffichageBouton()
+		{
+		// TODO Auto-generated method stub
+		carteServeur = game.getTabCarteJoueur1();
+		for(int i = 0; i < 9; i++)
+			{
+			jPanelMyCard.getTabMyCard()[i].setCarte(carteServeur[i]);
+			//jPanelMyCard.getTabMyCard()[0].setText(String.valueOf(carteServeur[0].getNumber()));
+			//System.out.println(JFrameHome.getInstance().getjPanelInGame().getjPanelMyCard().getTabMyCard()[1].getText());
+			jPanelMyCard.getTabMyCard()[i].setText(String.valueOf(carteServeur[i].getNumber()));
+			}
+		}
+	public void sendStateClient()
+		{
+		PacketMessage paquet = new PacketMessage(serverProgram.getPseudo(), PacketMessage.SEND_STATE_SERVER_TO_CLIENT, state);
+		serverProgram.envoiPaquet(paquet);
+		}
+
+	public void setChangementTour(GameState stateRecup)
+		{
+		stateClient = stateRecup;
+		ajusterStateClientVersServeur();
+		tourServeurOuTourJoueur();
+		}
+
+	public void sendStateClientChangementTour()
+		{
+		PacketMessage paquet = new PacketMessage(serverProgram.getPseudo(), PacketMessage.SEND_STATE_SERVER_TO_CLIENT, state);
+		serverProgram.envoiPaquet(paquet);
+		tourServeurOuTourJoueur();
+		}
+
 	/*------------------------------*\
 	|*				Get				*|
 	\*------------------------------*/
@@ -66,9 +98,9 @@ public class JPanelInGameServer extends JPanelInGame
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/
 
-	private void tourServeurOuTourJoueur()
+	public void tourServeurOuTourJoueur()
 		{
-		if (state == GameState.TOURCLIENT && stateClient == state)
+		if (state == GameState.TOURCLIENT)
 			{
 			for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
 				{
@@ -85,11 +117,6 @@ public class JPanelInGameServer extends JPanelInGame
 				}
 			}
 		}
-	private void sendStateClient()
-		{
-		PacketMessage paquet = new PacketMessage(serverProgram.getPseudo(), PacketMessage.SEND_STATE_SERVER_TO_CLIENT, state);
-		serverProgram.envoiPaquet(paquet);
-		}
 
 	private void controlBtnFinTour()
 		{
@@ -102,6 +129,8 @@ public class JPanelInGameServer extends JPanelInGame
 				PacketMessage paquet = new PacketMessage(serverProgram.getPseudo(), PacketMessage.END_OF_TURN);
 				serverProgram.envoiPaquet(paquet);
 				state = GameState.TOURCLIENT;
+				stateClient = GameState.TOURCLIENT;	// on force pour l'affichage
+				sendStateClientChangementTour();
 				}
 			});
 		}
@@ -113,18 +142,13 @@ public class JPanelInGameServer extends JPanelInGame
 		serverProgram.envoiPaquet(paquet);
 		}
 
-	private void changerAffichageBouton()
+	private void ajusterStateClientVersServeur()
 		{
-		// TODO Auto-generated method stub
-		carteServeur = game.getTabCarteJoueur1();
-		for(int i = 0; i < 9; i++)
-			{
-			jPanelMyCard.getTabMyCard()[i].setCarte(carteServeur[i]);
-			//jPanelMyCard.getTabMyCard()[0].setText(String.valueOf(carteServeur[0].getNumber()));
-			//System.out.println(JFrameHome.getInstance().getjPanelInGame().getjPanelMyCard().getTabMyCard()[1].getText());
-			jPanelMyCard.getTabMyCard()[i].setText(String.valueOf(carteServeur[i].getNumber()));
-			}
+		state = stateClient;
+		tourServeurOuTourJoueur();
 		}
+
+
 
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|

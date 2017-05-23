@@ -41,7 +41,6 @@ public class JPanelBoard extends JPanel
 		{
 		// JComponent : Instanciation
 		//atout =  new JLabelCartes(carte);
-
 		// Layout : Specification
 			{
 			gridlayout = new GridLayout(2,1);
@@ -52,7 +51,6 @@ public class JPanelBoard extends JPanel
 			}
 
 		// JComponent : add
-
 		}
 
 	private void control()
@@ -66,16 +64,20 @@ public class JPanelBoard extends JPanel
 		}
 	public void addMyCard(Carte carte){
 		myCard =  new JLabelCartes(carte);
+		add(myCard);
+		this.repaint();
+		this.revalidate();
 	}
 	public void addOpponentCard(Carte carte){
 		opponentCard =  new JLabelCartes(carte);
 		add(opponentCard);
+		this.repaint();
+		this.revalidate();
 	}
 	public void addAtout(Carte carte){
 		atout =  new JLabelCartes(carte);
 		add(atout);
 	}
-
 
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|

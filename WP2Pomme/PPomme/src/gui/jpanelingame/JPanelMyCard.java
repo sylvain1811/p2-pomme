@@ -27,6 +27,9 @@ public class JPanelMyCard extends JPanel
 		{
 		this.jPanelInGame = jPanelInGame;
 		this.jPanelBoard = jPanelBoard;
+		tabCarteSurPlateau = new int[2];
+		tabCarteSurPlateau[0] = 0;
+		tabCarteSurPlateau[1] = 0;
 		geometry();
 		control();
 		appearance();
@@ -128,9 +131,9 @@ public class JPanelMyCard extends JPanel
 				JButtonCartes carte = (JButtonCartes)e.getSource();
 				if (jPanelInGame.getState() == GameState.ECHANGE)
 					{
-						ajoutCardPourEchange(carte);
+					ajoutCardPourEchange(carte);
 					}
-				else
+				else if (jPanelInGame.getState() == GameState.TOURSERVEUR || jPanelInGame.getState() == GameState.TOURCLIENT)
 					{
 					jouerCarte(carte);
 					}
@@ -140,6 +143,26 @@ public class JPanelMyCard extends JPanel
 				{
 				jPanelBoard.addMyCard(carte.getCarte());
 				//ici il faut encore désactiver les boutons
+				if (jPanelInGame.getState() == GameState.TOURCLIENT)
+					{
+					//Le client a jouer une carte, on l'envoie au serveur
+					//Il faudra verifier si c'est la premiere ou la deuxieme carte
+					//((JPanelInGameClient)jPanelInGame). Faire méthode envoie tabCartePose
+					jPanelInGame.state = GameState.TOURSERVEUR;
+					((JPanelInGameClient)jPanelInGame).sendStateClient();
+					((JPanelInGameClient)jPanelInGame).changerAffichageBouton();
+					((JPanelInGameClient)jPanelInGame).tourServeurOuTourJoueur();
+					}
+
+				else if (jPanelInGame.getState() == GameState.TOURSERVEUR)
+					{
+						{
+						tabCarteSurPlateau[0] = carte.getCarte().getNumber();
+						}
+					((JPanelInGameServer)jPanelInGame).sendStateClient();
+					((JPanelInGameServer)jPanelInGame).changerAffichageBouton();
+					((JPanelInGameServer)jPanelInGame).tourServeurOuTourJoueur();
+					}
 				}
 			};
 		for(int i = 0; i < 9; i++)
@@ -150,15 +173,15 @@ public class JPanelMyCard extends JPanel
 		}
 
 	public void remiseAffichageApresEchangeTroisCartes()
-	{
-	for(int i = 0; i < 9; i++)
 		{
-		//On remet les couleur a bleu
-		tabMyCard[i].setBackground(Color.WHITE);
-		//On rend le bouton useless
-		troisCartes.setEnabled(false);
+		for(int i = 0; i < 9; i++)
+			{
+			//On remet les couleur a bleu
+			tabMyCard[i].setBackground(Color.WHITE);
+			//On rend le bouton useless
+			troisCartes.setEnabled(false);
+			}
 		}
-	}
 
 	private void appearance()
 		{
@@ -167,49 +190,49 @@ public class JPanelMyCard extends JPanel
 
 	private void ajoutCardPourEchange(JButtonCartes carteEchanger)
 		{
-			boolean aEchanger = false;
-			int i = 0;
+		boolean aEchanger = false;
+		int i = 0;
+			{
+			do
 				{
-				do
+				if (tabCardChange[i] == carteEchanger) //Si deja dans la liste, on retire
 					{
-					if (tabCardChange[i] == carteEchanger) //Si deja dans la liste, on retire
+					tabCardChange[i] = null;
+					carteEchanger.setBackground(Color.WHITE);
+					aEchanger = true;
+					}
+				i++;
+				} while(i < 3 && aEchanger == false);
+			// Si pas dans la liste, on ajoute si la liste est pas pleine
+			if (aEchanger == false)
+				{
+				for(int y = 0; y < 3 && aEchanger == false; y++)
+					{
+					if (tabCardChange[y] == null)
 						{
-						tabCardChange[i] = null;
-						carteEchanger.setBackground(Color.WHITE);
+						tabCardChange[y] = carteEchanger;
+						carteEchanger.setBackground(Color.GRAY);
 						aEchanger = true;
 						}
-					i++;
-					} while(i < 3 && aEchanger == false);
-				// Si pas dans la liste, on ajoute si la liste est pas pleine
-				if (aEchanger == false)
-					{
-					for(int y = 0; y < 3 && aEchanger == false; y++)
-						{
-						if (tabCardChange[y] == null)
-							{
-							tabCardChange[y] = carteEchanger;
-							carteEchanger.setBackground(Color.GRAY);
-							aEchanger = true;
-							}
-						}
 					}
 				}
-			boolean toutRempli = true;
-			for(int a = 0; a < 3; a++)
+			}
+		boolean toutRempli = true;
+		for(int a = 0; a < 3; a++)
+			{
+			if (tabCardChange[a] == null)
 				{
-				if (tabCardChange[a] == null)
-					{
-					toutRempli = false;
-					}
+				toutRempli = false;
 				}
-			if (toutRempli == true)
-				{
-				troisCartes.setEnabled(true);
-				}
-			else
-				{
-				troisCartes.setEnabled(false);
-				}
+			}
+		if (toutRempli == true)
+			{
+			troisCartes.setEnabled(true);
+			}
+		else
+			{
+			troisCartes.setEnabled(false);
+			}
 		}
 
 	/*------------------------------------------------------------------*\
@@ -222,4 +245,5 @@ public class JPanelMyCard extends JPanel
 	private JButtonCartes[] tabCardChange;
 	private JPanelInGame jPanelInGame;
 	private JPanelBoard jPanelBoard;
+	private int[] tabCarteSurPlateau;
 	}
