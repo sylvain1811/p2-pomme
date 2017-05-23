@@ -122,6 +122,7 @@ public class PacketMessage implements Serializable
 	public static final int END_OF_TURN = 3; // Fin du tour
 	public static final int CARD_ATOUT = 4; // Averti quel est l'atout
 	public static final int SIMPLE_MESSAGE = 5; // En vue d'un éventuel chat
+	public static final int SEND_CARD_CLIENT_TO_SERVER = 6; // Envoie du jeu de carte du client au serveur
 
 	// Les erreurs ont un code de 100 ou plus
 	public static final int ERROR_SERVER_FULL = 100;

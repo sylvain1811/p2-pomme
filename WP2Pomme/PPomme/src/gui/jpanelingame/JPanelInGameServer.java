@@ -20,11 +20,11 @@ public class JPanelInGameServer extends JPanelInGame
 		{
 		super();
 		this.serverProgram = serverProgram;
-		state= GameState.DEMMARAGE;
+		state = GameState.DEMMARAGE;
 		game = new Game();
 		game.distribuer(); //Distribution des cartes
 		envoiDistribution();
-		state= GameState.ECHANGE;
+		state = GameState.ECHANGE;
 		changerAffichageBouton();
 		controlBtnFinTour();
 		}
@@ -34,12 +34,12 @@ public class JPanelInGameServer extends JPanelInGame
 	\*------------------------------------------------------------------*/
 
 	public void echangerTroisCartes(Carte[] indexCartesARemplacer)
-	{
-	Game.echangerTroisCartes(carteServeur, indexCartesARemplacer);
-	changerAffichageBouton();
-	jPanelMyCard.remiseAffichageApresEchangeTroisCartes();
-	state= GameState.TOURSERVEUR;
-	}
+		{
+		Game.echangerTroisCartes(carteServeur, indexCartesARemplacer);
+		changerAffichageBouton();
+		jPanelMyCard.remiseAffichageApresEchangeTroisCartes();
+		state = GameState.TOURSERVEUR;
+		}
 
 	/*------------------------------*\
 	|*				Set				*|
@@ -62,7 +62,7 @@ public class JPanelInGameServer extends JPanelInGame
 				{
 				PacketMessage paquet = new PacketMessage(serverProgram.getPseudo(), PacketMessage.END_OF_TURN);
 				serverProgram.envoiPaquet(paquet);
-				state= GameState.TOURCLIENT;
+				state = GameState.TOURCLIENT;
 				}
 			});
 		}
@@ -85,6 +85,12 @@ public class JPanelInGameServer extends JPanelInGame
 			//System.out.println(JFrameHome.getInstance().getjPanelInGame().getjPanelMyCard().getTabMyCard()[1].getText());
 			jPanelMyCard.getTabMyCard()[i].setText(String.valueOf(carteServeur[i].getNumber()));
 			}
+		}
+
+	public void setMAJCarteClient(Carte[] tabCarte)
+		{
+		game.setTabCarteJoueur2(tabCarte);
+
 		}
 
 	/*------------------------------------------------------------------*\

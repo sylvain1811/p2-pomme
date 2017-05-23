@@ -290,6 +290,11 @@ public class Game
 		this.tabCarteJoueur1 = tabCarteJoueur1;
 		}
 
+	public void setTabCarteJoueur2(Carte[] tabCarteJoueur2)
+		{
+		this.tabCarteJoueur2 = tabCarteJoueur2;
+		}
+
 	public void setTabCarteGagneJoueur2(Carte[] tabCarteGagneJoueur2)
 		{
 		this.tabCarteGagneJoueur2 = tabCarteGagneJoueur2;

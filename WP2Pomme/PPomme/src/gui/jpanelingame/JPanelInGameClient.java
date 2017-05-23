@@ -44,13 +44,16 @@ public class JPanelInGameClient extends JPanelInGame
 		Game.echangerTroisCartes(carteJoueurClient, indexCartesARemplacer);
 		changerAffichageBouton();
 		jPanelMyCard.remiseAffichageApresEchangeTroisCartes();
+		setNewCardServeur();//Envoie des carte au serveur
 		state = GameState.TOURSERVEUR;
 		//Envoyer nouvelle carte serveur
 		}
 
 	public void setNewCardServeur()
 		{
-
+		PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.SEND_CARD_CLIENT_TO_SERVER, carteJoueurClient);
+		clientProgram.envoiPaquet(paquet);
+		//state= GameState.TOURSERVEUR;
 		}
 	/*------------------------------*\
 	|*				Get				*|
@@ -70,7 +73,7 @@ public class JPanelInGameClient extends JPanelInGame
 				{
 				PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.END_OF_TURN);
 				clientProgram.envoiPaquet(paquet);
-				state= GameState.TOURSERVEUR;
+				state = GameState.TOURSERVEUR;
 				}
 			});
 		}
