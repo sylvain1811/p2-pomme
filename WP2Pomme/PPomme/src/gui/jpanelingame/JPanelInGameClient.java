@@ -29,6 +29,43 @@ public class JPanelInGameClient extends JPanelInGame
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
 
+	public void tourServeurOuTourJoueur()
+		{
+		if (state == GameState.TOURSERVEUR)
+			{
+			for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
+				{
+				jPanelMyCard.getTabMyCard()[i].setEnabled(false);
+				btnFinTour.setEnabled(false);
+				}
+			}
+		else
+			{
+			for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
+				{
+				jPanelMyCard.getTabMyCard()[i].setEnabled(true);
+				btnFinTour.setEnabled(true);
+				}
+			}
+		}
+
+	public void sendStateClient()
+		{
+		PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.SEND_STATE_CLIENT_TO_SERVER, state);
+		clientProgram.envoiPaquet(paquet);
+		}
+
+	public void changerAffichageBouton()
+		{
+		// TODO Auto-generated method stub
+		for(int i = 0; i < 9; i++)
+			{
+			jPanelMyCard.getTabMyCard()[i].setCarte(carteJoueurClient[i]);
+			//jPanelMyCard.getTabMyCard()[i].setText(Carte.TABLE_COULEUR[carteJoueurClient[i].getCouleur()] + "  Valeur : " + Carte.TABLE_VALEUR[carteJoueurClient[i].getValeur()]);
+			jPanelMyCard.getTabMyCard()[i].setText(String.valueOf(carteJoueurClient[i].getNumber()));
+			}
+		}
+
 	/*------------------------------*\
 	|*				Set				*|
 	\*------------------------------*/
@@ -63,11 +100,6 @@ public class JPanelInGameClient extends JPanelInGame
 		tourServeurOuTourJoueur();
 		}
 
-	private void ajusterStateServeurVersClient()
-		{
-		state = stateServeur;
-		tourServeurOuTourJoueur();
-		}
 	/*------------------------------*\
 	|*				Get				*|
 	\*------------------------------*/
@@ -76,35 +108,15 @@ public class JPanelInGameClient extends JPanelInGame
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/
 
-	public void tourServeurOuTourJoueur()
+	private void ajusterStateServeurVersClient()
 		{
-		if (state == GameState.TOURSERVEUR)
-			{
-			for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
-				{
-				jPanelMyCard.getTabMyCard()[i].setEnabled(false);
-				btnFinTour.setEnabled(false);
-				}
-			}
-		else
-			{
-			for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
-				{
-				jPanelMyCard.getTabMyCard()[i].setEnabled(true);
-				btnFinTour.setEnabled(true);
-				}
-			}
+		state = stateServeur;
+		tourServeurOuTourJoueur();
 		}
 
 	private void sendNewCardServeur()
 		{
 		PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.SEND_CARD_CLIENT_TO_SERVER, carteJoueurClient);
-		clientProgram.envoiPaquet(paquet);
-		}
-
-	public void sendStateClient()
-		{
-		PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.SEND_STATE_CLIENT_TO_SERVER, state);
 		clientProgram.envoiPaquet(paquet);
 		}
 
@@ -119,28 +131,19 @@ public class JPanelInGameClient extends JPanelInGame
 				PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.END_OF_TURN);
 				clientProgram.envoiPaquet(paquet);
 				state = GameState.TOURSERVEUR;
-				stateServeur = GameState.TOURSERVEUR;	// on force pour l'affichage
+				stateServeur = GameState.TOURSERVEUR; // on force pour l'affichage
 				sendStateServerChangementTour();
 				}
 			});
 		}
 
 	private void sendStateServerChangementTour()
-	{
-	PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.SEND_STATE_CLIENT_TO_SERVER, state);
-	clientProgram.envoiPaquet(paquet);
-	tourServeurOuTourJoueur();
-	}
-
-	public void changerAffichageBouton()
 		{
-		// TODO Auto-generated method stub
-		for(int i = 0; i < 9; i++)
-			{
-			jPanelMyCard.getTabMyCard()[i].setCarte(carteJoueurClient[i]);
-			//jPanelMyCard.getTabMyCard()[i].setText(Carte.TABLE_COULEUR[carteJoueurClient[i].getCouleur()] + "  Valeur : " + Carte.TABLE_VALEUR[carteJoueurClient[i].getValeur()]);
-			jPanelMyCard.getTabMyCard()[i].setText(String.valueOf(carteJoueurClient[i].getNumber()));
-			}
+		PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.CARD_PLAYED, jPanelMyCard.getTabCarteSurPlateau()[1]);
+		clientProgram.envoiPaquet(paquet);
+		PacketMessage paquet2 = new PacketMessage(clientProgram.getPseudo(), PacketMessage.SEND_STATE_CLIENT_TO_SERVER, state);
+		clientProgram.envoiPaquet(paquet2);
+		tourServeurOuTourJoueur();
 		}
 
 	/*------------------------------------------------------------------*\

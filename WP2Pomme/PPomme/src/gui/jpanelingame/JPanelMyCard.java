@@ -27,9 +27,7 @@ public class JPanelMyCard extends JPanel
 		{
 		this.jPanelInGame = jPanelInGame;
 		this.jPanelBoard = jPanelBoard;
-		tabCarteSurPlateau = new int[2];
-		tabCarteSurPlateau[0] = 0;
-		tabCarteSurPlateau[1] = 0;
+		tabCarteSurPlateau = new Carte[2];
 		geometry();
 		control();
 		appearance();
@@ -39,9 +37,25 @@ public class JPanelMyCard extends JPanel
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
 
+
+	public void remiseAffichageApresEchangeTroisCartes()
+		{
+		for(int i = 0; i < 9; i++)
+			{
+			//On remet les couleur a bleu
+			tabMyCard[i].setBackground(Color.WHITE);
+			//On rend le bouton useless
+			troisCartes.setEnabled(false);
+			}
+		}
 	/*------------------------------*\
 	|*				Set				*|
 	\*------------------------------*/
+
+	public void setTabCarteSurPlateau(Carte tabCarteSurPlateau, int index)
+		{
+		this.tabCarteSurPlateau[index] = tabCarteSurPlateau;
+		}
 
 	/*------------------------------*\
 	|*				Get				*|
@@ -55,6 +69,11 @@ public class JPanelMyCard extends JPanel
 	public JButtonCartes[] getTabCardChange()
 		{
 		return this.tabCardChange;
+		}
+
+	public Carte[] getTabCarteSurPlateau()
+		{
+		return this.tabCarteSurPlateau;
 		}
 
 	/*------------------------------------------------------------------*\
@@ -145,6 +164,9 @@ public class JPanelMyCard extends JPanel
 				//ici il faut encore désactiver les boutons
 				if (jPanelInGame.getState() == GameState.TOURCLIENT)
 					{
+						{
+						tabCarteSurPlateau[1] = carte.getCarte(); //le client sera toujours a 1
+						}
 					//Le client a jouer une carte, on l'envoie au serveur
 					//Il faudra verifier si c'est la premiere ou la deuxieme carte
 					//((JPanelInGameClient)jPanelInGame). Faire méthode envoie tabCartePose
@@ -157,12 +179,28 @@ public class JPanelMyCard extends JPanel
 				else if (jPanelInGame.getState() == GameState.TOURSERVEUR)
 					{
 						{
-						tabCarteSurPlateau[0] = carte.getCarte().getNumber();
+						tabCarteSurPlateau[0] = carte.getCarte(); //le serveur sera toujours a 0
 						}
 					((JPanelInGameServer)jPanelInGame).sendStateClient();
 					((JPanelInGameServer)jPanelInGame).changerAffichageBouton();
 					((JPanelInGameServer)jPanelInGame).tourServeurOuTourJoueur();
 					}
+				if (tabCarteSurPlateau[0] != null)
+					{
+					System.out.println(tabCarteSurPlateau[0].getNumber());
+					}
+				if (tabCarteSurPlateau[1] != null)
+					{
+					System.out.println(tabCarteSurPlateau[1].getNumber());
+					}
+				for(int i = 0; i < 9; i++)
+					{
+					if (tabMyCard[i] == carte)
+						{
+						//Supprimer la case du tableau
+						}
+					}
+				reAfficher();
 				}
 			};
 		for(int i = 0; i < 9; i++)
@@ -172,15 +210,10 @@ public class JPanelMyCard extends JPanel
 			}
 		}
 
-	public void remiseAffichageApresEchangeTroisCartes()
+	private void reAfficher()
 		{
-		for(int i = 0; i < 9; i++)
-			{
-			//On remet les couleur a bleu
-			tabMyCard[i].setBackground(Color.WHITE);
-			//On rend le bouton useless
-			troisCartes.setEnabled(false);
-			}
+		this.repaint();
+		this.revalidate();
 		}
 
 	private void appearance()
@@ -245,5 +278,6 @@ public class JPanelMyCard extends JPanel
 	private JButtonCartes[] tabCardChange;
 	private JPanelInGame jPanelInGame;
 	private JPanelBoard jPanelBoard;
-	private int[] tabCarteSurPlateau;
+	private Carte[] tabCarteSurPlateau;
+
 	}

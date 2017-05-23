@@ -81,6 +81,9 @@ public class CustomListenerServer extends CustomListener
 				case PacketMessage.END_OF_TURN:
 					traiterStateFinDeTour(paquet.getState());
 					break;
+				case PacketMessage.CARD_PLAYED:
+					traiterCartePose(paquet.getCarte());
+					break;
 				default:
 					break;
 				}
@@ -113,6 +116,13 @@ public class CustomListenerServer extends CustomListener
 		// TODO
 		jPanelInGameServer = (JPanelInGameServer)(JFrameHome.getInstance().getjPanelInGame());
 		jPanelInGameServer.setStateClientUpdate(state);
+		}
+
+	private void traiterCartePose(Carte carte)
+		{
+		// TODO
+		jPanelInGameServer = (JPanelInGameServer)(JFrameHome.getInstance().getjPanelInGame());
+		jPanelInGameServer.setCarteAdverse(carte);
 		}
 
 	private void traiterStateFinDeTour(GameState state)
