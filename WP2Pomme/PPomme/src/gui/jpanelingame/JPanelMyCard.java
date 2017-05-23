@@ -7,13 +7,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 
-import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import cartes.Carte;
 import gui.JButtonCartes;
+import gui.JFrameHome;
 
 public class JPanelMyCard extends JPanel
 	{
@@ -22,8 +23,9 @@ public class JPanelMyCard extends JPanel
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	public JPanelMyCard()
+	public JPanelMyCard(JPanelInGame jPanelInGame)
 		{
+		this.jPanelInGame = jPanelInGame;
 		geometry();
 		control();
 		appearance();
@@ -62,9 +64,9 @@ public class JPanelMyCard extends JPanel
 		URL iconURL = getClass().getResource(imgPath);
 		Icon icon = new ImageIcon(iconURL);
 		troisCartes = new JButton(icon);
-		troisCartes.setBorder(BorderFactory.createEmptyBorder());
-		troisCartes.setContentAreaFilled(false);
-		troisCartes.setText("test");
+		//troisCartes.setBorder(BorderFactory.createEmptyBorder());
+		//troisCartes.setContentAreaFilled(false);
+		troisCartes.setEnabled(false);
 		tabMyCard = new JButtonCartes[9];
 		tabCardChange = new JButtonCartes[3];
 		for(int i = 0; i < 9; i++)
@@ -98,10 +100,27 @@ public class JPanelMyCard extends JPanel
 			public void actionPerformed(ActionEvent e)
 				{
 				// TODO Auto-generated method stub
+				//appeler méthode de changement 3 carte
 
+				Carte[] carteAEchanger = new Carte[3];
+				for(int i = 0; i < 3; i++)
+					{
+					carteAEchanger[i] = tabCardChange[i].getCarte();
+					}
+				if (JFrameHome.getInstance().getServer() == null)
+					{
+					((JPanelInGameClient)jPanelInGame).echangerTroisCartes(carteAEchanger);
+					}
+				else
+					{
+					//cote serveur
+					((JPanelInGameServer)jPanelInGame).echangerTroisCartes(carteAEchanger);
+
+					}
 				}
 			});
-		ActionListener l = new ActionListener()
+
+		ActionListener actionListenerButtonCartes = new ActionListener()
 			{
 
 			@Override
@@ -110,16 +129,11 @@ public class JPanelMyCard extends JPanel
 				// TODO Auto-generated method stub
 				JButtonCartes carte = (JButtonCartes)e.getSource();
 				ajoutCardPourEchange(carte);
-				System.out.println(carte.getText());
-				System.out.println("1 : " + tabCardChange[0]);
-				System.out.println("2 : " + tabCardChange[1]);
-				System.out.println("3 : " + tabCardChange[2]);
-
 				}
 			};
 		for(int i = 0; i < 9; i++)
 			{
-			tabMyCard[i].addActionListener(l);
+			tabMyCard[i].addActionListener(actionListenerButtonCartes);
 			tabMyCard[i].setBackground(Color.blue);
 			}
 		}
@@ -129,18 +143,18 @@ public class JPanelMyCard extends JPanel
 		// rien
 		}
 
-	private void ajoutCardPourEchange(JButtonCartes carteAEchanger)
+	private void ajoutCardPourEchange(JButtonCartes carteEchanger)
 		{
 		boolean aEchanger = false;
 		int i = 0;
 			{
 			do
 				{
-				if (tabCardChange[i] == carteAEchanger) //Si deja dans la liste, on retire
+				if (tabCardChange[i] == carteEchanger) //Si deja dans la liste, on retire
 					{
 					System.out.println("test");
 					tabCardChange[i] = null;
-					carteAEchanger.setBackground(Color.GREEN);
+					carteEchanger.setBackground(Color.GREEN);
 					aEchanger = true;
 					}
 				i++;
@@ -153,12 +167,28 @@ public class JPanelMyCard extends JPanel
 					{
 					if (tabCardChange[y] == null)
 						{
-						tabCardChange[y] = carteAEchanger;
-						carteAEchanger.setBackground(Color.BLACK);
+						tabCardChange[y] = carteEchanger;
+						carteEchanger.setBackground(Color.BLACK);
 						aEchanger = true;
 						}
 					}
 				}
+			}
+		boolean toutRempli = true;
+		for(int a = 0; a < 3; a++)
+			{
+			if (tabCardChange[a] == null)
+				{
+				toutRempli = false;
+				}
+			}
+		if (toutRempli == true)
+			{
+			troisCartes.setEnabled(true);
+			}
+		else
+			{
+			troisCartes.setEnabled(false);
 			}
 		}
 
@@ -170,4 +200,5 @@ public class JPanelMyCard extends JPanel
 	private JButtonCartes[] tabMyCard;
 	private JButton troisCartes;
 	private JButtonCartes[] tabCardChange;
+	private JPanelInGame jPanelInGame;
 	}

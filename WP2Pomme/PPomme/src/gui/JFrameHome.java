@@ -269,6 +269,11 @@ public class JFrameHome extends JFrame
 		return this.jPanelInGame;
 		}
 
+	public ServerProgram getServer()
+		{
+		return this.server;
+		}
+
 	/*------------------------------------------------------------------*\
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/

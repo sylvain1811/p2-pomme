@@ -31,6 +31,12 @@ public class JPanelInGameServer extends JPanelInGame
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
 
+	public void echangerTroisCartes(Carte[] indexCartesARemplacer)
+	{
+	Game.echangerTroisCartes(carteServeur, indexCartesARemplacer);
+	changerAffichageBouton();
+	}
+
 	/*------------------------------*\
 	|*				Set				*|
 	\*------------------------------*/
@@ -66,12 +72,13 @@ public class JPanelInGameServer extends JPanelInGame
 	private void changerAffichageBouton()
 		{
 		// TODO Auto-generated method stub
+		carteServeur = game.getTabCarteJoueur1();
 		for(int i = 0; i < 9; i++)
 			{
-			carteServeur = game.getTabCarteJoueur1();
+			jPanelMyCard.getTabMyCard()[i].setCarte(carteServeur[i]);
 			//jPanelMyCard.getTabMyCard()[0].setText(String.valueOf(carteServeur[0].getNumber()));
 			//System.out.println(JFrameHome.getInstance().getjPanelInGame().getjPanelMyCard().getTabMyCard()[1].getText());
-			jPanelMyCard.getTabMyCard()[i].setText(String.valueOf(game.getTabCarteJoueur1()[i].getNumber()));
+			jPanelMyCard.getTabMyCard()[i].setText(String.valueOf(carteServeur[i].getNumber()));
 			}
 		}
 

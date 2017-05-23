@@ -29,7 +29,7 @@ public class JButtonCartes extends JButton
 	public JButtonCartes(String text)
 		{
 		super();
-		Dimension size  = new Dimension(100,100);
+		Dimension size = new Dimension(100, 100);
 		setPreferredSize(size);
 		setMinimumSize(size);
 		setMaximumSize(size);
@@ -44,9 +44,19 @@ public class JButtonCartes extends JButton
 	|*				Set				*|
 	\*------------------------------*/
 
+	public void setCarte(Carte carte)
+		{
+		this.carte = carte;
+		}
+
 	/*------------------------------*\
 	|*				Get				*|
 	\*------------------------------*/
+
+	public Carte getCarte()
+		{
+		return this.carte;
+		}
 
 	/*------------------------------------------------------------------*\
 	|*							Methodes Private						*|
@@ -56,4 +66,5 @@ public class JButtonCartes extends JButton
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
 	private Carte carte;
+
 	}

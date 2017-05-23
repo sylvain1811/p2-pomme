@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import cartes.Carte;
+import cartes.Game;
 import reseau.usekryonet.ClientProgram;
 import reseau.usekryonet.PacketMessage;
 
@@ -36,6 +37,17 @@ public class JPanelInGameClient extends JPanelInGame
 		changerAffichageBouton();
 		}
 
+	public void echangerTroisCartes(Carte[] indexCartesARemplacer)
+		{
+		Game.echangerTroisCartes(carteJoueurClient, indexCartesARemplacer);
+		changerAffichageBouton();
+		//Envoyer nouvelle carte serveur
+		}
+
+	public void setNewCardServeur()
+		{
+
+		}
 	/*------------------------------*\
 	|*				Get				*|
 	\*------------------------------*/
@@ -63,9 +75,13 @@ public class JPanelInGameClient extends JPanelInGame
 		// TODO Auto-generated method stub
 		for(int i = 0; i < 9; i++)
 			{
-			jPanelMyCard.getTabMyCard()[i].setText(Carte.TABLE_COULEUR[carteJoueurClient[i].getCouleur()] + "  Valeur : " + Carte.TABLE_VALEUR[carteJoueurClient[i].getValeur()]);
+			jPanelMyCard.getTabMyCard()[i].setCarte(carteJoueurClient[i]);
+			//jPanelMyCard.getTabMyCard()[i].setText(Carte.TABLE_COULEUR[carteJoueurClient[i].getCouleur()] + "  Valeur : " + Carte.TABLE_VALEUR[carteJoueurClient[i].getValeur()]);
+			jPanelMyCard.getTabMyCard()[i].setText(String.valueOf(carteJoueurClient[i].getNumber()));
+
 			}
 		}
+
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/

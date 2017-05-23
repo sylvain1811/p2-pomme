@@ -53,7 +53,7 @@ public abstract class JPanelInGame extends JPanel
 		blackline = BorderFactory.createLineBorder(Color.black);
 		jPanelBoard = new JPanelBoard();
 		jPanelBoard.setBorder(blackline);
-		jPanelMyCard = new JPanelMyCard();
+		jPanelMyCard = new JPanelMyCard(this);
 		jPanelOpponentCard = new JPanelOpponentCard();
 
 		// Layout : Specification
