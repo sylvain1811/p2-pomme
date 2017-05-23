@@ -23,9 +23,10 @@ public class JPanelMyCard extends JPanel
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	public JPanelMyCard(JPanelInGame jPanelInGame)
+	public JPanelMyCard(JPanelInGame jPanelInGame,JPanelBoard jPanelBoard)
 		{
 		this.jPanelInGame = jPanelInGame;
+		this.jPanelBoard = jPanelBoard;
 		geometry();
 		control();
 		appearance();
@@ -126,9 +127,19 @@ public class JPanelMyCard extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 				{
-				// TODO Auto-generated method stub
 				JButtonCartes carte = (JButtonCartes)e.getSource();
-				ajoutCardPourEchange(carte);
+				if(jPanelInGame.getState()==GameState.ECHANGE)
+					{
+						ajoutCardPourEchange(carte);
+					}else{
+						jouerCarte(carte);
+					}
+				}
+
+			private void jouerCarte(JButtonCartes carte)
+				{
+					jPanelBoard.addMyCard(carte.getCarte());
+					//ici il faut encore désactiver les boutons
 				}
 			};
 		for(int i = 0; i < 9; i++)
@@ -201,4 +212,5 @@ public class JPanelMyCard extends JPanel
 	private JButton troisCartes;
 	private JButtonCartes[] tabCardChange;
 	private JPanelInGame jPanelInGame;
+	private JPanelBoard jPanelBoard;
 	}

@@ -64,14 +64,14 @@ public class JPanelBoard extends JPanel
 		{
 		// rien
 		}
-	private void addCarteMyCard(Carte carte){
+	public void addMyCard(Carte carte){
 		myCard =  new JLabelCartes(carte);
 	}
-	private void addOpponentCard(Carte carte){
+	public void addOpponentCard(Carte carte){
 		opponentCard =  new JLabelCartes(carte);
 		add(opponentCard);
 	}
-	private void addAtout(Carte carte){
+	public void addAtout(Carte carte){
 		atout =  new JLabelCartes(carte);
 		add(atout);
 	}

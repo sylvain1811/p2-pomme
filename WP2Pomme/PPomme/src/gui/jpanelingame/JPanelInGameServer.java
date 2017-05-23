@@ -20,9 +20,11 @@ public class JPanelInGameServer extends JPanelInGame
 		{
 		super();
 		this.serverProgram = serverProgram;
+		state= GameState.DEMMARAGE;
 		game = new Game();
 		game.distribuer(); //Distribution des cartes
 		envoiDistribution();
+		state= GameState.ECHANGE;
 		changerAffichageBouton();
 		controlBtnFinTour();
 		}
@@ -35,6 +37,7 @@ public class JPanelInGameServer extends JPanelInGame
 	{
 	Game.echangerTroisCartes(carteServeur, indexCartesARemplacer);
 	changerAffichageBouton();
+	state= GameState.TOURSERVEUR;
 	}
 
 	/*------------------------------*\
@@ -58,6 +61,7 @@ public class JPanelInGameServer extends JPanelInGame
 				{
 				PacketMessage paquet = new PacketMessage(serverProgram.getPseudo(), PacketMessage.END_OF_TURN);
 				serverProgram.envoiPaquet(paquet);
+				state= GameState.TOURCLIENT;
 				}
 			});
 		}

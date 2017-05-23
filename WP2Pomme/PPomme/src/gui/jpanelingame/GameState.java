@@ -1,32 +1,25 @@
 
-package gui;
+package gui.jpanelingame;
 
-import java.awt.Dimension;
 
-import javax.swing.JLabel;
 
-import cartes.Carte;
-
-public class JLabelCartes extends JLabel
-	{
+public enum GameState
+{
+DEMMARAGE(1),ECHANGE(2),TOURSERVEUR(3),TOURCLIENT(4),FIN(5);
 
 	/*------------------------------------------------------------------*\
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
-	public JLabelCartes(Carte carte)
+	private GameState(int number)
 		{
-		super();
-		this.carte = carte;
-		Dimension size  = new Dimension(100,100);
-		setPreferredSize(size);
-		setMinimumSize(size);
-		setMaximumSize(size);
-		setText(""+carte.getNumber());
-	}
-
+			this.number = number;
+		}
 	/*------------------------------------------------------------------*\
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
+	private int getState(){
+		return this.number;
+	}
 
 	/*------------------------------*\
 	|*				Set				*|
@@ -43,6 +36,5 @@ public class JLabelCartes extends JLabel
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
-	private Carte carte;
-	}
-
+	private int number;
+}

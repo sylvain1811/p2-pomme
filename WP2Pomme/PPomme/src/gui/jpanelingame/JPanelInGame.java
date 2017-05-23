@@ -53,7 +53,7 @@ public abstract class JPanelInGame extends JPanel
 		blackline = BorderFactory.createLineBorder(Color.black);
 		jPanelBoard = new JPanelBoard();
 		jPanelBoard.setBorder(blackline);
-		jPanelMyCard = new JPanelMyCard(this);
+		jPanelMyCard = new JPanelMyCard(this,jPanelBoard);
 		jPanelOpponentCard = new JPanelOpponentCard();
 
 		// Layout : Specification
@@ -86,7 +86,14 @@ public abstract class JPanelInGame extends JPanel
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
 
+
+	public GameState getState()
+		{
+		return this.state;
+		}
+
 	// Tools
+	protected GameState state;
 	private Border blackline;
 	protected JButton btnFinTour;
 	protected JButtonCartes[] tabBtnCartes;

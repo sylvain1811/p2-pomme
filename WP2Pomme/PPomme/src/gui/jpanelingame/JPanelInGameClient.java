@@ -21,6 +21,7 @@ public class JPanelInGameClient extends JPanelInGame
 		super();
 		this.clientProgram = clientProgram;
 		controlBtnFinTour();
+		state = GameState.DEMMARAGE;
 		}
 
 	/*------------------------------------------------------------------*\
@@ -35,12 +36,14 @@ public class JPanelInGameClient extends JPanelInGame
 		{
 		this.carteJoueurClient = carteJoueurClient;
 		changerAffichageBouton();
+		state = GameState.ECHANGE;
 		}
 
 	public void echangerTroisCartes(Carte[] indexCartesARemplacer)
 		{
 		Game.echangerTroisCartes(carteJoueurClient, indexCartesARemplacer);
 		changerAffichageBouton();
+		state = GameState.TOURSERVEUR;
 		//Envoyer nouvelle carte serveur
 		}
 
@@ -66,6 +69,7 @@ public class JPanelInGameClient extends JPanelInGame
 				{
 				PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.END_OF_TURN);
 				clientProgram.envoiPaquet(paquet);
+				state= GameState.TOURSERVEUR;
 				}
 			});
 		}
