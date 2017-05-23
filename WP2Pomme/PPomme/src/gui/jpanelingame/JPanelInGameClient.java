@@ -43,6 +43,7 @@ public class JPanelInGameClient extends JPanelInGame
 		{
 		Game.echangerTroisCartes(carteJoueurClient, indexCartesARemplacer);
 		changerAffichageBouton();
+		jPanelMyCard.remiseAffichageApresEchangeTroisCartes();
 		state = GameState.TOURSERVEUR;
 		//Envoyer nouvelle carte serveur
 		}

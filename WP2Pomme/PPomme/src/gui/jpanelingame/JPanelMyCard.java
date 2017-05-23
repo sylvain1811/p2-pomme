@@ -23,7 +23,7 @@ public class JPanelMyCard extends JPanel
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	public JPanelMyCard(JPanelInGame jPanelInGame,JPanelBoard jPanelBoard)
+	public JPanelMyCard(JPanelInGame jPanelInGame, JPanelBoard jPanelBoard)
 		{
 		this.jPanelInGame = jPanelInGame;
 		this.jPanelBoard = jPanelBoard;
@@ -102,7 +102,6 @@ public class JPanelMyCard extends JPanel
 				{
 				// TODO Auto-generated method stub
 				//appeler méthode de changement 3 carte
-
 				Carte[] carteAEchanger = new Carte[3];
 				for(int i = 0; i < 3; i++)
 					{
@@ -116,7 +115,6 @@ public class JPanelMyCard extends JPanel
 					{
 					//cote serveur
 					((JPanelInGameServer)jPanelInGame).echangerTroisCartes(carteAEchanger);
-
 					}
 				}
 			});
@@ -128,26 +126,39 @@ public class JPanelMyCard extends JPanel
 			public void actionPerformed(ActionEvent e)
 				{
 				JButtonCartes carte = (JButtonCartes)e.getSource();
-				if(jPanelInGame.getState()==GameState.ECHANGE)
+				if (jPanelInGame.getState() == GameState.ECHANGE)
 					{
 						ajoutCardPourEchange(carte);
-					}else{
-						jouerCarte(carte);
+					}
+				else
+					{
+					jouerCarte(carte);
 					}
 				}
 
 			private void jouerCarte(JButtonCartes carte)
 				{
-					jPanelBoard.addMyCard(carte.getCarte());
-					//ici il faut encore désactiver les boutons
+				jPanelBoard.addMyCard(carte.getCarte());
+				//ici il faut encore désactiver les boutons
 				}
 			};
 		for(int i = 0; i < 9; i++)
 			{
 			tabMyCard[i].addActionListener(actionListenerButtonCartes);
-			tabMyCard[i].setBackground(Color.blue);
+			tabMyCard[i].setBackground(Color.WHITE);
 			}
 		}
+
+	public void remiseAffichageApresEchangeTroisCartes()
+	{
+	for(int i = 0; i < 9; i++)
+		{
+		//On remet les couleur a bleu
+		tabMyCard[i].setBackground(Color.WHITE);
+		//On rend le bouton useless
+		troisCartes.setEnabled(false);
+		}
+	}
 
 	private void appearance()
 		{
@@ -156,51 +167,49 @@ public class JPanelMyCard extends JPanel
 
 	private void ajoutCardPourEchange(JButtonCartes carteEchanger)
 		{
-		boolean aEchanger = false;
-		int i = 0;
-			{
-			do
+			boolean aEchanger = false;
+			int i = 0;
 				{
-				if (tabCardChange[i] == carteEchanger) //Si deja dans la liste, on retire
+				do
 					{
-					System.out.println("test");
-					tabCardChange[i] = null;
-					carteEchanger.setBackground(Color.GREEN);
-					aEchanger = true;
-					}
-				i++;
-				} while(i < 3 && aEchanger == false);
-			System.out.println("coucou");
-			// Si pas dans la liste, on ajoute si la liste est pas pleine
-			if (aEchanger == false)
-				{
-				for(int y = 0; y < 3 && aEchanger == false; y++)
-					{
-					if (tabCardChange[y] == null)
+					if (tabCardChange[i] == carteEchanger) //Si deja dans la liste, on retire
 						{
-						tabCardChange[y] = carteEchanger;
-						carteEchanger.setBackground(Color.BLACK);
+						tabCardChange[i] = null;
+						carteEchanger.setBackground(Color.WHITE);
 						aEchanger = true;
+						}
+					i++;
+					} while(i < 3 && aEchanger == false);
+				// Si pas dans la liste, on ajoute si la liste est pas pleine
+				if (aEchanger == false)
+					{
+					for(int y = 0; y < 3 && aEchanger == false; y++)
+						{
+						if (tabCardChange[y] == null)
+							{
+							tabCardChange[y] = carteEchanger;
+							carteEchanger.setBackground(Color.GRAY);
+							aEchanger = true;
+							}
 						}
 					}
 				}
-			}
-		boolean toutRempli = true;
-		for(int a = 0; a < 3; a++)
-			{
-			if (tabCardChange[a] == null)
+			boolean toutRempli = true;
+			for(int a = 0; a < 3; a++)
 				{
-				toutRempli = false;
+				if (tabCardChange[a] == null)
+					{
+					toutRempli = false;
+					}
 				}
-			}
-		if (toutRempli == true)
-			{
-			troisCartes.setEnabled(true);
-			}
-		else
-			{
-			troisCartes.setEnabled(false);
-			}
+			if (toutRempli == true)
+				{
+				troisCartes.setEnabled(true);
+				}
+			else
+				{
+				troisCartes.setEnabled(false);
+				}
 		}
 
 	/*------------------------------------------------------------------*\
