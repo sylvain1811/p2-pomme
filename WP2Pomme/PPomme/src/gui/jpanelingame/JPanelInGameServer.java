@@ -25,6 +25,7 @@ public class JPanelInGameServer extends JPanelInGame
 		game.distribuer(); //Distribution des cartes
 		envoiDistribution();
 		state = GameState.ECHANGE;
+		sendStateClient();
 		changerAffichageBouton();
 		controlBtnFinTour();
 		}
@@ -39,12 +40,24 @@ public class JPanelInGameServer extends JPanelInGame
 		changerAffichageBouton();
 		jPanelMyCard.remiseAffichageApresEchangeTroisCartes();
 		state = GameState.TOURSERVEUR;
+		sendStateClient();
+		tourServeurOuTourJoueur();
 		}
 
 	/*------------------------------*\
 	|*				Set				*|
 	\*------------------------------*/
 
+	public void setMAJCarteClient(Carte[] tabCarte)
+		{
+		game.setTabCarteJoueur2(tabCarte);
+		}
+
+	public void setStateClientUpdate(GameState gameState)
+		{
+		stateClient = gameState;
+		tourServeurOuTourJoueur();
+		}
 	/*------------------------------*\
 	|*				Get				*|
 	\*------------------------------*/
@@ -52,6 +65,32 @@ public class JPanelInGameServer extends JPanelInGame
 	/*------------------------------------------------------------------*\
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/
+
+	private void tourServeurOuTourJoueur()
+		{
+		if (state == GameState.TOURCLIENT && stateClient == state)
+			{
+			for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
+				{
+				jPanelMyCard.getTabMyCard()[i].setEnabled(false);
+				btnFinTour.setEnabled(false);
+				}
+			}
+		else
+			{
+			for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
+				{
+				jPanelMyCard.getTabMyCard()[i].setEnabled(true);
+				btnFinTour.setEnabled(true);
+				}
+			}
+		}
+	private void sendStateClient()
+		{
+		PacketMessage paquet = new PacketMessage(serverProgram.getPseudo(), PacketMessage.SEND_STATE_SERVER_TO_CLIENT, state);
+		serverProgram.envoiPaquet(paquet);
+		}
+
 	private void controlBtnFinTour()
 		{
 		this.btnFinTour.addActionListener(new ActionListener()
@@ -87,12 +126,6 @@ public class JPanelInGameServer extends JPanelInGame
 			}
 		}
 
-	public void setMAJCarteClient(Carte[] tabCarte)
-		{
-		game.setTabCarteJoueur2(tabCarte);
-
-		}
-
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
@@ -100,5 +133,6 @@ public class JPanelInGameServer extends JPanelInGame
 	// Tools
 	private ServerProgram serverProgram;
 	private Game game;
+	private GameState stateClient;
 	private Carte[] carteServeur;
 	}

@@ -7,6 +7,7 @@ import com.esotericsoftware.kryonet.Connection;
 
 import cartes.Carte;
 import gui.JFrameHome;
+import gui.jpanelingame.GameState;
 import gui.jpanelingame.JPanelInGameServer;
 import reseau.usekryonet.PacketMessage;
 import reseau.usekryonet.ServerProgram;
@@ -74,7 +75,9 @@ public class CustomListenerServer extends CustomListener
 				case PacketMessage.SEND_CARD_CLIENT_TO_SERVER:
 					traiterRecuperationTabCarte(paquet.getTabCarte());
 					break;
-
+				case PacketMessage.SEND_STATE_CLIENT_TO_SERVER:
+					traiterState(paquet.getState());
+					break;
 				default:
 					break;
 				}
@@ -102,6 +105,12 @@ public class CustomListenerServer extends CustomListener
 		jPanelInGameServer.setMAJCarteClient(tabCartes);
 		}
 
+	private void traiterState(GameState state)
+		{
+		// TODO
+		jPanelInGameServer = (JPanelInGameServer)(JFrameHome.getInstance().getjPanelInGame());
+		jPanelInGameServer.setStateClientUpdate(state);
+		}
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
