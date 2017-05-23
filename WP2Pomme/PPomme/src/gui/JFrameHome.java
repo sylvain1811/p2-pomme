@@ -226,6 +226,7 @@ public class JFrameHome extends JFrame
 			{
 			this.jPanelMain.remove(jPanelAttente);
 			this.jPanelInGame = new JPanelInGameServer(server);
+			setTitle("server");
 			}
 		else
 			{
@@ -238,6 +239,7 @@ public class JFrameHome extends JFrame
 				this.jPanelMain.remove(jPanelListServer);
 				}
 			this.jPanelInGame = new JPanelInGameClient(client);
+			setTitle("client");
 			}
 		this.jPanelMain.add(this.jPanelInGame);
 		this.setSize(1200, 800);

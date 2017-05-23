@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import cartes.Carte;
-import gui.JFrameHome;
 import reseau.usekryonet.ClientProgram;
 import reseau.usekryonet.PacketMessage;
 
@@ -33,7 +32,7 @@ public class JPanelInGameClient extends JPanelInGame
 
 	public void setCarteJoueurClient(Carte[] carteJoueurClient)
 		{
-		this.CarteJoueurClient = carteJoueurClient;
+		this.carteJoueurClient = carteJoueurClient;
 		changerAffichageBouton();
 		}
 
@@ -64,8 +63,7 @@ public class JPanelInGameClient extends JPanelInGame
 		// TODO Auto-generated method stub
 		for(int i = 0; i < 9; i++)
 			{
-			jPanelMyCard = JFrameHome.getInstance().getjPanelInGame().getjPanelMyCard();
-			jPanelMyCard.getTabMyCard()[i].setText(String.valueOf(CarteJoueurClient[i].getNumber()));
+			jPanelMyCard.getTabMyCard()[i].setText(Carte.TABLE_COULEUR[carteJoueurClient[i].getCouleur()] + "  Valeur : " + Carte.TABLE_VALEUR[carteJoueurClient[i].getValeur()]);
 			}
 		}
 	/*------------------------------------------------------------------*\
@@ -74,6 +72,5 @@ public class JPanelInGameClient extends JPanelInGame
 
 	// Tools
 	private ClientProgram clientProgram;
-	private Carte[] CarteJoueurClient;
-	private JPanelMyCard jPanelMyCard;
+	private Carte[] carteJoueurClient;
 	}

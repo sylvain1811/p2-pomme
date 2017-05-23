@@ -91,6 +91,6 @@ public abstract class JPanelInGame extends JPanel
 	protected JButton btnFinTour;
 	protected JButtonCartes[] tabBtnCartes;
 	private JPanelBoard jPanelBoard;
-	private JPanelMyCard jPanelMyCard;
+	protected JPanelMyCard jPanelMyCard;
 	private JPanelOpponentCard jPanelOpponentCard;
 	}

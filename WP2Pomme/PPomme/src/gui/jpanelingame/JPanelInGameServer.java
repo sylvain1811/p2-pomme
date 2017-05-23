@@ -70,9 +70,8 @@ public class JPanelInGameServer extends JPanelInGame
 			{
 			carteServeur = game.getTabCarteJoueur1();
 			//jPanelMyCard.getTabMyCard()[0].setText(String.valueOf(carteServeur[0].getNumber()));
-			//jPanelMyCard = JFrameHome.getInstance().getjPanelInGame().getjPanelMyCard();
-			//Erreur ici !!
-			//jPanelMyCard.getTabMyCard()[i].setText(String.valueOf(game.getTabCarteJoueur1()[i].getNumber()));
+			//System.out.println(JFrameHome.getInstance().getjPanelInGame().getjPanelMyCard().getTabMyCard()[1].getText());
+			jPanelMyCard.getTabMyCard()[i].setText(String.valueOf(game.getTabCarteJoueur1()[i].getNumber()));
 			}
 		}
 
@@ -84,5 +83,4 @@ public class JPanelInGameServer extends JPanelInGame
 	private ServerProgram serverProgram;
 	private Game game;
 	private Carte[] carteServeur;
-	private JPanelMyCard jPanelMyCard;
 	}

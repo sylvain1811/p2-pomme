@@ -84,6 +84,18 @@ public class CustomListenerClient extends CustomListener
 		{
 		// TODO
 		jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());
+		while(jPanelInGameClient == null)
+			{
+			try
+				{
+				Thread.sleep(100);
+				}
+			catch (InterruptedException e)
+				{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				}
+			}
 		jPanelInGameClient.setCarteJoueurClient(tabCartes);
 		}
 
