@@ -1,25 +1,25 @@
 
 package gui.jpanelingame;
 
-
-
 public enum GameState
-{
-DEMMARAGE(1),ECHANGE(2),TOURSERVEUR(3),TOURCLIENT(4),FIN(5);
+	{
+	DEMMARAGE(1), ECHANGE(2), TOURSERVEUR(3), TOURCLIENT(4), FIN(5);
 
 	/*------------------------------------------------------------------*\
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 	private GameState(int number)
 		{
-			this.number = number;
+		this.number = number;
 		}
+
 	/*------------------------------------------------------------------*\
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
-	private int getState(){
+	private int getState()
+		{
 		return this.number;
-	}
+		}
 
 	/*------------------------------*\
 	|*				Set				*|
@@ -37,4 +37,4 @@ DEMMARAGE(1),ECHANGE(2),TOURSERVEUR(3),TOURCLIENT(4),FIN(5);
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
 	private int number;
-}
+	}

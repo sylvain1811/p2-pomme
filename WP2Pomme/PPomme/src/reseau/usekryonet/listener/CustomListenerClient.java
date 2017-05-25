@@ -82,17 +82,17 @@ public class CustomListenerClient extends CustomListener
 
 	private void traiterCasDistribution(Carte[] tabCartes)
 		{
-		// TODO
+		// TODO Améliorer l'attente du jpanel
 		jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());
 		while(jPanelInGameClient == null)
 			{
 			try
 				{
 				Thread.sleep(100);
+				jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());
 				}
 			catch (InterruptedException e)
 				{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				}
 			}
@@ -103,7 +103,7 @@ public class CustomListenerClient extends CustomListener
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
 
-	// Input
+	// Inputs
 	private ClientProgram clientProgram;
 	private JPanelInGameClient jPanelInGameClient;
 	}
