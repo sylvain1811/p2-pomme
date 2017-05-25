@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.esotericsoftware.kryonet.Client;
 
+import gui.jpanelingame.GameState;
 import reseau.usekryonet.listener.CustomListener;
 import reseau.usekryonet.listener.CustomListenerClient;
 
@@ -46,6 +47,7 @@ public class ClientProgram
 		client.getKryo().register(PacketMessage.class);
 		client.getKryo().register(cartes.Carte[].class);
 		client.getKryo().register(cartes.Carte.class);
+		client.getKryo().register(GameState.class);
 		client.start();
 
 		customListener = new CustomListenerClient(this);

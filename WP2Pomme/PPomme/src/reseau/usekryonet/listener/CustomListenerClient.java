@@ -7,6 +7,7 @@ import com.esotericsoftware.kryonet.Connection;
 
 import cartes.Carte;
 import gui.JFrameHome;
+import gui.jpanelingame.GameState;
 import gui.jpanelingame.JPanelInGameClient;
 import reseau.usekryonet.ClientProgram;
 import reseau.usekryonet.PacketMessage;
@@ -59,7 +60,12 @@ public class CustomListenerClient extends CustomListener
 				case PacketMessage.START_GAME_DISTRIBUTION:
 					traiterCasDistribution(paquet.getTabCarte());
 					break;
-
+				case PacketMessage.SEND_STATE_SERVER_TO_CLIENT:
+					traiterState(paquet.getState());
+					break;
+				case PacketMessage.END_OF_TURN:
+					traiterStateFinDeTour(paquet.getState());
+					break;
 				default:
 					break;
 				}
@@ -99,6 +105,19 @@ public class CustomListenerClient extends CustomListener
 		jPanelInGameClient.setCarteJoueurClient(tabCartes);
 		}
 
+	private void traiterState(GameState state)
+		{
+		// TODO
+		jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());
+		jPanelInGameClient.setStateUpdate(state);
+		}
+
+	private void traiterStateFinDeTour(GameState state)
+		{
+		// TODO
+		jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());
+		jPanelInGameClient.setChangementTour(state);
+		}
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/

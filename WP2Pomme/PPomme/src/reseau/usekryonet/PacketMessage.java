@@ -4,6 +4,7 @@ package reseau.usekryonet;
 import java.io.Serializable;
 
 import cartes.Carte;
+import gui.jpanelingame.GameState;
 
 /**
  * Cette classe est utilisée pour envoyer les données à traver les réseau.
@@ -31,6 +32,13 @@ public class PacketMessage implements Serializable
 		{
 		this.pseudoFrom = pseudo;
 		this.message = message;
+		}
+
+	public PacketMessage(String pseudo, int code, GameState state)
+		{
+		this.pseudoFrom = pseudo;
+		this.code = code;
+		this.state = state;
 		}
 
 	/**
@@ -78,6 +86,10 @@ public class PacketMessage implements Serializable
 		this.code = code;
 		}
 
+	public void setState(GameState state)
+		{
+		this.state = state;
+		}
 	/*------------------------------*\
 	|*				Get				*|
 	\*------------------------------*/
@@ -102,6 +114,11 @@ public class PacketMessage implements Serializable
 		return this.code;
 		}
 
+	public GameState getState()
+		{
+		return this.state;
+		}
+
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
@@ -111,6 +128,7 @@ public class PacketMessage implements Serializable
 	private int code;
 	private Carte[] tabCarte = null;
 	private Carte carte = null;
+	private GameState state = null;
 
 	/*------------------------------*\
 	|*			  Static			*|
@@ -122,6 +140,10 @@ public class PacketMessage implements Serializable
 	public static final int END_OF_TURN = 3; // Fin du tour
 	public static final int CARD_ATOUT = 4; // Averti quel est l'atout
 	public static final int SIMPLE_MESSAGE = 5; // En vue d'un éventuel chat
+	public static final int SEND_CARD_CLIENT_TO_SERVER = 6; // Envoie du jeu de carte du client au serveur
+	public static final int SEND_STATE_CLIENT_TO_SERVER = 7; // Envoie du jeu de carte du client au serveur
+	public static final int SEND_STATE_SERVER_TO_CLIENT = 8; // Envoie du jeu de carte du client au serveur
+
 
 	// Les erreurs ont un code de 100 ou plus
 	public static final int ERROR_SERVER_FULL = 100;

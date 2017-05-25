@@ -10,6 +10,7 @@ import java.util.List;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Server;
 
+import gui.jpanelingame.GameState;
 import reseau.usekryonet.listener.CustomListener;
 import reseau.usekryonet.listener.CustomListenerServer;
 
@@ -34,6 +35,8 @@ public class ServerProgram
 		server.getKryo().register(PacketMessage.class);
 		server.getKryo().register(cartes.Carte[].class);
 		server.getKryo().register(cartes.Carte.class);
+		server.getKryo().register(GameState.class);
+
 		server.start();
 
 		// Port par défaut
