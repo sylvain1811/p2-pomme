@@ -160,6 +160,7 @@ public class JPanelMyCard extends JPanel
 			public void actionPerformed(ActionEvent e)
 				{
 				JButtonCartes carte = (JButtonCartes)e.getSource();
+				cartePose = carte.getCarte();
 				if (jPanelInGame.getState() == GameState.ECHANGE)
 					{
 					ajoutCardPourEchange(carte);
@@ -176,7 +177,7 @@ public class JPanelMyCard extends JPanel
 			private void jouerCarte(JButtonCartes carte)
 				{
 				jPanelBoard.addMyCard(carte.getCarte());
-				cartePose = carte.getCarte(); //On met la carte dans la variable
+				//cartePose = carte.getCarte(); //On met la carte dans la variable
 				//CODER ACTION POUR JOUER LES CARTES !!!!!!!!!!!!
 				if (jPanelInGame.getState() == GameState.TOURCLIENT)
 					{

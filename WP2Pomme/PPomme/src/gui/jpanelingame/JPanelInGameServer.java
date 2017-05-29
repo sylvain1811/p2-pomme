@@ -117,6 +117,11 @@ public class JPanelInGameServer extends JPanelInGame
 		jPanelMyCard.setTabCarteSurPlateau(carte, 1);
 		}
 
+	public void setCartePoseParClient(Carte carteClient)
+	{
+		this.carteClient = carteClient;
+		System.out.println("Carte reçu par le Client : " + this.carteClient.getNumber());
+	}
 	/*------------------------------*\
 	|*				Get				*|
 	\*------------------------------*/
@@ -146,10 +151,23 @@ public class JPanelInGameServer extends JPanelInGame
 	private void sendCarteToClient()
 	{
 	PacketMessage paquet = new PacketMessage(serverProgram.getPseudo(), PacketMessage.SEND_CARD_SERVER_TO_CLIENT,jPanelMyCard.getCartePose());
-	System.out.println("Serveur : " + jPanelMyCard.getCartePose().getNumber());
+	System.out.println("Carte joué par le Serveur  : " + jPanelMyCard.getCartePose().getNumber());
+	buttonDisparition(jPanelMyCard.getCartePose());
 	serverProgram.envoiPaquet(paquet);
 	}
 
+	private void buttonDisparition(Carte carte)
+	{
+		for(int i = 0; i<jPanelMyCard.getTabMyCard().length;i++)
+			{
+			if(jPanelMyCard.getTabMyCard()[i].getCarte() == carte)
+				{
+				jPanelMyCard.getTabMyCard()[i].setEnabled(false);
+				jPanelMyCard.getTabMyCard()[i].setVisible(false);
+
+				}
+			}
+	}
 
 	private void envoiDistribution()
 		{
@@ -171,6 +189,7 @@ public class JPanelInGameServer extends JPanelInGame
 	// Tools
 	private ServerProgram serverProgram;
 	private Game game;
+	private Carte carteClient;
 	private GameState stateClient;
 	private Carte[] carteServeur;
 	}

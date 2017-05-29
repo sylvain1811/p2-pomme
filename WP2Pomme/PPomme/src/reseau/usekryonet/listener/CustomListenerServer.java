@@ -72,8 +72,11 @@ public class CustomListenerServer extends CustomListener
 			//System.out.println("[" + paquet.getPseudoFrom() + " say ]: Message received from server : " + paquet.getMessage());
 			switch(paquet.getCode())
 				{
-				case PacketMessage.SEND_CARD_CLIENT_TO_SERVER:
+				case PacketMessage.SEND_PAQUET_CARD_CLIENT_TO_SERVER:
 					traiterRecuperationTabCarte(paquet.getTabCarte());
+					break;
+				case PacketMessage.SEND_CARD_CLIENT_TO_SERVER:
+					traiterEnvoieCarteClientToServeur(paquet.getCarte());
 					break;
 				case PacketMessage.SEND_STATE_CLIENT_TO_SERVER:
 					traiterState(paquet.getState());
@@ -109,6 +112,13 @@ public class CustomListenerServer extends CustomListener
 		// TODO
 		jPanelInGameServer = (JPanelInGameServer)(JFrameHome.getInstance().getjPanelInGame());
 		jPanelInGameServer.setMAJCarteClient(tabCartes);
+		}
+
+	private void traiterEnvoieCarteClientToServeur(Carte carte)
+		{
+		// TODO
+		jPanelInGameServer = (JPanelInGameServer)(JFrameHome.getInstance().getjPanelInGame());
+		jPanelInGameServer.setCartePoseParClient(carte);
 		}
 
 	private void traiterState(GameState state)
