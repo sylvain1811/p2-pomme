@@ -100,6 +100,15 @@ public class JPanelInGameClient extends JPanelInGame
 		tourServeurOuTourJoueur();
 		}
 
+	public static void setCartePoseParServeur(Carte carte)	//static OBLIGATOIRE !!
+		{
+		cartePoseParServeur = carte;
+		System.out.println("Client : " + cartePoseParServeur.getNumber());
+		//System.out.println("Client : " + cartePoseParServeur.getNumber()); //carte reçu du serveur
+		//jPanelMyCard.setTabCarteSurPlateau(cartePoseParServeur, 0);
+		//FINIR TRAITEMENT AVEC LA CARTE REçU (AFFICHER LA CARTE)
+		//RESTE SENS INVERSE A FINIR
+		}
 	/*------------------------------*\
 	|*				Get				*|
 	\*------------------------------*/
@@ -128,11 +137,11 @@ public class JPanelInGameClient extends JPanelInGame
 			@Override
 			public void actionPerformed(ActionEvent e)
 				{
-				PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.END_OF_TURN);
+				PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.END_OF_TURN); //envoi paquet fin de tour
 				clientProgram.envoiPaquet(paquet);
-				state = GameState.TOURSERVEUR;
+				state = GameState.TOURSERVEUR; //change le tour
 				stateServeur = GameState.TOURSERVEUR; // on force pour l'affichage
-				sendStateServerChangementTour();
+				sendStateServerChangementTour(); //Envoie la carte qui a été joué (ENCORE A FINIR) et envoi l'état du client vers le serveur
 				}
 			});
 		}
@@ -140,6 +149,7 @@ public class JPanelInGameClient extends JPanelInGame
 	private void sendStateServerChangementTour()
 		{
 		PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.CARD_PLAYED, jPanelMyCard.getTabCarteSurPlateau()[1]);
+		//System.out.println(jPanelMyCard.getTabCarteSurPlateau()[1].getCouleur());
 		clientProgram.envoiPaquet(paquet);
 		PacketMessage paquet2 = new PacketMessage(clientProgram.getPseudo(), PacketMessage.SEND_STATE_CLIENT_TO_SERVER, state);
 		clientProgram.envoiPaquet(paquet2);
@@ -153,5 +163,6 @@ public class JPanelInGameClient extends JPanelInGame
 	// Tools
 	private ClientProgram clientProgram;
 	private Carte[] carteJoueurClient;
+	private static Carte cartePoseParServeur;
 	private GameState stateServeur = GameState.ECHANGE;
 	}

@@ -137,10 +137,19 @@ public class JPanelInGameServer extends JPanelInGame
 				serverProgram.envoiPaquet(paquet);
 				state = GameState.TOURCLIENT;
 				stateClient = GameState.TOURCLIENT; // on force pour l'affichage
-				sendStateClientChangementTour();
+				sendStateClientChangementTour();	//Envoie state du serveur au client et change l'affichage du serveur
+				sendCarteToClient();
 				}
 			});
 		}
+
+	private void sendCarteToClient()
+	{
+	PacketMessage paquet = new PacketMessage(serverProgram.getPseudo(), PacketMessage.SEND_CARD_SERVER_TO_CLIENT,jPanelMyCard.getCartePose());
+	System.out.println("Serveur : " + jPanelMyCard.getCartePose().getNumber());
+	serverProgram.envoiPaquet(paquet);
+	}
+
 
 	private void envoiDistribution()
 		{
