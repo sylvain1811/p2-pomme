@@ -28,6 +28,14 @@ public class JPanelMyCard extends JPanel
 		this.jPanelInGame = jPanelInGame;
 		this.jPanelBoard = jPanelBoard;
 		tabCarteSurPlateau = new Carte[2];
+		if (JFrameHome.getInstance().getServer() == null)
+			{
+			isServer = false;
+			}
+		else
+			{
+			isServer = true;
+			}
 		geometry();
 		control();
 		appearance();
@@ -87,7 +95,7 @@ public class JPanelMyCard extends JPanel
 	private void geometry()
 		{
 		// JComponent : Instanciation
-		String imgPath = "../3carte.png";
+		String imgPath = "/3carte.png";
 		URL iconURL = getClass().getResource(imgPath);
 		Icon icon = new ImageIcon(iconURL);
 		troisCartes = new JButton(icon);
@@ -98,7 +106,7 @@ public class JPanelMyCard extends JPanel
 		tabCardChange = new JButtonCartes[3];
 		for(int i = 0; i < 9; i++)
 			{
-			tabMyCard[i] = new JButtonCartes("Carte");
+				tabMyCard[i] = new JButtonCartes("Carte");
 			}
 		// Layout : Specification
 			{
@@ -156,10 +164,13 @@ public class JPanelMyCard extends JPanel
 					{
 					ajoutCardPourEchange(carte);
 					}
-				else if (jPanelInGame.getState() == GameState.TOURSERVEUR || jPanelInGame.getState() == GameState.TOURCLIENT)
+				else if (jPanelInGame.getState() == GameState.TOURSERVEUR && isServer == true)
 					{
 					jouerCarte(carte);
 					}
+				else if (jPanelInGame.getState() == GameState.TOURCLIENT && isServer == false){
+					jouerCarte(carte);
+				}
 				}
 
 			private void jouerCarte(JButtonCartes carte)
@@ -224,7 +235,6 @@ public class JPanelMyCard extends JPanel
 
 	private void appearance()
 		{
-		// rien
 		}
 
 	private void ajoutCardPourEchange(JButtonCartes carteEchanger)
@@ -286,5 +296,6 @@ public class JPanelMyCard extends JPanel
 	private JPanelBoard jPanelBoard;
 	private Carte[] tabCarteSurPlateau;
 	private Carte cartePose; //On mettra la carte posé
+	private boolean isServer;
 
 	}

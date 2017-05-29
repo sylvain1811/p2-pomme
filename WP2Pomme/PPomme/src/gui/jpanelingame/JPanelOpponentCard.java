@@ -42,10 +42,10 @@ public class JPanelOpponentCard extends JPanel
 		{
 		// JComponent : Instanciation
 		tabOpponentCard = new JLabel[9];
-		String imgPath = "../pomme_logo_100x100.png";
+		String imgPath = "/Dos.png";
 		URL iconURL = getClass().getResource(imgPath);
 		dosDeCarte = new ImageIcon(iconURL);
-		imgPath = "../3carteB.png";
+		imgPath = "/3carteB.png";
 		iconURL = getClass().getResource(imgPath);
 		troisCartesPic= new ImageIcon(iconURL);
 		troisCarte = new JLabel(troisCartesPic);
