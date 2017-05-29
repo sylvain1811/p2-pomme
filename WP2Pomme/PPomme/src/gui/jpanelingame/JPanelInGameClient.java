@@ -128,11 +128,11 @@ public class JPanelInGameClient extends JPanelInGame
 			@Override
 			public void actionPerformed(ActionEvent e)
 				{
-				PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.END_OF_TURN);
+				PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.END_OF_TURN);	//envoi paquet fin de tour
 				clientProgram.envoiPaquet(paquet);
-				state = GameState.TOURSERVEUR;
+				state = GameState.TOURSERVEUR;	//change le tour
 				stateServeur = GameState.TOURSERVEUR; // on force pour l'affichage
-				sendStateServerChangementTour();
+				sendStateServerChangementTour(); //Envoie la carte qui a été joué (ENCORE A FINIR) et envoi l'état du client vers le serveur
 				}
 			});
 		}

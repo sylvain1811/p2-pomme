@@ -161,6 +161,7 @@ public class JPanelMyCard extends JPanel
 			private void jouerCarte(JButtonCartes carte)
 				{
 				jPanelBoard.addMyCard(carte.getCarte());
+				//CODER ACTION POUR JOUER LES CARTES !!!!!!!!!!!!
 				//ici il faut encore désactiver les boutons
 				if (jPanelInGame.getState() == GameState.TOURCLIENT)
 					{

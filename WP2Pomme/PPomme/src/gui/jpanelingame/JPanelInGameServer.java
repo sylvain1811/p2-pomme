@@ -137,7 +137,7 @@ public class JPanelInGameServer extends JPanelInGame
 				serverProgram.envoiPaquet(paquet);
 				state = GameState.TOURCLIENT;
 				stateClient = GameState.TOURCLIENT; // on force pour l'affichage
-				sendStateClientChangementTour();
+				sendStateClientChangementTour();	//Envoie state du serveur au client et change l'affichage du serveur
 				}
 			});
 		}
