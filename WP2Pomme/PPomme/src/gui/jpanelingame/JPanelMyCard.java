@@ -37,7 +37,6 @@ public class JPanelMyCard extends JPanel
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
 
-
 	public void remiseAffichageApresEchangeTroisCartes()
 		{
 		for(int i = 0; i < 9; i++)
@@ -69,6 +68,11 @@ public class JPanelMyCard extends JPanel
 	public JButtonCartes[] getTabCardChange()
 		{
 		return this.tabCardChange;
+		}
+
+	public Carte getCartePose()
+		{
+		return cartePose;
 		}
 
 	public Carte[] getTabCarteSurPlateau()
@@ -161,13 +165,16 @@ public class JPanelMyCard extends JPanel
 			private void jouerCarte(JButtonCartes carte)
 				{
 				jPanelBoard.addMyCard(carte.getCarte());
+				cartePose = carte.getCarte(); //On met la carte dans la variable
 				//CODER ACTION POUR JOUER LES CARTES !!!!!!!!!!!!
-				//ici il faut encore désactiver les boutons
 				if (jPanelInGame.getState() == GameState.TOURCLIENT)
 					{
+					/*
+					 * La partie ci desssous est un essai qui peut encore servir, MERCI DE PAS TOUCHER!
 						{
 						tabCarteSurPlateau[1] = carte.getCarte(); //le client sera toujours a 1
 						}
+						*/
 					//Le client a jouer une carte, on l'envoie au serveur
 					//Il faudra verifier si c'est la premiere ou la deuxieme carte
 					//((JPanelInGameClient)jPanelInGame). Faire méthode envoie tabCartePose
@@ -188,11 +195,9 @@ public class JPanelMyCard extends JPanel
 					}
 				if (tabCarteSurPlateau[0] != null)
 					{
-					System.out.println(tabCarteSurPlateau[0].getNumber());
 					}
 				if (tabCarteSurPlateau[1] != null)
 					{
-					System.out.println(tabCarteSurPlateau[1].getNumber());
 					}
 				for(int i = 0; i < 9; i++)
 					{
@@ -280,5 +285,6 @@ public class JPanelMyCard extends JPanel
 	private JPanelInGame jPanelInGame;
 	private JPanelBoard jPanelBoard;
 	private Carte[] tabCarteSurPlateau;
+	private Carte cartePose; //On mettra la carte posé
 
 	}

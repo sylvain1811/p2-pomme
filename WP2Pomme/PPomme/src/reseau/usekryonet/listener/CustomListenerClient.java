@@ -66,6 +66,9 @@ public class CustomListenerClient extends CustomListener
 				case PacketMessage.END_OF_TURN:
 					traiterStateFinDeTour(paquet.getState());
 					break;
+				case PacketMessage.SEND_CARD_SERVER_TO_CLIENT:
+					traiterEnvoieCarteServeurToClient(paquet.getCarte());
+					break;
 				default:
 					break;
 				}
@@ -84,6 +87,12 @@ public class CustomListenerClient extends CustomListener
 					break;
 				}
 			}
+		}
+
+	private void traiterEnvoieCarteServeurToClient(Carte carte)
+		{
+		jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());
+		JPanelInGameClient.setCartePoseParServeur(carte);
 		}
 
 	private void traiterCasDistribution(Carte[] tabCartes)
