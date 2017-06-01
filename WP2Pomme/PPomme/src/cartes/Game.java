@@ -159,11 +159,11 @@ public class Game
 		return somme;
 		}
 
-	private int calculGagnantTour()
+	public int calculGagnantTour()
 		{
-		if (tabCartes[tabCartePose[0]].getCouleur() == tabCartes[numeroAtout].getCouleur())
+		if (tabCartePose[0].getCouleur() == tabCartes[numeroAtout].getCouleur())
 			{
-			if (tabCartes[tabCartePose[0]].getCouleur() != tabCartes[numeroAtout].getCouleur())
+			if (tabCartePose[1].getCouleur() != tabCartes[numeroAtout].getCouleur())
 				{
 				//Joueur 1 gagne !
 				return 0;
@@ -172,13 +172,13 @@ public class Game
 				{
 				//5 : valet, 3 : 9
 				// les deux joueurs ont jouÃ© atouts
-				switch(tabCartes[tabCartePose[0]].getValeur())
+				switch(tabCartePose[0].getValeur())
 					{
 					case 5:
 						//le joueur 1 gagne
 						return 0;
 					case 3:
-						if (tabCartes[tabCartePose[1]].getValeur() == 5)
+						if (tabCartePose[1].getValeur() == 5)
 							{
 							//le joueur 2 prend le 9 d'atout
 							return 1;
@@ -189,7 +189,7 @@ public class Game
 							return 0;
 							}
 					default:
-						if (tabCartes[tabCartePose[1]].getValeur() > tabCartes[tabCartePose[0]].getValeur())
+						if (tabCartePose[1].getValeur() > tabCartePose[0].getValeur())
 							{
 							// Le joueur 1 gagne
 							return 0;
@@ -205,15 +205,15 @@ public class Game
 		else
 			{
 			//Pas atout
-			if (tabCartes[tabCartePose[1]].getCouleur() == tabCartes[numeroAtout].getCouleur())
+			if (tabCartePose[1].getCouleur() == tabCartes[numeroAtout].getCouleur())
 				{
 				// joueur 2 gagne, il a jouer atout
 				return 1;
 				}
-			else if (tabCartes[tabCartePose[0]].getCouleur() == tabCartes[tabCartePose[1]].getCouleur())
+			else if (tabCartePose[0].getCouleur() == tabCartePose[1].getCouleur())
 				{
 				//le joueur a suivi la couleur
-				if (tabCartes[tabCartePose[0]].getValeur() > tabCartes[tabCartePose[1]].getValeur())
+				if (tabCartePose[0].getValeur() > tabCartePose[1].getValeur())
 					{
 					//Le joueur 1 gagne
 					return 0;
@@ -300,9 +300,9 @@ public class Game
 		this.tabCarteGagneJoueur2 = tabCarteGagneJoueur2;
 		}
 
-	public void setTabCartePose(int tabCartePose, int index)
+	public void setTabCartePose(Carte[] carte)
 		{
-		this.tabCartePose[index] = tabCartePose;
+		this.tabCartePose = carte;
 		}
 
 	/*------------------------------*\
@@ -316,24 +316,33 @@ public class Game
 		return this.tabCarteJoueur1;
 		}
 
+	public Carte[] getTabCarte()
+		{
+		return this.tabCartes;
+		}
+
 	public Carte[] getTabCarteJoueur2()
 		{
 		return this.tabCarteJoueur2;
 		}
 
-	public int[] getTabCartePose()
+	public Carte[] getTabCartePose()
 		{
 		return this.tabCartePose;
 		}
 
+	public int getNumeroAtout()
+		{
+		return this.numeroAtout;
+		}
 	/*------------------------------------------------------------------*\
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/
 
 	private void init()
 		{
-		tabCartePose[0] = 0;
-		tabCartePose[1] = 0;
+		tabCartePose[0] = null;
+		tabCartePose[1] = null;
 		// Initialiser les cartes;
 		int k = 0; // indice pour les numbers
 		for(int i = 0; i < 4; i++) // boucle pour les couleurs
@@ -363,9 +372,8 @@ public class Game
 	private Carte[] tabCarteGagneJoueur1 = new Carte[18];
 	private Carte[] tabCarteGagneJoueur2 = new Carte[18];
 	private int[] tabIndexCarte = new int[24];
-	private int[] tabCartePose = new int[2];
+	private Carte[] tabCartePose = new Carte[2];
 	private int sommeJ1 = 0;
 	private int sommeJ2 = 0;
 	private int numeroAtout;
-
 	}

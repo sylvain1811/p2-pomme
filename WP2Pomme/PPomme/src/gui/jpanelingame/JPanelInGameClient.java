@@ -31,20 +31,26 @@ public class JPanelInGameClient extends JPanelInGame
 
 	public void tourServeurOuTourJoueur()
 		{
-		if (state == GameState.TOURSERVEUR)
+		if (state == GameState.ECHANGE)
 			{
-			for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
-				{
-				jPanelMyCard.getTabMyCard()[i].setEnabled(false);
-				btnFinTour.setEnabled(false);
-				}
 			}
 		else
 			{
-			for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
+			if (stateServeur == GameState.TOURSERVEUR)
 				{
-				jPanelMyCard.getTabMyCard()[i].setEnabled(true);
-				btnFinTour.setEnabled(true);
+				for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
+					{
+					jPanelMyCard.getTabMyCard()[i].setEnabled(false);
+					btnFinTour.setEnabled(false);
+					}
+				}
+			else
+				{
+				for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
+					{
+					jPanelMyCard.getTabMyCard()[i].setEnabled(true);
+					btnFinTour.setEnabled(true);
+					}
 				}
 			}
 		}
@@ -100,7 +106,7 @@ public class JPanelInGameClient extends JPanelInGame
 		tourServeurOuTourJoueur();
 		}
 
-	public static void setCartePoseParServeur(Carte carte)	//static OBLIGATOIRE !!
+	public static void setCartePoseParServeur(Carte carte) //static OBLIGATOIRE !!
 		{
 		cartePoseParServeur = carte;
 		System.out.println("Carte reçu par le Serveur : " + cartePoseParServeur.getNumber());
@@ -118,17 +124,17 @@ public class JPanelInGameClient extends JPanelInGame
 	\*------------------------------------------------------------------*/
 
 	private void buttonDisparition(Carte carte)
-	{
-		for(int i = 0; i<jPanelMyCard.getTabMyCard().length;i++)
+		{
+		for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
 			{
-			if(jPanelMyCard.getTabMyCard()[i].getCarte() == carte)
+			if (jPanelMyCard.getTabMyCard()[i].getCarte() == carte)
 				{
 				jPanelMyCard.getTabMyCard()[i].setEnabled(false);
 				jPanelMyCard.getTabMyCard()[i].setVisible(false);
 
 				}
 			}
-	}
+		}
 
 	private void ajusterStateServeurVersClient()
 		{
@@ -171,12 +177,12 @@ public class JPanelInGameClient extends JPanelInGame
 		}
 
 	private void sendCarteToServer()
-	{
-	PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.SEND_CARD_CLIENT_TO_SERVER,jPanelMyCard.getCartePose());
-	System.out.println("Carte joué par le Client  : " + jPanelMyCard.getCartePose().getNumber());
-	buttonDisparition(jPanelMyCard.getCartePose());
-	clientProgram.envoiPaquet(paquet);
-	}
+		{
+		PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.SEND_CARD_CLIENT_TO_SERVER, jPanelMyCard.getCartePose());
+		System.out.println("Carte joué par le Client  : " + jPanelMyCard.getCartePose().getNumber());
+		buttonDisparition(jPanelMyCard.getCartePose());
+		clientProgram.envoiPaquet(paquet);
+		}
 
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|

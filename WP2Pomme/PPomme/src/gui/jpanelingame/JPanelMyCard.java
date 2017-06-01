@@ -28,6 +28,9 @@ public class JPanelMyCard extends JPanel
 		this.jPanelInGame = jPanelInGame;
 		this.jPanelBoard = jPanelBoard;
 		tabCarteSurPlateau = new Carte[2];
+		tabCarteSurPlateau[0] = null;
+		tabCarteSurPlateau[1] = null;
+		twoPlayerPlayed = false;
 		if (JFrameHome.getInstance().getServer() == null)
 			{
 			isServer = false;
@@ -88,6 +91,15 @@ public class JPanelMyCard extends JPanel
 		return this.tabCarteSurPlateau;
 		}
 
+	public void setTwoPlayerPlayed(boolean ontJouer)
+		{
+		this.twoPlayerPlayed = ontJouer;
+		}
+
+	public boolean getTwoPlayerPlayed()
+		{
+		return this.twoPlayerPlayed;
+		}
 	/*------------------------------------------------------------------*\
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/
@@ -298,5 +310,6 @@ public class JPanelMyCard extends JPanel
 	private Carte[] tabCarteSurPlateau;
 	private Carte cartePose; //On mettra la carte posé
 	private boolean isServer;
+	private boolean twoPlayerPlayed;
 
 	}
