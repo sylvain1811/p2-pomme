@@ -3,6 +3,8 @@ package gui.jpanelingame;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import cartes.Carte;
 import cartes.Game;
@@ -21,6 +23,11 @@ public class JPanelInGameServer extends JPanelInGame
 		super();
 		this.serverProgram = serverProgram;
 		state = GameState.DEMMARAGE;
+		scoreServeur = 0;
+		scoreClient = 0;
+		listeCarteServeurGagne = new ArrayList<>();
+		listeCarteClientGagne = new ArrayList<>();
+		jeuFini = false;
 		game = new Game();
 		game.distribuer(); //Distribution des cartes
 		envoiDistribution();
@@ -60,7 +67,7 @@ public class JPanelInGameServer extends JPanelInGame
 			for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
 				{
 				jPanelMyCard.getTabMyCard()[i].setEnabled(true);
-				btnFinTour.setEnabled(true);
+				//btnFinTour.setEnabled(true);
 				}
 			}
 		}
@@ -169,16 +176,49 @@ public class JPanelInGameServer extends JPanelInGame
 			});
 		}
 
+	private void finDuJeu()
+		{
+		jeuFini = true;
+		for(int i = 0; i < 9; i++)
+			{
+			if (jPanelMyCard.getTabMyCard()[i].isVisible() == true)
+				{
+				jeuFini = false;
+				}
+			}
+		if (jeuFini == true)
+			{
+			//Le jeu est fini
+			//Création des paquet de carte a envoyé a la méthode
+			if (listeCarteClientGagne.size() != 0)
+				{
+				Carte[] carteGagneClient = new Carte[listeCarteClientGagne.size()];
+				scoreClient = game.comptagePointsFinal(carteGagneClient);
+				}
+			if (listeCarteServeurGagne.size() != 0)
+				{
+				Carte[] carteGagneServeur = new Carte[listeCarteServeurGagne.size()];
+				scoreClient = game.comptagePointsFinal(carteGagneServeur);
+				}
+			System.out.println("Score client : " + scoreClient);
+			System.out.println("Score serveur : " + scoreServeur);
+			//Envoie a la méthode
+			}
+		}
+
 	private void calculQuiAGagne()
 		{
 		game.setTabCartePose(jPanelMyCard.getTabCarteSurPlateau());
 		gagnant = game.calculGagnantTour();
-		jPanelMyCard.setTabCarteSurPlateau(null, 0); //Suppression des carte sur le plateau
-		jPanelMyCard.setTabCarteSurPlateau(null, 1);
-		jPanelMyCard.setTwoPlayerPlayed(false);
+
 		if (gagnant == 0)
 			{
 			System.out.println("Serveur gagnant");
+			listeCarteServeurGagne.add(jPanelMyCard.getTabCarteSurPlateau()[0]);
+			listeCarteServeurGagne.add(jPanelMyCard.getTabCarteSurPlateau()[1]);
+			jPanelMyCard.setTabCarteSurPlateau(null, 0); //Suppression des carte sur le plateau
+			jPanelMyCard.setTabCarteSurPlateau(null, 1);
+			jPanelMyCard.setTwoPlayerPlayed(false);
 			state = GameState.TOURSERVEUR;
 			stateClient = GameState.TOURSERVEUR; // on force pour l'affichage
 			sendStateClientChangementTour(); //Envoie state du serveur au client et change l'affichage du serveur
@@ -186,10 +226,16 @@ public class JPanelInGameServer extends JPanelInGame
 		else
 			{
 			System.out.println("Client gagnant");
+			listeCarteClientGagne.add(jPanelMyCard.getTabCarteSurPlateau()[0]);
+			listeCarteClientGagne.add(jPanelMyCard.getTabCarteSurPlateau()[1]);
+			jPanelMyCard.setTabCarteSurPlateau(null, 0); //Suppression des carte sur le plateau
+			jPanelMyCard.setTabCarteSurPlateau(null, 1);
+			jPanelMyCard.setTwoPlayerPlayed(false);
 			state = GameState.TOURCLIENT;
 			stateClient = GameState.TOURCLIENT; // on force pour l'affichage
 			sendStateClientChangementTour(); //Envoie state du serveur au client et change l'affichage du serveur
 			}
+		finDuJeu();
 		}
 
 	private void sendCarteToClient()
@@ -242,5 +288,10 @@ public class JPanelInGameServer extends JPanelInGame
 	private Carte carteClient;
 	private GameState stateClient;
 	private Carte[] carteServeur;
+	private List<Carte> listeCarteServeurGagne;
+	private List<Carte> listeCarteClientGagne;
 	private int gagnant;
+	private boolean jeuFini;
+	private int scoreServeur;
+	private int scoreClient;
 	}

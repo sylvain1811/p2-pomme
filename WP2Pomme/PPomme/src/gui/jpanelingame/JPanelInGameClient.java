@@ -49,7 +49,7 @@ public class JPanelInGameClient extends JPanelInGame
 				for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
 					{
 					jPanelMyCard.getTabMyCard()[i].setEnabled(true);
-					btnFinTour.setEnabled(true);
+					//btnFinTour.setEnabled(true);
 					}
 				}
 			}

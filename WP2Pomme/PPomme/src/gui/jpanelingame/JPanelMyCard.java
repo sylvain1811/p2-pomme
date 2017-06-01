@@ -27,6 +27,7 @@ public class JPanelMyCard extends JPanel
 		{
 		this.jPanelInGame = jPanelInGame;
 		this.jPanelBoard = jPanelBoard;
+		jPanelInGame.btnFinTour.setEnabled(false);
 		tabCarteSurPlateau = new Carte[2];
 		tabCarteSurPlateau[0] = null;
 		tabCarteSurPlateau[1] = null;
@@ -118,7 +119,7 @@ public class JPanelMyCard extends JPanel
 		tabCardChange = new JButtonCartes[3];
 		for(int i = 0; i < 9; i++)
 			{
-				tabMyCard[i] = new JButtonCartes("Carte");
+			tabMyCard[i] = new JButtonCartes("Carte");
 			}
 		// Layout : Specification
 			{
@@ -173,6 +174,13 @@ public class JPanelMyCard extends JPanel
 				{
 				JButtonCartes carte = (JButtonCartes)e.getSource();
 				cartePose = carte.getCarte();
+				if (jPanelInGame.state == GameState.ECHANGE)
+					{
+					}
+				else
+					{
+					jPanelInGame.btnFinTour.setEnabled(true);
+					}
 				if (jPanelInGame.getState() == GameState.ECHANGE)
 					{
 					ajoutCardPourEchange(carte);
@@ -181,9 +189,10 @@ public class JPanelMyCard extends JPanel
 					{
 					jouerCarte(carte);
 					}
-				else if (jPanelInGame.getState() == GameState.TOURCLIENT && isServer == false){
+				else if (jPanelInGame.getState() == GameState.TOURCLIENT && isServer == false)
+					{
 					jouerCarte(carte);
-				}
+					}
 				}
 
 			private void jouerCarte(JButtonCartes carte)

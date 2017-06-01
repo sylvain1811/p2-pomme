@@ -133,7 +133,8 @@ public class Game
 	public int comptagePointsFinal(Carte[] cJoueur)
 		{
 		int somme = 0;
-		for(int i = 0; i < 18; i++)
+		System.out.println(cJoueur[0].getNumber());
+		for(int i = 0; i < cJoueur.length-1; i++)
 			{
 			if (cJoueur[i].getCouleur() == tabCartes[numeroAtout].getCouleur())
 				{
@@ -295,11 +296,6 @@ public class Game
 		this.tabCarteJoueur2 = tabCarteJoueur2;
 		}
 
-	public void setTabCarteGagneJoueur2(Carte[] tabCarteGagneJoueur2)
-		{
-		this.tabCarteGagneJoueur2 = tabCarteGagneJoueur2;
-		}
-
 	public void setTabCartePose(Carte[] carte)
 		{
 		this.tabCartePose = carte;
@@ -369,11 +365,7 @@ public class Game
 	private Carte[] tabCartes = new Carte[36];
 	private Carte[] tabCarteJoueur1 = new Carte[12];
 	private Carte[] tabCarteJoueur2 = new Carte[12];
-	private Carte[] tabCarteGagneJoueur1 = new Carte[18];
-	private Carte[] tabCarteGagneJoueur2 = new Carte[18];
 	private int[] tabIndexCarte = new int[24];
 	private Carte[] tabCartePose = new Carte[2];
-	private int sommeJ1 = 0;
-	private int sommeJ2 = 0;
 	private int numeroAtout;
 	}
