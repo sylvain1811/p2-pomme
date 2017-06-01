@@ -193,16 +193,21 @@ public class JPanelInGameServer extends JPanelInGame
 			if (listeCarteClientGagne.size() != 0)
 				{
 				Carte[] carteGagneClient = new Carte[listeCarteClientGagne.size()];
+				for(int i = 0; i<listeCarteClientGagne.size();i++)
+					{
+						carteGagneClient[i] = listeCarteClientGagne.get(i);
+					}
 				scoreClient = game.comptagePointsFinal(carteGagneClient);
 				}
 			if (listeCarteServeurGagne.size() != 0)
 				{
 				Carte[] carteGagneServeur = new Carte[listeCarteServeurGagne.size()];
-				scoreClient = game.comptagePointsFinal(carteGagneServeur);
+				for(int i = 0; i<listeCarteServeurGagne.size();i++)
+					{
+					carteGagneServeur[i] = listeCarteServeurGagne.get(i);
+					}
+				scoreServeur = game.comptagePointsFinal(carteGagneServeur);
 				}
-			System.out.println("Score client : " + scoreClient);
-			System.out.println("Score serveur : " + scoreServeur);
-			//Envoie a la méthode
 			}
 		}
 
