@@ -66,7 +66,7 @@ public class JFrameHome extends JFrame
 	private JFrameHome()
 		{
 		// Icon, title
-		String imgPath = "pomme_logo.png";
+		String imgPath = "/pomme_logo.png";
 		URL iconURL = getClass().getResource(imgPath);
 		ImageIcon icon = new ImageIcon(iconURL);
 		setIconImage(icon.getImage());

@@ -2,7 +2,11 @@
 package gui;
 
 import java.awt.Dimension;
+import java.awt.Insets;
+import java.net.URL;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import cartes.Carte;
@@ -13,19 +17,8 @@ public class JButtonCartes extends JButton
 	/*------------------------------------------------------------------*\
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
-
-	/*public JButtonCartes(Carte carte)
-		{
-		super();
-		this.carte = carte;
-		Dimension size  = new Dimension(100,100);
-		setPreferredSize(size);
-		setMinimumSize(size);
-		setMaximumSize(size);
-		//setText(carte.getName());
-		}*/
-
 	//temporary const :
+
 	public JButtonCartes(String text)
 		{
 		super();
@@ -33,7 +26,6 @@ public class JButtonCartes extends JButton
 		setPreferredSize(size);
 		setMinimumSize(size);
 		setMaximumSize(size);
-		setText(text);
 		}
 
 	/*------------------------------------------------------------------*\
@@ -47,6 +39,15 @@ public class JButtonCartes extends JButton
 	public void setCarte(Carte carte)
 		{
 		this.carte = carte;
+		URL iconURL = getClass().getResource(carte.getImgPath());
+		Icon picture = new ImageIcon(iconURL);
+		setBorderPainted(false);
+		setBorder(null);
+		setMargin(new Insets(0, 0, 0, 0));
+		setContentAreaFilled(false);
+		setBorder(null);
+		setIcon(picture);
+
 		}
 
 	/*------------------------------*\

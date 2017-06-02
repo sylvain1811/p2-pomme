@@ -13,6 +13,7 @@ public class Carte
 		this.number = number;
 		this.couleur = couleur;
 		this.valeur = valeur;
+		this.imgPath = "/" + number + ".png";
 		}
 
 	public Carte()
@@ -50,6 +51,11 @@ public class Carte
 		return this.couleur;
 		}
 
+	public String getImgPath()
+		{
+		return this.imgPath;
+		}
+
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
@@ -57,6 +63,7 @@ public class Carte
 	private int number;
 	private int couleur;
 	private int valeur;
+	private String imgPath;
 
 	/*------------------------------*\
 	|*			  Static			*|

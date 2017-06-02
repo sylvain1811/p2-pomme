@@ -27,7 +27,19 @@ public class JPanelMyCard extends JPanel
 		{
 		this.jPanelInGame = jPanelInGame;
 		this.jPanelBoard = jPanelBoard;
+		jPanelInGame.btnFinTour.setEnabled(false);
 		tabCarteSurPlateau = new Carte[2];
+		tabCarteSurPlateau[0] = null;
+		tabCarteSurPlateau[1] = null;
+		twoPlayerPlayed = false;
+		if (JFrameHome.getInstance().getServer() == null)
+			{
+			isServer = false;
+			}
+		else
+			{
+			isServer = true;
+			}
 		geometry();
 		control();
 		appearance();
@@ -80,6 +92,15 @@ public class JPanelMyCard extends JPanel
 		return this.tabCarteSurPlateau;
 		}
 
+	public void setTwoPlayerPlayed(boolean ontJouer)
+		{
+		this.twoPlayerPlayed = ontJouer;
+		}
+
+	public boolean getTwoPlayerPlayed()
+		{
+		return this.twoPlayerPlayed;
+		}
 	/*------------------------------------------------------------------*\
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/
@@ -87,7 +108,7 @@ public class JPanelMyCard extends JPanel
 	private void geometry()
 		{
 		// JComponent : Instanciation
-		String imgPath = "../3carte.png";
+		String imgPath = "/3carte.png";
 		URL iconURL = getClass().getResource(imgPath);
 		Icon icon = new ImageIcon(iconURL);
 		troisCartes = new JButton(icon);
@@ -152,11 +173,23 @@ public class JPanelMyCard extends JPanel
 			public void actionPerformed(ActionEvent e)
 				{
 				JButtonCartes carte = (JButtonCartes)e.getSource();
+				cartePose = carte.getCarte();
+				if (jPanelInGame.state == GameState.ECHANGE)
+					{
+					}
+				else
+					{
+					jPanelInGame.btnFinTour.setEnabled(true);
+					}
 				if (jPanelInGame.getState() == GameState.ECHANGE)
 					{
 					ajoutCardPourEchange(carte);
 					}
-				else if (jPanelInGame.getState() == GameState.TOURSERVEUR || jPanelInGame.getState() == GameState.TOURCLIENT)
+				else if (jPanelInGame.getState() == GameState.TOURSERVEUR && isServer == true)
+					{
+					jouerCarte(carte);
+					}
+				else if (jPanelInGame.getState() == GameState.TOURCLIENT && isServer == false)
 					{
 					jouerCarte(carte);
 					}
@@ -165,7 +198,7 @@ public class JPanelMyCard extends JPanel
 			private void jouerCarte(JButtonCartes carte)
 				{
 				jPanelBoard.addMyCard(carte.getCarte());
-				cartePose = carte.getCarte(); //On met la carte dans la variable
+				//cartePose = carte.getCarte(); //On met la carte dans la variable
 				//CODER ACTION POUR JOUER LES CARTES !!!!!!!!!!!!
 				if (jPanelInGame.getState() == GameState.TOURCLIENT)
 					{
@@ -224,7 +257,6 @@ public class JPanelMyCard extends JPanel
 
 	private void appearance()
 		{
-		// rien
 		}
 
 	private void ajoutCardPourEchange(JButtonCartes carteEchanger)
@@ -286,5 +318,7 @@ public class JPanelMyCard extends JPanel
 	private JPanelBoard jPanelBoard;
 	private Carte[] tabCarteSurPlateau;
 	private Carte cartePose; //On mettra la carte posé
+	private boolean isServer;
+	private boolean twoPlayerPlayed;
 
 	}
