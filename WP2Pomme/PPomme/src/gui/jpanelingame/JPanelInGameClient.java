@@ -82,6 +82,15 @@ public class JPanelInGameClient extends JPanelInGame
 		changerAffichageBouton();
 		}
 
+	public static void setFinJeu()
+		{
+		//	ACTION DE LA FIN DU JEU
+		System.out.println("" + scoreClient);
+		System.out.println("" + scoreServeur);
+		//Afficher fenetre avec score (les deux variable sont rempli, manque juste affichage
+
+		}
+
 	public void echangerTroisCartes(Carte[] indexCartesARemplacer)
 		{
 		Game.echangerTroisCartes(carteJoueurClient, indexCartesARemplacer);
@@ -97,6 +106,22 @@ public class JPanelInGameClient extends JPanelInGame
 		{
 		stateServeur = stateRecup;
 		tourServeurOuTourJoueur();
+		}
+
+	public static void setUpdateScoreClient(int score)
+		{
+		scoreClient = score;
+		}
+
+	public static void setCarteAtout(Carte carteAtoutRec)
+		{
+		carteAtout = carteAtoutRec;
+		//Afficher l'atout
+		}
+
+	public static void setUpdateScoreServeur(int score)
+		{
+		scoreServeur = score;
 		}
 
 	public void setChangementTour(GameState stateRecup)
@@ -193,4 +218,7 @@ public class JPanelInGameClient extends JPanelInGame
 	private Carte[] carteJoueurClient;
 	private static Carte cartePoseParServeur;
 	private GameState stateServeur = GameState.ECHANGE;
+	private static int scoreClient;
+	private static int scoreServeur;
+	private static Carte carteAtout;
 	}

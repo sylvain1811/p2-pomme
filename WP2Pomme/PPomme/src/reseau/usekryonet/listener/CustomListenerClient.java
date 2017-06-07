@@ -69,6 +69,18 @@ public class CustomListenerClient extends CustomListener
 				case PacketMessage.SEND_CARD_SERVER_TO_CLIENT:
 					traiterEnvoieCarteServeurToClient(paquet.getCarte());
 					break;
+				case PacketMessage.SEND_SCORE_SERVER_TO_CLIENT_CLIENT:
+					traiterScoreClient(paquet.getScore());
+					break;
+				case PacketMessage.SEND_SCORE_SERVER_TO_CLIENT_SERVER:
+					traiterScoreServeur(paquet.getScore());
+					break;
+				case PacketMessage.FIN_JEU:
+					traiterFinJeu();
+					break;
+				case PacketMessage.SEND_CARD_ATOUT_SERVER_TO_CLIENT:
+					traiterCarteAtout(paquet.getCarte());
+					break;
 				default:
 					break;
 				}
@@ -89,10 +101,34 @@ public class CustomListenerClient extends CustomListener
 			}
 		}
 
+	private void traiterFinJeu()
+		{
+		jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());
+		JPanelInGameClient.setFinJeu();
+		}
+
 	private void traiterEnvoieCarteServeurToClient(Carte carte)
 		{
 		jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());
 		JPanelInGameClient.setCartePoseParServeur(carte);
+		}
+
+	private void traiterScoreClient(int score)
+		{
+		jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());
+		JPanelInGameClient.setUpdateScoreClient(score);
+		}
+
+	private void traiterCarteAtout(Carte carteAtout)
+		{
+		jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());
+		JPanelInGameClient.setCarteAtout(carteAtout);
+		}
+
+	private void traiterScoreServeur(int score)
+		{
+		jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());
+		JPanelInGameClient.setUpdateScoreServeur(score);
 		}
 
 	private void traiterCasDistribution(Carte[] tabCartes)
