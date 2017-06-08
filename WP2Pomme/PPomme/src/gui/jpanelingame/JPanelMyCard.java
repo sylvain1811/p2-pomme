@@ -90,9 +90,9 @@ public class JPanelMyCard extends JPanel
 		return this.tabCardOnBoard;
 		}
 
-	public void setTwoPlayerPlayed(boolean ontJouer)
+	public void setTwoPlayerPlayed(boolean arePlayed)
 		{
-		this.twoPlayerPlayed = ontJouer;
+		this.twoPlayerPlayed = arePlayed;
 		}
 
 	public boolean getTwoPlayerPlayed()
@@ -184,17 +184,17 @@ public class JPanelMyCard extends JPanel
 					}
 				else if (jPanelInGame.getState() == GameState.TOURSERVER && isServer == true)
 					{
-					jouerCarte(card);
+					playCard(card);
 					}
 				else if (jPanelInGame.getState() == GameState.TOURCLIENT && isServer == false)
 					{
-					jouerCarte(card);
+					playCard(card);
 					}
 				}
 
-			private void jouerCarte(JButtonCartes carte)
+			private void playCard(JButtonCartes card)
 				{
-				jPanelBoard.addMyCard(carte.getCard());
+				jPanelBoard.addMyCard(card.getCard());
 				if (jPanelInGame.getState() == GameState.TOURCLIENT)
 					{
 					jPanelInGame.state = GameState.TOURSERVER;
@@ -206,7 +206,7 @@ public class JPanelMyCard extends JPanel
 				else if (jPanelInGame.getState() == GameState.TOURSERVER)
 					{
 						{
-						tabCardOnBoard[0] = carte.getCard(); //le serveur sera toujours a 0
+						tabCardOnBoard[0] = card.getCard(); //le serveur sera toujours a 0
 						}
 					((JPanelInGameServer)jPanelInGame).sendStateClient();
 					((JPanelInGameServer)jPanelInGame).changeDisplayButton();
@@ -220,7 +220,7 @@ public class JPanelMyCard extends JPanel
 					}
 				for(int i = 0; i < 9; i++)
 					{
-					if (tabMyCard[i] == carte)
+					if (tabMyCard[i] == card)
 						{
 						//Supprimer la case du tableau
 						}

@@ -188,7 +188,7 @@ public class Game
 							return 0;
 							}
 					default:
-						if (tabCardsPose[1].getValue() > tabCardsPose[0].getValue())
+						if (tabCardsPose[0].getValue() > tabCardsPose[1].getValue())
 							{
 							// Le joueur 1 gagne
 							return 0;
@@ -230,6 +230,7 @@ public class Game
 				}
 			}
 		}
+
 	/*------------------------------*\
 	|*			  Static			*|
 	\*------------------------------*/

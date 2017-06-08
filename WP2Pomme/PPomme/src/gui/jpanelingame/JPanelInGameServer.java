@@ -25,6 +25,7 @@ public class JPanelInGameServer extends JPanelInGame
 		state = GameState.DEMMARAGE;
 		scoreServer = 0;
 		scoreClient = 0;
+		serverStartTour = true;
 		listCardServerWin = new ArrayList<>();
 		listCardClientWin = new ArrayList<>();
 		endGame = false;
@@ -131,10 +132,12 @@ public class JPanelInGameServer extends JPanelInGame
 		if (jPanelMyCard.getTwoPlayerPlayed() == true)
 			{
 			calculateWinner();
+			serverStartTour = true;
 			}
 		else
 			{
 			jPanelMyCard.setTwoPlayerPlayed(true);
+			serverStartTour = false;
 			}
 		}
 	/*------------------------------*\
@@ -221,12 +224,21 @@ public class JPanelInGameServer extends JPanelInGame
 
 	private void calculateWinner()
 		{
-		game.setTabCartePose(jPanelMyCard.getTabCardOnBoard());
-		winner = game.calculateWinnerTour();
-
+		if (serverStartTour == true)
+			{
+			game.setTabCartePose(jPanelMyCard.getTabCardOnBoard());
+			winner = game.calculateWinnerTour();
+			}
+		else
+			{
+			Card temp = jPanelMyCard.getTabCardOnBoard()[0];
+			jPanelMyCard.setTabCardOnBoard(jPanelMyCard.getTabCardOnBoard()[1], 0);
+			jPanelMyCard.setTabCardOnBoard(temp, 1);
+			game.setTabCartePose(jPanelMyCard.getTabCardOnBoard());
+			winner = game.calculateWinnerTour();
+			}
 		if (winner == 0)
 			{
-			System.out.println("Server gagnant");
 			listCardServerWin.add(jPanelMyCard.getTabCardOnBoard()[0]);
 			listCardServerWin.add(jPanelMyCard.getTabCardOnBoard()[1]);
 			//TODO Faire disparaitre les cartes après un petit moment
@@ -237,7 +249,6 @@ public class JPanelInGameServer extends JPanelInGame
 			}
 		else
 			{
-			System.out.println("Client gagnant");
 			listCardClientWin.add(jPanelMyCard.getTabCardOnBoard()[0]);
 			listCardClientWin.add(jPanelMyCard.getTabCardOnBoard()[1]);
 			jPanelMyCard.setTabCardOnBoard(null, 0); //Suppression des carte sur le plateau
@@ -323,6 +334,7 @@ public class JPanelInGameServer extends JPanelInGame
 	private List<Card> listCardClientWin;
 	private int winner;
 	private boolean endGame;
+	private boolean serverStartTour;
 	private int scoreServer;
 	private int scoreClient;
 	}
