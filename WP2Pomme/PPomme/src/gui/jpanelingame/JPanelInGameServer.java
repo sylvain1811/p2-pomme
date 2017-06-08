@@ -35,7 +35,7 @@ public class JPanelInGameServer extends JPanelInGame
 		sendStateClient();
 		changerAffichageBouton();
 		controlBtnFinTour();
-		System.out.println(game.getTabCarte()[game.getNumeroAtout()].getCouleur());
+		sendCarteAtout(game.getTabCarte()[game.getNumeroAtout()]);
 		}
 
 	/*------------------------------------------------------------------*\
@@ -130,6 +130,7 @@ public class JPanelInGameServer extends JPanelInGame
 		this.carteClient = carteClient;
 		jPanelMyCard.setTabCarteSurPlateau(this.carteClient, 1);
 		System.out.println("Carte reçu par le Client : " + this.carteClient.getNumber());
+		//Afficher carte client sur le serveur
 		if (jPanelMyCard.getTwoPlayerPlayed() == true)
 			{
 			calculQuiAGagne();
@@ -158,6 +159,7 @@ public class JPanelInGameServer extends JPanelInGame
 				PacketMessage paquet = new PacketMessage(serverProgram.getPseudo(), PacketMessage.END_OF_TURN);
 				serverProgram.envoiPaquet(paquet);
 				//Si on le serveur est le deuxieme a jouer
+				//Afficher carte du serveur
 				if (jPanelMyCard.getTwoPlayerPlayed() == true)
 					{
 					sendStateClientChangementTour(); //Envoie state du serveur au client et change l'affichage du serveur
@@ -193,22 +195,31 @@ public class JPanelInGameServer extends JPanelInGame
 			if (listeCarteClientGagne.size() != 0)
 				{
 				Carte[] carteGagneClient = new Carte[listeCarteClientGagne.size()];
-				for(int i = 0; i<listeCarteClientGagne.size();i++)
+				for(int i = 0; i < listeCarteClientGagne.size(); i++)
 					{
-						carteGagneClient[i] = listeCarteClientGagne.get(i);
+					carteGagneClient[i] = listeCarteClientGagne.get(i);
 					}
 				scoreClient = game.comptagePointsFinal(carteGagneClient);
 				}
 			if (listeCarteServeurGagne.size() != 0)
 				{
 				Carte[] carteGagneServeur = new Carte[listeCarteServeurGagne.size()];
-				for(int i = 0; i<listeCarteServeurGagne.size();i++)
+				for(int i = 0; i < listeCarteServeurGagne.size(); i++)
 					{
 					carteGagneServeur[i] = listeCarteServeurGagne.get(i);
 					}
 				scoreServeur = game.comptagePointsFinal(carteGagneServeur);
 				}
+			sendScoreToClient();
+			sendFinDeJeu();
+			finDeJeu();
 			}
+		}
+
+	private void finDeJeu()
+		{
+		//Partie fin du jeu
+		//Afficher fenetre avec score (les deux variable sont rempli, manque juste affichage
 		}
 
 	private void calculQuiAGagne()
@@ -249,6 +260,26 @@ public class JPanelInGameServer extends JPanelInGame
 		System.out.println("Carte joué par le Serveur  : " + jPanelMyCard.getCartePose().getNumber());
 		ajouterCartePourControle(jPanelMyCard.getCartePose());
 		buttonDisparition(jPanelMyCard.getCartePose());
+		serverProgram.envoiPaquet(paquet);
+		}
+
+	private void sendScoreToClient()
+		{
+		PacketMessage paquet = new PacketMessage(serverProgram.getPseudo(), PacketMessage.SEND_SCORE_SERVER_TO_CLIENT_CLIENT, scoreClient);
+		serverProgram.envoiPaquet(paquet);
+		PacketMessage paquet2 = new PacketMessage(serverProgram.getPseudo(), PacketMessage.SEND_SCORE_SERVER_TO_CLIENT_SERVER, scoreServeur);
+		serverProgram.envoiPaquet(paquet2);
+		}
+
+	private void sendFinDeJeu()
+		{
+		PacketMessage paquet = new PacketMessage(serverProgram.getPseudo(), PacketMessage.FIN_JEU);
+		serverProgram.envoiPaquet(paquet);
+		}
+
+	private void sendCarteAtout(Carte carteAtout)
+		{
+		PacketMessage paquet = new PacketMessage(serverProgram.getPseudo(), PacketMessage.SEND_CARD_ATOUT_SERVER_TO_CLIENT, carteAtout);
 		serverProgram.envoiPaquet(paquet);
 		}
 

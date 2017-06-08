@@ -133,7 +133,6 @@ public class Game
 	public int comptagePointsFinal(Carte[] cJoueur)
 		{
 		int somme = 0;
-		System.out.println(cJoueur[0].getNumber());
 		for(int i = 0; i < cJoueur.length-1; i++)
 			{
 			if (cJoueur[i].getCouleur() == tabCartes[numeroAtout].getCouleur())
