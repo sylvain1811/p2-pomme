@@ -130,6 +130,7 @@ public class JPanelInGameServer extends JPanelInGame
 		this.carteClient = carteClient;
 		jPanelMyCard.setTabCarteSurPlateau(this.carteClient, 1);
 		System.out.println("Carte reçu par le Client : " + this.carteClient.getNumber());
+		//Afficher carte client sur le serveur
 		if (jPanelMyCard.getTwoPlayerPlayed() == true)
 			{
 			calculQuiAGagne();
@@ -158,6 +159,7 @@ public class JPanelInGameServer extends JPanelInGame
 				PacketMessage paquet = new PacketMessage(serverProgram.getPseudo(), PacketMessage.END_OF_TURN);
 				serverProgram.envoiPaquet(paquet);
 				//Si on le serveur est le deuxieme a jouer
+				//Afficher carte du serveur
 				if (jPanelMyCard.getTwoPlayerPlayed() == true)
 					{
 					sendStateClientChangementTour(); //Envoie state du serveur au client et change l'affichage du serveur
