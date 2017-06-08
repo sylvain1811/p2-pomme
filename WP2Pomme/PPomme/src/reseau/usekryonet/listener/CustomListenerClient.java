@@ -5,7 +5,7 @@ import javax.swing.JOptionPane;
 
 import com.esotericsoftware.kryonet.Connection;
 
-import cartes.Carte;
+import cartes.Card;
 import gui.JFrameHome;
 import gui.jpanelingame.GameState;
 import gui.jpanelingame.JPanelInGameClient;
@@ -75,7 +75,7 @@ public class CustomListenerClient extends CustomListener
 				case PacketMessage.SEND_SCORE_SERVER_TO_CLIENT_SERVER:
 					traiterScoreServeur(paquet.getScore());
 					break;
-				case PacketMessage.FIN_JEU:
+				case PacketMessage.END_GAME:
 					traiterFinJeu();
 					break;
 				case PacketMessage.SEND_CARD_ATOUT_SERVER_TO_CLIENT:
@@ -107,7 +107,7 @@ public class CustomListenerClient extends CustomListener
 		JPanelInGameClient.setFinJeu();
 		}
 
-	private void traiterEnvoieCarteServeurToClient(Carte carte)
+	private void traiterEnvoieCarteServeurToClient(Card carte)
 		{
 		jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());
 		JPanelInGameClient.setCartePoseParServeur(carte);
@@ -119,7 +119,7 @@ public class CustomListenerClient extends CustomListener
 		JPanelInGameClient.setUpdateScoreClient(score);
 		}
 
-	private void traiterCarteAtout(Carte carteAtout)
+	private void traiterCarteAtout(Card carteAtout)
 		{
 		jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());
 		JPanelInGameClient.setCarteAtout(carteAtout);
@@ -131,7 +131,7 @@ public class CustomListenerClient extends CustomListener
 		JPanelInGameClient.setUpdateScoreServeur(score);
 		}
 
-	private void traiterCasDistribution(Carte[] tabCartes)
+	private void traiterCasDistribution(Card[] tabCartes)
 		{
 		// TODO
 		jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());

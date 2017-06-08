@@ -45,8 +45,8 @@ public class ClientProgram
 		{
 		client = new Client();
 		client.getKryo().register(PacketMessage.class);
-		client.getKryo().register(cartes.Carte[].class);
-		client.getKryo().register(cartes.Carte.class);
+		client.getKryo().register(cartes.Card[].class);
+		client.getKryo().register(cartes.Card.class);
 		client.getKryo().register(GameState.class);
 		client.start();
 

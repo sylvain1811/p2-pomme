@@ -1,22 +1,22 @@
 
 package cartes;
 
-public class Carte
+public class Card
 	{
 
 	/*------------------------------------------------------------------*\
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	public Carte(int number, int couleur, int valeur)
+	public Card(int number, int color, int value)
 		{
 		this.number = number;
-		this.couleur = couleur;
-		this.valeur = valeur;
+		this.color = color;
+		this.value = value;
 		this.imgPath = "/" + number + ".png";
 		}
 
-	public Carte()
+	public Card()
 		{
 		//Rien
 
@@ -29,7 +29,7 @@ public class Carte
 	public String toString()
 		{
 		//return "Carte [number=" + this.number + ", couleur=" + this.couleur + ", valeur=" + this.valeur + "]";
-		return "[Carte]:" + TABLE_VALEUR[number] + " de " + TABLE_COULEUR[couleur];
+		return "[Carte]:" + TABLE_VALEUR[number] + " de " + TABLE_COULEUR[color];
 		}
 
 	/*------------------------------*\
@@ -41,14 +41,14 @@ public class Carte
 		return this.number;
 		}
 
-	public int getValeur()
+	public int getValue()
 		{
-		return this.valeur;
+		return this.value;
 		}
 
-	public int getCouleur()
+	public int getColor()
 		{
-		return this.couleur;
+		return this.color;
 		}
 
 	public String getImgPath()
@@ -61,8 +61,8 @@ public class Carte
 	\*------------------------------------------------------------------*/
 
 	private int number;
-	private int couleur;
-	private int valeur;
+	private int color;
+	private int value;
 	private String imgPath;
 
 	/*------------------------------*\

@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import cartes.Carte;
+import cartes.Card;
 import cartes.Game;
 import reseau.usekryonet.PacketMessage;
 import reseau.usekryonet.ServerProgram;
@@ -42,7 +42,7 @@ public class JPanelInGameServer extends JPanelInGame
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
 
-	public void echangerTroisCartes(Carte[] indexCartesARemplacer)
+	public void echangerTroisCartes(Card[] indexCartesARemplacer)
 		{
 		Game.echangerTroisCartes(carteServeur, indexCartesARemplacer);
 		changerAffichageBouton();
@@ -89,7 +89,7 @@ public class JPanelInGameServer extends JPanelInGame
 	|*				Set				*|
 	\*------------------------------*/
 
-	public void setMAJCarteClient(Carte[] tabCarte)
+	public void setMAJCarteClient(Card[] tabCarte)
 		{
 		game.setTabCarteJoueur2(tabCarte);
 		}
@@ -120,12 +120,12 @@ public class JPanelInGameServer extends JPanelInGame
 		tourServeurOuTourJoueur();
 		}
 
-	public void setCarteAdverse(Carte carte)
+	public void setCarteAdverse(Card carte)
 		{
 		jPanelMyCard.setTabCarteSurPlateau(carte, 1);
 		}
 
-	public void setCartePoseParClient(Carte carteClient)
+	public void setCartePoseParClient(Card carteClient)
 		{
 		this.carteClient = carteClient;
 		jPanelMyCard.setTabCarteSurPlateau(this.carteClient, 1);
@@ -194,7 +194,7 @@ public class JPanelInGameServer extends JPanelInGame
 			//Création des paquet de carte a envoyé a la méthode
 			if (listeCarteClientGagne.size() != 0)
 				{
-				Carte[] carteGagneClient = new Carte[listeCarteClientGagne.size()];
+				Card[] carteGagneClient = new Card[listeCarteClientGagne.size()];
 				for(int i = 0; i < listeCarteClientGagne.size(); i++)
 					{
 					carteGagneClient[i] = listeCarteClientGagne.get(i);
@@ -203,7 +203,7 @@ public class JPanelInGameServer extends JPanelInGame
 				}
 			if (listeCarteServeurGagne.size() != 0)
 				{
-				Carte[] carteGagneServeur = new Carte[listeCarteServeurGagne.size()];
+				Card[] carteGagneServeur = new Card[listeCarteServeurGagne.size()];
 				for(int i = 0; i < listeCarteServeurGagne.size(); i++)
 					{
 					carteGagneServeur[i] = listeCarteServeurGagne.get(i);
@@ -273,22 +273,22 @@ public class JPanelInGameServer extends JPanelInGame
 
 	private void sendFinDeJeu()
 		{
-		PacketMessage paquet = new PacketMessage(serverProgram.getPseudo(), PacketMessage.FIN_JEU);
+		PacketMessage paquet = new PacketMessage(serverProgram.getPseudo(), PacketMessage.END_GAME);
 		serverProgram.envoiPaquet(paquet);
 		}
 
-	private void sendCarteAtout(Carte carteAtout)
+	private void sendCarteAtout(Card carteAtout)
 		{
 		PacketMessage paquet = new PacketMessage(serverProgram.getPseudo(), PacketMessage.SEND_CARD_ATOUT_SERVER_TO_CLIENT, carteAtout);
 		serverProgram.envoiPaquet(paquet);
 		}
 
-	private void ajouterCartePourControle(Carte carteAControler)
+	private void ajouterCartePourControle(Card carteAControler)
 		{
 		jPanelMyCard.setTabCarteSurPlateau(carteAControler, 0);
 		}
 
-	private void buttonDisparition(Carte carte)
+	private void buttonDisparition(Card carte)
 		{
 		for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
 			{
@@ -321,11 +321,11 @@ public class JPanelInGameServer extends JPanelInGame
 	// Tools
 	private ServerProgram serverProgram;
 	private Game game;
-	private Carte carteClient;
+	private Card carteClient;
 	private GameState stateClient;
-	private Carte[] carteServeur;
-	private List<Carte> listeCarteServeurGagne;
-	private List<Carte> listeCarteClientGagne;
+	private Card[] carteServeur;
+	private List<Card> listeCarteServeurGagne;
+	private List<Card> listeCarteClientGagne;
 	private int gagnant;
 	private boolean jeuFini;
 	private int scoreServeur;

@@ -4,7 +4,7 @@ package gui.jpanelingame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import cartes.Carte;
+import cartes.Card;
 import cartes.Game;
 import reseau.usekryonet.ClientProgram;
 import reseau.usekryonet.PacketMessage;
@@ -21,15 +21,15 @@ public class JPanelInGameClient extends JPanelInGame
 		super();
 		this.clientProgram = clientProgram;
 		state = GameState.DEMMARAGE;
-		ajusterStateServeurVersClient();
-		controlBtnFinTour();
+		adjusteStateServerToClient();
+		controlBtnEndTour();
 		}
 
 	/*------------------------------------------------------------------*\
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
 
-	public void tourServeurOuTourJoueur()
+	public void tourServerOrTourPlayer()
 		{
 		if (state == GameState.ECHANGE)
 			{
@@ -65,8 +65,7 @@ public class JPanelInGameClient extends JPanelInGame
 		// TODO Auto-generated method stub
 		for(int i = 0; i < 9; i++)
 			{
-			jPanelMyCard.getTabMyCard()[i].setCarte(carteJoueurClient[i]);
-			//jPanelMyCard.getTabMyCard()[i].setText(String.valueOf(carteJoueurClient[i].getNumber()));
+			jPanelMyCard.getTabMyCard()[i].setCarte(cardClient[i]);
 			}
 		}
 
@@ -74,36 +73,34 @@ public class JPanelInGameClient extends JPanelInGame
 	|*				Set				*|
 	\*------------------------------*/
 
-	public void setCarteJoueurClient(Carte[] carteJoueurClient)
+	public void setCarteJoueurClient(Card[] carteJoueurClient)
 		{
-		this.carteJoueurClient = carteJoueurClient;
+		this.cardClient = carteJoueurClient;
 		changerAffichageBouton();
 		}
 
 	public static void setFinJeu()
 		{
 		//	ACTION DE LA FIN DU JEU
-		System.out.println("" + scoreClient);
-		System.out.println("" + scoreServeur);
 		//Afficher fenetre avec score (les deux variable sont rempli, manque juste affichage
 
 		}
 
-	public void echangerTroisCartes(Carte[] indexCartesARemplacer)
+	public void echangerTroisCartes(Card[] indexCartesARemplacer)
 		{
-		Game.echangerTroisCartes(carteJoueurClient, indexCartesARemplacer);
+		Game.echangerTroisCartes(cardClient, indexCartesARemplacer);
 		changerAffichageBouton();
 		jPanelMyCard.remiseAffichageApresEchangeTroisCartes();
 		sendNewCardServeur();//Envoie des carte au serveur
 		state = GameState.TOURSERVEUR;
 		sendStateClient();
-		tourServeurOuTourJoueur();
+		tourServerOrTourPlayer();
 		}
 
 	public void setStateUpdate(GameState stateRecup)
 		{
 		stateServeur = stateRecup;
-		tourServeurOuTourJoueur();
+		tourServerOrTourPlayer();
 		}
 
 	public static void setUpdateScoreClient(int score)
@@ -111,7 +108,7 @@ public class JPanelInGameClient extends JPanelInGame
 		scoreClient = score;
 		}
 
-	public static void setCarteAtout(Carte carteAtoutRec)
+	public static void setCarteAtout(Card carteAtoutRec)
 		{
 		carteAtout = carteAtoutRec;
 		//Afficher l'atout
@@ -119,20 +116,19 @@ public class JPanelInGameClient extends JPanelInGame
 
 	public static void setUpdateScoreServeur(int score)
 		{
-		scoreServeur = score;
+		scoreServer = score;
 		}
 
 	public void setChangementTour(GameState stateRecup)
 		{
 		stateServeur = stateRecup;
-		ajusterStateServeurVersClient();
-		tourServeurOuTourJoueur();
+		adjusteStateServerToClient();
+		tourServerOrTourPlayer();
 		}
 
-	public static void setCartePoseParServeur(Carte carte) //static OBLIGATOIRE !!
+	public static void setCartePoseParServeur(Card carte) //static OBLIGATOIRE !!
 		{
-		cartePoseParServeur = carte;
-		System.out.println("Carte reçu par le Serveur : " + cartePoseParServeur.getNumber());
+		cardPoseToServer = carte;
 		//Afficher la carte reçu par le serveur
 
 		}
@@ -144,7 +140,7 @@ public class JPanelInGameClient extends JPanelInGame
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/
 
-	private void buttonDisparition(Carte carte)
+	private void buttonDisparition(Card carte)
 		{
 		for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
 			{
@@ -152,24 +148,23 @@ public class JPanelInGameClient extends JPanelInGame
 				{
 				jPanelMyCard.getTabMyCard()[i].setEnabled(false);
 				jPanelMyCard.getTabMyCard()[i].setVisible(false);
-
 				}
 			}
 		}
 
-	private void ajusterStateServeurVersClient()
+	private void adjusteStateServerToClient()
 		{
 		state = stateServeur;
-		tourServeurOuTourJoueur();
+		tourServerOrTourPlayer();
 		}
 
 	private void sendNewCardServeur()
 		{
-		PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.SEND_PAQUET_CARD_CLIENT_TO_SERVER, carteJoueurClient);
+		PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.SEND_PAQUET_CARD_CLIENT_TO_SERVER, cardClient);
 		clientProgram.envoiPaquet(paquet);
 		}
 
-	private void controlBtnFinTour()
+	private void controlBtnEndTour()
 		{
 		this.btnFinTour.addActionListener(new ActionListener()
 			{
@@ -194,13 +189,12 @@ public class JPanelInGameClient extends JPanelInGame
 		clientProgram.envoiPaquet(paquet);
 		PacketMessage paquet2 = new PacketMessage(clientProgram.getPseudo(), PacketMessage.SEND_STATE_CLIENT_TO_SERVER, state);
 		clientProgram.envoiPaquet(paquet2);
-		tourServeurOuTourJoueur();
+		tourServerOrTourPlayer();
 		}
 
 	private void sendCarteToServer()
 		{
 		PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.SEND_CARD_CLIENT_TO_SERVER, jPanelMyCard.getCartePose());
-		System.out.println("Carte joué par le Client  : " + jPanelMyCard.getCartePose().getNumber());
 		buttonDisparition(jPanelMyCard.getCartePose());
 		clientProgram.envoiPaquet(paquet);
 		}
@@ -211,10 +205,10 @@ public class JPanelInGameClient extends JPanelInGame
 
 	// Tools
 	private ClientProgram clientProgram;
-	private Carte[] carteJoueurClient;
-	private static Carte cartePoseParServeur;
+	private Card[] cardClient;
+	private static Card cardPoseToServer;
 	private GameState stateServeur = GameState.ECHANGE;
 	private static int scoreClient;
-	private static int scoreServeur;
-	private static Carte carteAtout;
+	private static int scoreServer;
+	private static Card carteAtout;
 	}

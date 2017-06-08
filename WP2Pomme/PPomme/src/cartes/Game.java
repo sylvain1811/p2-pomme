@@ -10,9 +10,8 @@ public class Game
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	public Game(/*ServerProgram serverProgram*/)
+	public Game()
 		{
-		//this.serverProgram = serverProgram;
 		this.init();
 		}
 
@@ -22,29 +21,29 @@ public class Game
 
 	public void distribuer()
 		{
-		// RÃ©partir 24 cartes entre deux tableaux alÃ©atoirement. Les cartes doivent Ãªtre uniques. Garder une carte pour l'atout.
+		// R�partir 24 cartes entre deux tableaux al�atoirement. Les cartes doivent �tre uniques. Garder une carte pour l'atout.
 		// Ces tableaux sont des variables de la classe.
 		Random rand = new Random();
 		int random;
-		boolean dejaDistribue = false;
+		boolean isDistributed = false;
 
-		//Rempli carte joueur 1
+		//Rempli carte player 1
 		for(int i = 0; i < 12; i++)
 			{
 			do
 				{
-				dejaDistribue = false;
+				isDistributed = false;
 				random = rand.nextInt(36);
-				dejaDistribue = estDejaDistribuer(random);
-				if (dejaDistribue == false)
+				isDistributed = isAlreadyDistributed(random);
+				if (isDistributed == false)
 					{
-					tabIndexCarte[i] = random;
-					distributionJoueur1(random, i);
+					tabIndexCards[i] = random;
+					distributionPlayer1(random, i);
 					}
 				else
 					{
 					}
-				} while(dejaDistribue == true);
+				} while(isDistributed == true);
 			}
 
 		//Rempli carte joueur 2
@@ -52,50 +51,50 @@ public class Game
 			{
 			do
 				{
-				dejaDistribue = false;
+				isDistributed = false;
 				random = rand.nextInt(36);
-				dejaDistribue = estDejaDistribuer(random);
-				if (dejaDistribue == false)
+				isDistributed = isAlreadyDistributed(random);
+				if (isDistributed == false)
 					{
-					tabIndexCarte[i] = random;
-					distributionJoueur2(random, i - 12);
+					tabIndexCards[i] = random;
+					distributionPlayer2(random, i - 12);
 					}
-				} while(dejaDistribue == true);
+				} while(isDistributed == true);
 			}
 
 		//Choix de l'atout
 		do
 			{
-			dejaDistribue = false;
+			isDistributed = false;
 			random = rand.nextInt(36);
-			dejaDistribue = estDejaDistribuer(random);
-			if (dejaDistribue == false)
+			isDistributed = isAlreadyDistributed(random);
+			if (isDistributed == false)
 				{
-				numeroAtout = random;
+				numberAtout = random;
 				}
-			} while(dejaDistribue == true);
+			} while(isDistributed == true);
 		}
 
-	public boolean estDejaDistribuer(int random)
+	public boolean isAlreadyDistributed(int random)
 		{
-		for(int y = 0; y < tabIndexCarte.length; y++)
+		for(int y = 0; y < tabIndexCards.length; y++)
 			{
-			if (tabIndexCarte[y] == random) { return true; }
+			if (tabIndexCards[y] == random) { return true; }
 			}
 		return false;
 		}
 
-	public void distributionJoueur1(int alea, int pos)
+	public void distributionPlayer1(int alea, int pos)
 		{
-		tabCarteJoueur1[pos] = tabCartes[alea];
+		tabCardsPlayer1[pos] = tabCards[alea];
 		}
 
-	public void distributionJoueur2(int alea, int pos)
+	public void distributionPlayer2(int alea, int pos)
 		{
-		tabCarteJoueur2[pos] = tabCartes[alea];
+		tabCardsPlayer2[pos] = tabCards[alea];
 		}
 
-	public void jouerCarte(Carte carteJouee)
+	public void playCard(Card carteJouee)
 		{
 		// On passe une carte que le joueur choisi. Si c'est le dernier joueur Ã  poser une carte, on regarde qui gagne. (mÃ©thode private sÃ©parÃ©e)
 		// Si c'est le premier, on bloque les cartes que le prochain joueur ne pourra pas jouer.
@@ -111,7 +110,7 @@ public class Game
 		}
 
 	//calcul des points
-	private int methodeComptage(int c1)
+	private int methodCounting(int c1)
 		{
 		switch(c1)
 			{
@@ -130,15 +129,15 @@ public class Game
 			}
 		}
 
-	public int comptagePointsFinal(Carte[] cJoueur)
+	public int comptagePointsFinal(Card[] cJoueur)
 		{
 		int somme = 0;
 		for(int i = 0; i < cJoueur.length-1; i++)
 			{
-			if (cJoueur[i].getCouleur() == tabCartes[numeroAtout].getCouleur())
+			if (cJoueur[i].getColor() == tabCards[numberAtout].getColor())
 				{
 				//atout
-				switch(cJoueur[i].getValeur())
+				switch(cJoueur[i].getValue())
 					{
 					case 3:
 						somme += 14;
@@ -147,13 +146,13 @@ public class Game
 						somme += 20;
 						break;
 					default: //comptage normal
-						somme += methodeComptage(cJoueur[i].getValeur());
+						somme += methodCounting(cJoueur[i].getValue());
 						break;
 					}
 				}
 			else
 				{
-				somme += methodeComptage(cJoueur[i].getValeur());
+				somme += methodCounting(cJoueur[i].getValue());
 				}
 			}
 		return somme;
@@ -161,9 +160,9 @@ public class Game
 
 	public int calculGagnantTour()
 		{
-		if (tabCartePose[0].getCouleur() == tabCartes[numeroAtout].getCouleur())
+		if (tabCardsPose[0].getColor() == tabCards[numberAtout].getColor())
 			{
-			if (tabCartePose[1].getCouleur() != tabCartes[numeroAtout].getCouleur())
+			if (tabCardsPose[1].getColor() != tabCards[numberAtout].getColor())
 				{
 				//Joueur 1 gagne !
 				return 0;
@@ -171,14 +170,14 @@ public class Game
 			else
 				{
 				//5 : valet, 3 : 9
-				// les deux joueurs ont jouÃ© atouts
-				switch(tabCartePose[0].getValeur())
+				// les deux joueurs ont jou� atouts
+				switch(tabCardsPose[0].getValue())
 					{
 					case 5:
 						//le joueur 1 gagne
 						return 0;
 					case 3:
-						if (tabCartePose[1].getValeur() == 5)
+						if (tabCardsPose[1].getValue() == 5)
 							{
 							//le joueur 2 prend le 9 d'atout
 							return 1;
@@ -189,7 +188,7 @@ public class Game
 							return 0;
 							}
 					default:
-						if (tabCartePose[1].getValeur() > tabCartePose[0].getValeur())
+						if (tabCardsPose[1].getValue() > tabCardsPose[0].getValue())
 							{
 							// Le joueur 1 gagne
 							return 0;
@@ -205,15 +204,15 @@ public class Game
 		else
 			{
 			//Pas atout
-			if (tabCartePose[1].getCouleur() == tabCartes[numeroAtout].getCouleur())
+			if (tabCardsPose[1].getColor() == tabCards[numberAtout].getColor())
 				{
 				// joueur 2 gagne, il a jouer atout
 				return 1;
 				}
-			else if (tabCartePose[0].getCouleur() == tabCartePose[1].getCouleur())
+			else if (tabCardsPose[0].getColor() == tabCardsPose[1].getColor())
 				{
 				//le joueur a suivi la couleur
-				if (tabCartePose[0].getValeur() > tabCartePose[1].getValeur())
+				if (tabCardsPose[0].getValue() > tabCardsPose[1].getValue())
 					{
 					//Le joueur 1 gagne
 					return 0;
@@ -235,42 +234,42 @@ public class Game
 	|*			  Static			*|
 	\*------------------------------*/
 
-	// MÃ©thode appelÃ©e selon choix du joueur
-	public static Carte[] echangerTroisCartes(Carte[] tabCartesSources, Carte[] indexCartesARemplacer)
+	// M�thode appel�e selon choix du joueur
+	public static Card[] echangerTroisCartes(Card[] tabCardsSources, Card[] indexCardsToReplace)
 		{
-		// Input : tableau 12 cartes, tableau de 3 int (index des cartes Ã  remplacer, max 8). Retourne un tableau de 9 cartes.
-		// On passe le tableau de 12 carte, et le tableau des 3 carts Ã  remplacer.
+		// Input : tableau 12 cartes, tableau de 3 int (index des cartes ete� remplacer, max 8). Retourne un tableau de 9 cartes.
+		// On passe le tableau de 12 carte, et le tableau des 3 carts �t� remplacer.
 		// On retourne un tableau de 12 ou de 9 ( A CHOISIR AVEC LE RESTE DES METHODE)
-		// tabCartesSources 9,10 et 11 seront les carte remplacÃ©es
+		// tabCartesSources 9,10 et 11 seront les carte remplac�es
 		int a = 9;
 		for(int i = 0; i < 9; i++)
 			{
 			for(int y = 0; y < 3; y++)
 				{
-				if (tabCartesSources[i] == indexCartesARemplacer[y])
+				if (tabCardsSources[i] == indexCardsToReplace[y])
 					{
-					Carte temp = tabCartesSources[i];
-					tabCartesSources[i] = tabCartesSources[a];
-					tabCartesSources[a] = temp;
+					Card temp = tabCardsSources[i];
+					tabCardsSources[i] = tabCardsSources[a];
+					tabCardsSources[a] = temp;
 					a++;
 					}
 				}
 			}
-		return tabCartesSources;
+		return tabCardsSources;
 		}
 
-	// MÃ©thode appelee selon choix du joueur
-	public static Carte[] echangerSixAtout(Carte[] jeu, Carte atout)
+	// Methode appelee selon choix du joueur
+	public static Card[] exchangeSixAtout(Card[] jeu, Card atout)
 		{
 		// Place la carte d'atout dans le jeu. Enleve le 6.
 		for(int i = 0; i < 9; i++)
 			{
 			//Comparaison avec le deck du joueur concernant la couleur
-			if (jeu[i].getCouleur() == atout.getCouleur())
+			if (jeu[i].getColor() == atout.getColor())
 				{
-				if (jeu[i].getValeur() == 6)
+				if (jeu[i].getValue() == 6)
 					{
-					Carte temp = jeu[i];
+					Card temp = jeu[i];
 					jeu[i] = atout;
 					atout = temp;
 					}
@@ -285,19 +284,19 @@ public class Game
 	\*------------------------------*/
 
 	// Set sur tous les attributs (pour l'instant)
-	public void setTabCarteJoueur1(Carte[] tabCarteJoueur1)
+	public void setTabCarteJoueur1(Card[] tabCarteJoueur1)
 		{
-		this.tabCarteJoueur1 = tabCarteJoueur1;
+		this.tabCardsPlayer1 = tabCarteJoueur1;
 		}
 
-	public void setTabCarteJoueur2(Carte[] tabCarteJoueur2)
+	public void setTabCarteJoueur2(Card[] tabCarteJoueur2)
 		{
-		this.tabCarteJoueur2 = tabCarteJoueur2;
+		this.tabCardsPlayer2 = tabCarteJoueur2;
 		}
 
-	public void setTabCartePose(Carte[] carte)
+	public void setTabCartePose(Card[] carte)
 		{
-		this.tabCartePose = carte;
+		this.tabCardsPose = carte;
 		}
 
 	/*------------------------------*\
@@ -306,29 +305,29 @@ public class Game
 
 	// Get sur tous les attributs (pour l'instant)
 
-	public Carte[] getTabCarteJoueur1()
+	public Card[] getTabCarteJoueur1()
 		{
-		return this.tabCarteJoueur1;
+		return this.tabCardsPlayer1;
 		}
 
-	public Carte[] getTabCarte()
+	public Card[] getTabCarte()
 		{
-		return this.tabCartes;
+		return this.tabCards;
 		}
 
-	public Carte[] getTabCarteJoueur2()
+	public Card[] getTabCarteJoueur2()
 		{
-		return this.tabCarteJoueur2;
+		return this.tabCardsPlayer2;
 		}
 
-	public Carte[] getTabCartePose()
+	public Card[] getTabCartePose()
 		{
-		return this.tabCartePose;
+		return this.tabCardsPose;
 		}
 
 	public int getNumeroAtout()
 		{
-		return this.numeroAtout;
+		return this.numberAtout;
 		}
 	/*------------------------------------------------------------------*\
 	|*							Methodes Private						*|
@@ -336,16 +335,16 @@ public class Game
 
 	private void init()
 		{
-		tabCartePose[0] = null;
-		tabCartePose[1] = null;
+		tabCardsPose[0] = null;
+		tabCardsPose[1] = null;
 		// Initialiser les cartes;
 		int k = 0; // indice pour les numbers
 		for(int i = 0; i < 4; i++) // boucle pour les couleurs
 			{
 			for(int j = 0; j < 9; j++) // boucle pour les valeurs
 				{
-				Carte cartes = new Carte(k + 1, i, j);
-				tabCartes[k] = cartes;
+				Card cards = new Card(k + 1, i, j);
+				tabCards[k] = cards;
 				k++;
 				}
 			}
@@ -361,10 +360,10 @@ public class Game
 	|*			  Static			*|
 	\*------------------------------*/
 
-	private Carte[] tabCartes = new Carte[36];
-	private Carte[] tabCarteJoueur1 = new Carte[12];
-	private Carte[] tabCarteJoueur2 = new Carte[12];
-	private int[] tabIndexCarte = new int[24];
-	private Carte[] tabCartePose = new Carte[2];
-	private int numeroAtout;
+	private Card[] tabCards = new Card[36];
+	private Card[] tabCardsPlayer1 = new Card[12];
+	private Card[] tabCardsPlayer2 = new Card[12];
+	private int[] tabIndexCards = new int[24];
+	private Card[] tabCardsPose = new Card[2];
+	private int numberAtout;
 	}

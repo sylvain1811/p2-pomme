@@ -12,7 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import cartes.Carte;
+import cartes.Card;
 import gui.JButtonCartes;
 import gui.JFrameHome;
 
@@ -28,7 +28,7 @@ public class JPanelMyCard extends JPanel
 		this.jPanelInGame = jPanelInGame;
 		this.jPanelBoard = jPanelBoard;
 		jPanelInGame.btnFinTour.setEnabled(false);
-		tabCarteSurPlateau = new Carte[2];
+		tabCarteSurPlateau = new Card[2];
 		tabCarteSurPlateau[0] = null;
 		tabCarteSurPlateau[1] = null;
 		twoPlayerPlayed = false;
@@ -63,7 +63,7 @@ public class JPanelMyCard extends JPanel
 	|*				Set				*|
 	\*------------------------------*/
 
-	public void setTabCarteSurPlateau(Carte tabCarteSurPlateau, int index)
+	public void setTabCarteSurPlateau(Card tabCarteSurPlateau, int index)
 		{
 		this.tabCarteSurPlateau[index] = tabCarteSurPlateau;
 		}
@@ -82,12 +82,12 @@ public class JPanelMyCard extends JPanel
 		return this.tabCardChange;
 		}
 
-	public Carte getCartePose()
+	public Card getCartePose()
 		{
 		return cartePose;
 		}
 
-	public Carte[] getTabCarteSurPlateau()
+	public Card[] getTabCarteSurPlateau()
 		{
 		return this.tabCarteSurPlateau;
 		}
@@ -149,7 +149,7 @@ public class JPanelMyCard extends JPanel
 				{
 				// TODO Auto-generated method stub
 				//appeler méthode de changement 3 carte
-				Carte[] carteAEchanger = new Carte[3];
+				Card[] carteAEchanger = new Card[3];
 				for(int i = 0; i < 3; i++)
 					{
 					carteAEchanger[i] = tabCardChange[i].getCarte();
@@ -214,7 +214,7 @@ public class JPanelMyCard extends JPanel
 					jPanelInGame.state = GameState.TOURSERVEUR;
 					((JPanelInGameClient)jPanelInGame).sendStateClient();
 					((JPanelInGameClient)jPanelInGame).changerAffichageBouton();
-					((JPanelInGameClient)jPanelInGame).tourServeurOuTourJoueur();
+					((JPanelInGameClient)jPanelInGame).tourServerOrTourPlayer();
 					}
 
 				else if (jPanelInGame.getState() == GameState.TOURSERVEUR)
@@ -316,8 +316,8 @@ public class JPanelMyCard extends JPanel
 	private JButtonCartes[] tabCardChange;
 	private JPanelInGame jPanelInGame;
 	private JPanelBoard jPanelBoard;
-	private Carte[] tabCarteSurPlateau;
-	private Carte cartePose; //On mettra la carte posé
+	private Card[] tabCarteSurPlateau;
+	private Card cartePose; //On mettra la carte posé
 	private boolean isServer;
 	private boolean twoPlayerPlayed;
 

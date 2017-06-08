@@ -5,15 +5,15 @@ import java.awt.Dimension;
 
 import javax.swing.JLabel;
 
-import cartes.Carte;
+import cartes.Card;
 
-public class JLabelCartes extends JLabel
+public class JLabelCards extends JLabel
 	{
 
 	/*------------------------------------------------------------------*\
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
-	public JLabelCartes(Carte carte)
+	public JLabelCards(Card carte)
 		{
 		super();
 		this.carte = carte;
@@ -43,6 +43,6 @@ public class JLabelCartes extends JLabel
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
-	private Carte carte;
+	private Card carte;
 	}
 

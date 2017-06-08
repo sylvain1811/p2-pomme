@@ -5,7 +5,7 @@ import javax.swing.JOptionPane;
 
 import com.esotericsoftware.kryonet.Connection;
 
-import cartes.Carte;
+import cartes.Card;
 import gui.JFrameHome;
 import gui.jpanelingame.GameState;
 import gui.jpanelingame.JPanelInGameServer;
@@ -107,14 +107,14 @@ public class CustomListenerServer extends CustomListener
 			}
 		}
 
-	private void traiterRecuperationTabCarte(Carte[] tabCartes)
+	private void traiterRecuperationTabCarte(Card[] tabCartes)
 		{
 		// TODO
 		jPanelInGameServer = (JPanelInGameServer)(JFrameHome.getInstance().getjPanelInGame());
 		jPanelInGameServer.setMAJCarteClient(tabCartes);
 		}
 
-	private void traiterEnvoieCarteClientToServeur(Carte carte)
+	private void traiterEnvoieCarteClientToServeur(Card carte)
 		{
 		// TODO
 		jPanelInGameServer = (JPanelInGameServer)(JFrameHome.getInstance().getjPanelInGame());
@@ -128,7 +128,7 @@ public class CustomListenerServer extends CustomListener
 		jPanelInGameServer.setStateClientUpdate(state);
 		}
 
-	private void traiterCartePose(Carte carte)
+	private void traiterCartePose(Card carte)
 		{
 		// TODO
 		jPanelInGameServer = (JPanelInGameServer)(JFrameHome.getInstance().getjPanelInGame());

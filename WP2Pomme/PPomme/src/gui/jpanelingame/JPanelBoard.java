@@ -4,8 +4,8 @@ import java.awt.GridLayout;
 
 import javax.swing.JPanel;
 
-import cartes.Carte;
-import gui.JLabelCartes;
+import cartes.Card;
+import gui.JLabelCards;
 
 public class JPanelBoard extends JPanel
 	{
@@ -40,7 +40,6 @@ public class JPanelBoard extends JPanel
 	private void geometry()
 		{
 		// JComponent : Instanciation
-		//atout =  new JLabelCartes(carte);
 		// Layout : Specification
 			{
 			gridlayout = new GridLayout(2,1);
@@ -62,20 +61,20 @@ public class JPanelBoard extends JPanel
 		{
 		// rien
 		}
-	public void addMyCard(Carte carte){
-		myCard =  new JLabelCartes(carte);
+	public void addMyCard(Card carte){
+		myCard =  new JLabelCards(carte);
 		add(myCard);
 		this.repaint();
 		this.revalidate();
 	}
-	public void addOpponentCard(Carte carte){
-		opponentCard =  new JLabelCartes(carte);
+	public void addOpponentCard(Card carte){
+		opponentCard =  new JLabelCards(carte);
 		add(opponentCard);
 		this.repaint();
 		this.revalidate();
 	}
-	public void addAtout(Carte carte){
-		atout =  new JLabelCartes(carte);
+	public void addAtout(Card carte){
+		atout =  new JLabelCards(carte);
 		add(atout);
 	}
 
@@ -84,8 +83,8 @@ public class JPanelBoard extends JPanel
 	\*------------------------------------------------------------------*/
 
 	// Tools
-	JLabelCartes opponentCard;
-	JLabelCartes myCard;
-	JLabelCartes atout;
+	JLabelCards opponentCard;
+	JLabelCards myCard;
+	JLabelCards atout;
 	GridLayout gridlayout;
 	}

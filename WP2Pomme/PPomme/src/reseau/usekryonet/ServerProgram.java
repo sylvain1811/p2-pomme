@@ -33,8 +33,8 @@ public class ServerProgram
 		server = new Server();
 
 		server.getKryo().register(PacketMessage.class);
-		server.getKryo().register(cartes.Carte[].class);
-		server.getKryo().register(cartes.Carte.class);
+		server.getKryo().register(cartes.Card[].class);
+		server.getKryo().register(cartes.Card.class);
 		server.getKryo().register(GameState.class);
 
 		server.start();

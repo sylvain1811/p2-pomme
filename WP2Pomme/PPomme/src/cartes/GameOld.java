@@ -45,11 +45,11 @@ public class GameOld
 	\*------------------------------------------------------------------*/
 	private static GameOld INSTANCE = null;
 
-	static Carte[] carte = new Carte[36];
-	static Carte[] carteJoueur1 = new Carte[12];
-	static Carte[] carteJoueur2 = new Carte[12];
-	static Carte[] carteGagneJoueur1 = new Carte[18];
-	static Carte[] carteGagneJoueur2 = new Carte[18];
+	static Card[] carte = new Card[36];
+	static Card[] carteJoueur1 = new Card[12];
+	static Card[] carteJoueur2 = new Card[12];
+	static Card[] carteGagneJoueur1 = new Card[18];
+	static Card[] carteGagneJoueur2 = new Card[18];
 	static int[] tabcarte = new int[24];
 	static int[] cartePose = new int[2];
 	static int SommeJ1 = 0;
@@ -101,7 +101,7 @@ public class GameOld
 			{
 			for(int j = 0; j < 9; j++) // boucle pour les valeurs
 				{
-				Carte cartes = new Carte(k, i, j);
+				Card cartes = new Card(k, i, j);
 				carte[k] = cartes;
 				k++;
 				}
@@ -137,9 +137,9 @@ public class GameOld
 	//Calcul de qui prend le tour
 	private static int calculGagnantTour()
 		{
-		if (carte[cartePose[0]].getCouleur() == carte[numeroAtout].getCouleur())
+		if (carte[cartePose[0]].getColor() == carte[numeroAtout].getColor())
 			{
-			if (carte[cartePose[0]].getCouleur() != carte[numeroAtout].getCouleur())
+			if (carte[cartePose[0]].getColor() != carte[numeroAtout].getColor())
 				{
 				//Joueur 1 gagne !
 				return 0;
@@ -148,13 +148,13 @@ public class GameOld
 				{
 				//5 : valet, 3 : 9
 				// les deux joueurs ont joué atouts
-				switch(carte[cartePose[0]].getValeur())
+				switch(carte[cartePose[0]].getValue())
 					{
 					case 5:
 						//le joueur 1 gagne
 						return 0;
 					case 3:
-						if (carte[cartePose[1]].getValeur() == 5)
+						if (carte[cartePose[1]].getValue() == 5)
 							{
 							//le joueur 2 prend le 9 d'atout
 							return 1;
@@ -165,7 +165,7 @@ public class GameOld
 							return 0;
 							}
 					default:
-						if (carte[cartePose[1]].getValeur() > carte[cartePose[0]].getValeur())
+						if (carte[cartePose[1]].getValue() > carte[cartePose[0]].getValue())
 							{
 							// Le joueur 1 gagne
 							return 0;
@@ -181,15 +181,15 @@ public class GameOld
 		else
 			{
 			//Pas atout
-			if (carte[cartePose[1]].getCouleur() == carte[numeroAtout].getCouleur())
+			if (carte[cartePose[1]].getColor() == carte[numeroAtout].getColor())
 				{
 				// joueur 2 gagne, il a jouer atout
 				return 1;
 				}
-			else if (carte[cartePose[0]].getCouleur() == carte[cartePose[1]].getCouleur())
+			else if (carte[cartePose[0]].getColor() == carte[cartePose[1]].getColor())
 				{
 				//le joueur a suivi la couleur
-				if (carte[cartePose[0]].getValeur() > carte[cartePose[1]].getValeur())
+				if (carte[cartePose[0]].getValue() > carte[cartePose[1]].getValue())
 					{
 					//Le joueur 1 gagne
 					return 0;
@@ -213,20 +213,20 @@ public class GameOld
 		for(int i = 0; i < 9; i++)
 			{
 			//Comparaison avec le deck du joueur concernant la couleur
-			if (carteJoueur1[i].getCouleur() == carte[numeroAtout].getCouleur())
+			if (carteJoueur1[i].getColor() == carte[numeroAtout].getColor())
 				{
-				if (carteJoueur1[i].getValeur() == 6)
+				if (carteJoueur1[i].getValue() == 6)
 					{
-					Carte temp = carteJoueur1[i];
+					Card temp = carteJoueur1[i];
 					carteJoueur1[i] = carte[numeroAtout];
 					carte[numeroAtout] = temp;
 					}
 				}
-			if (carteJoueur2[i].getCouleur() == carte[numeroAtout].getCouleur())
+			if (carteJoueur2[i].getColor() == carte[numeroAtout].getColor())
 				{
-				if (carteJoueur2[i].getValeur() == 6)
+				if (carteJoueur2[i].getValue() == 6)
 					{
-					Carte temp = carteJoueur2[i];
+					Card temp = carteJoueur2[i];
 					carteJoueur2[i] = carte[numeroAtout];
 					carte[numeroAtout] = temp;
 					}
@@ -332,15 +332,15 @@ public class GameOld
 			}
 		}
 
-	public static int comptagePointsFinal(Carte[] cJoueur)
+	public static int comptagePointsFinal(Card[] cJoueur)
 		{
 		int somme = 0;
 		for(int i = 0; i < 18; i++)
 			{
-			if (cJoueur[i].getCouleur() == carte[numeroAtout].getCouleur())
+			if (cJoueur[i].getColor() == carte[numeroAtout].getColor())
 				{
 				//atout
-				switch(cJoueur[i].getValeur())
+				switch(cJoueur[i].getValue())
 					{
 					case 3:
 						somme += 14;
@@ -349,13 +349,13 @@ public class GameOld
 						somme += 20;
 						break;
 					default: //comptage normal
-						somme += methodeComptage(cJoueur[i].getValeur());
+						somme += methodeComptage(cJoueur[i].getValue());
 						break;
 					}
 				}
 			else
 				{
-				somme += methodeComptage(cJoueur[i].getValeur());
+				somme += methodeComptage(cJoueur[i].getValue());
 				}
 			}
 		return somme;
