@@ -36,7 +36,7 @@ public class JButtonCartes extends JButton
 	|*				Set				*|
 	\*------------------------------*/
 
-	public void setCarte(Card carte)
+	public void setCard(Card carte)
 		{
 		this.carte = carte;
 		URL iconURL = getClass().getResource(carte.getImgPath());
@@ -54,7 +54,7 @@ public class JButtonCartes extends JButton
 	|*				Get				*|
 	\*------------------------------*/
 
-	public Card getCarte()
+	public Card getCard()
 		{
 		return this.carte;
 		}

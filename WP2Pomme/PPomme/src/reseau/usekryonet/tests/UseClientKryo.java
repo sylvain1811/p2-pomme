@@ -22,9 +22,9 @@ public class UseClientKryo
 
 		// PacketMessage paquet = new PacketMessage();
 		PacketMessage paquet = new PacketMessage("pseudo", "Hello");
-		client.envoiPaquet(paquet);
+		client.sendPackage(paquet);
 		paquet.setMessage("Comment va ?");
-		client.envoiPaquet(paquet);
+		client.sendPackage(paquet);
 
 		new JFrameKryo(client);
 		}

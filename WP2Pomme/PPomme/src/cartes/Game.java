@@ -19,7 +19,7 @@ public class Game
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
 
-	public void distribuer()
+	public void distribute()
 		{
 		// Répartir 24 cartes entre deux tableaux aléatoirement. Les cartes doivent être uniques. Garder une carte pour l'atout.
 		// Ces tableaux sont des variables de la classe.
@@ -158,7 +158,7 @@ public class Game
 		return somme;
 		}
 
-	public int calculGagnantTour()
+	public int calculateWinnerTour()
 		{
 		if (tabCardsPose[0].getColor() == tabCards[numberAtout].getColor())
 			{
@@ -235,7 +235,7 @@ public class Game
 	\*------------------------------*/
 
 	// Méthode appelée selon choix du joueur
-	public static Card[] echangerTroisCartes(Card[] tabCardsSources, Card[] indexCardsToReplace)
+	public static Card[] exchangeThreeCards(Card[] tabCardsSources, Card[] indexCardsToReplace)
 		{
 		// Input : tableau 12 cartes, tableau de 3 int (index des cartes ete  remplacer, max 8). Retourne un tableau de 9 cartes.
 		// On passe le tableau de 12 carte, et le tableau des 3 carts été remplacer.
@@ -289,7 +289,7 @@ public class Game
 		this.tabCardsPlayer1 = tabCarteJoueur1;
 		}
 
-	public void setTabCarteJoueur2(Card[] tabCarteJoueur2)
+	public void setTabCardPlayer2(Card[] tabCarteJoueur2)
 		{
 		this.tabCardsPlayer2 = tabCarteJoueur2;
 		}
@@ -305,17 +305,17 @@ public class Game
 
 	// Get sur tous les attributs (pour l'instant)
 
-	public Card[] getTabCarteJoueur1()
+	public Card[] getTabCardPlayer1()
 		{
 		return this.tabCardsPlayer1;
 		}
 
-	public Card[] getTabCarte()
+	public Card[] getTabCard()
 		{
 		return this.tabCards;
 		}
 
-	public Card[] getTabCarteJoueur2()
+	public Card[] getTabCardPlayer2()
 		{
 		return this.tabCardsPlayer2;
 		}

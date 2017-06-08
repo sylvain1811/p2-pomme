@@ -49,7 +49,7 @@ public abstract class JPanelInGame extends JPanel
 	private void geometry()
 		{
 		// JComponent : Instanciation
-		this.btnFinTour = new JButton("Fin du tour");
+		this.btnEndTour = new JButton("Fin du tour");
 		blackline = BorderFactory.createLineBorder(Color.black);
 		jPanelBoard = new JPanelBoard();
 		jPanelBoard.setBorder(blackline);
@@ -66,7 +66,7 @@ public abstract class JPanelInGame extends JPanel
 			}
 
 		// JComponent : add
-		add(this.btnFinTour, BorderLayout.EAST);
+		add(this.btnEndTour, BorderLayout.EAST);
 		add(jPanelBoard, BorderLayout.CENTER);
 		add(jPanelOpponentCard, BorderLayout.NORTH);
 		add(jPanelMyCard, BorderLayout.SOUTH);
@@ -95,7 +95,7 @@ public abstract class JPanelInGame extends JPanel
 	// Tools
 	protected GameState state;
 	private Border blackline;
-	protected JButton btnFinTour;
+	protected JButton btnEndTour;
 	protected JButtonCartes[] tabBtnCartes;
 	private JPanelBoard jPanelBoard;
 	protected JPanelMyCard jPanelMyCard;

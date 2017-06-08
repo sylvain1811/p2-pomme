@@ -68,7 +68,7 @@ public class ClientProgram
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
 
-	public void envoiPaquet(PacketMessage paquet)
+	public void sendPackage(PacketMessage paquet)
 		{
 		client.sendTCP(paquet);
 		}

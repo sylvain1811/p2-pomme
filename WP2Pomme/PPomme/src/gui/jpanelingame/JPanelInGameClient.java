@@ -36,12 +36,12 @@ public class JPanelInGameClient extends JPanelInGame
 			}
 		else
 			{
-			if (stateServeur == GameState.TOURSERVEUR)
+			if (stateServer == GameState.TOURSERVER)
 				{
 				for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
 					{
 					jPanelMyCard.getTabMyCard()[i].setEnabled(false);
-					btnFinTour.setEnabled(false);
+					btnEndTour.setEnabled(false);
 					}
 				}
 			else
@@ -57,15 +57,14 @@ public class JPanelInGameClient extends JPanelInGame
 	public void sendStateClient()
 		{
 		PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.SEND_STATE_CLIENT_TO_SERVER, state);
-		clientProgram.envoiPaquet(paquet);
+		clientProgram.sendPackage(paquet);
 		}
 
-	public void changerAffichageBouton()
+	public void changeDisplayButton()
 		{
-		// TODO Auto-generated method stub
 		for(int i = 0; i < 9; i++)
 			{
-			jPanelMyCard.getTabMyCard()[i].setCarte(cardClient[i]);
+			jPanelMyCard.getTabMyCard()[i].setCard(tabCardClient[i]);
 			}
 		}
 
@@ -73,33 +72,33 @@ public class JPanelInGameClient extends JPanelInGame
 	|*				Set				*|
 	\*------------------------------*/
 
-	public void setCarteJoueurClient(Card[] carteJoueurClient)
+	public void setCardClient(Card[] tabCardClient)
 		{
-		this.cardClient = carteJoueurClient;
-		changerAffichageBouton();
+		this.tabCardClient = tabCardClient;
+		changeDisplayButton();
 		}
 
-	public static void setFinJeu()
+	public static void setEndGame()
 		{
-		//	ACTION DE LA FIN DU JEU
+		//TODO
 		//Afficher fenetre avec score (les deux variable sont rempli, manque juste affichage
 
 		}
 
-	public void echangerTroisCartes(Card[] indexCartesARemplacer)
+	public void exchangeThreeCards(Card[] indexCardsToReplace)
 		{
-		Game.echangerTroisCartes(cardClient, indexCartesARemplacer);
-		changerAffichageBouton();
-		jPanelMyCard.remiseAffichageApresEchangeTroisCartes();
+		Game.exchangeThreeCards(tabCardClient, indexCardsToReplace);
+		changeDisplayButton();
+		jPanelMyCard.resetDisplayAfterExchangeThreeCards();
 		sendNewCardServeur();//Envoie des carte au serveur
-		state = GameState.TOURSERVEUR;
+		state = GameState.TOURSERVER;
 		sendStateClient();
 		tourServerOrTourPlayer();
 		}
 
-	public void setStateUpdate(GameState stateRecup)
+	public void setStateUpdate(GameState state)
 		{
-		stateServeur = stateRecup;
+		stateServer = state;
 		tourServerOrTourPlayer();
 		}
 
@@ -108,29 +107,30 @@ public class JPanelInGameClient extends JPanelInGame
 		scoreClient = score;
 		}
 
-	public static void setCarteAtout(Card carteAtoutRec)
+	public static void setCarteAtout(Card carteAtout2)
 		{
-		carteAtout = carteAtoutRec;
+		cardAtout = carteAtout2;
 		//Afficher l'atout
+		//TODO
 		}
 
-	public static void setUpdateScoreServeur(int score)
+	public static void setUpdateScoreServer(int score)
 		{
 		scoreServer = score;
 		}
 
-	public void setChangementTour(GameState stateRecup)
+	public void setChangeTour(GameState state)
 		{
-		stateServeur = stateRecup;
+		stateServer = state;
 		adjusteStateServerToClient();
 		tourServerOrTourPlayer();
 		}
 
-	public static void setCartePoseParServeur(Card carte) //static OBLIGATOIRE !!
+	public static void setCardPosedToServer(Card card)
 		{
-		cardPoseToServer = carte;
+		cardPosedToServer = card;
 		//Afficher la carte reçu par le serveur
-
+		//TODO
 		}
 	/*------------------------------*\
 	|*				Get				*|
@@ -140,11 +140,11 @@ public class JPanelInGameClient extends JPanelInGame
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/
 
-	private void buttonDisparition(Card carte)
+	private void buttonDisplayInvisible(Card card)
 		{
 		for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
 			{
-			if (jPanelMyCard.getTabMyCard()[i].getCarte() == carte)
+			if (jPanelMyCard.getTabMyCard()[i].getCard() == card)
 				{
 				jPanelMyCard.getTabMyCard()[i].setEnabled(false);
 				jPanelMyCard.getTabMyCard()[i].setVisible(false);
@@ -154,19 +154,19 @@ public class JPanelInGameClient extends JPanelInGame
 
 	private void adjusteStateServerToClient()
 		{
-		state = stateServeur;
+		state = stateServer;
 		tourServerOrTourPlayer();
 		}
 
 	private void sendNewCardServeur()
 		{
-		PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.SEND_PAQUET_CARD_CLIENT_TO_SERVER, cardClient);
-		clientProgram.envoiPaquet(paquet);
+		PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.SEND_PAQUET_CARD_CLIENT_TO_SERVER, tabCardClient);
+		clientProgram.sendPackage(paquet);
 		}
 
 	private void controlBtnEndTour()
 		{
-		this.btnFinTour.addActionListener(new ActionListener()
+		this.btnEndTour.addActionListener(new ActionListener()
 			{
 
 			@Override
@@ -174,9 +174,9 @@ public class JPanelInGameClient extends JPanelInGame
 				{
 				//Afficher carte du client
 				PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.END_OF_TURN); //envoi paquet fin de tour
-				clientProgram.envoiPaquet(paquet);
-				state = GameState.TOURSERVEUR; //change le tour
-				stateServeur = GameState.TOURSERVEUR; // on force pour l'affichage
+				clientProgram.sendPackage(paquet);
+				state = GameState.TOURSERVER; //change le tour
+				stateServer = GameState.TOURSERVER; // on force pour l'affichage
 				sendStateServerChangementTour();
 				sendCarteToServer();
 				}
@@ -185,18 +185,18 @@ public class JPanelInGameClient extends JPanelInGame
 
 	private void sendStateServerChangementTour()
 		{
-		PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.CARD_PLAYED, jPanelMyCard.getTabCarteSurPlateau()[1]);
-		clientProgram.envoiPaquet(paquet);
+		PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.CARD_PLAYED, jPanelMyCard.getTabCardOnBoard()[1]);
+		clientProgram.sendPackage(paquet);
 		PacketMessage paquet2 = new PacketMessage(clientProgram.getPseudo(), PacketMessage.SEND_STATE_CLIENT_TO_SERVER, state);
-		clientProgram.envoiPaquet(paquet2);
+		clientProgram.sendPackage(paquet2);
 		tourServerOrTourPlayer();
 		}
 
 	private void sendCarteToServer()
 		{
-		PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.SEND_CARD_CLIENT_TO_SERVER, jPanelMyCard.getCartePose());
-		buttonDisparition(jPanelMyCard.getCartePose());
-		clientProgram.envoiPaquet(paquet);
+		PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.SEND_CARD_CLIENT_TO_SERVER, jPanelMyCard.getCardPosed());
+		buttonDisplayInvisible(jPanelMyCard.getCardPosed());
+		clientProgram.sendPackage(paquet);
 		}
 
 	/*------------------------------------------------------------------*\
@@ -205,10 +205,10 @@ public class JPanelInGameClient extends JPanelInGame
 
 	// Tools
 	private ClientProgram clientProgram;
-	private Card[] cardClient;
-	private static Card cardPoseToServer;
-	private GameState stateServeur = GameState.ECHANGE;
+	private Card[] tabCardClient;
+	private static Card cardPosedToServer;
+	private GameState stateServer = GameState.ECHANGE;
 	private static int scoreClient;
 	private static int scoreServer;
-	private static Card carteAtout;
+	private static Card cardAtout;
 	}

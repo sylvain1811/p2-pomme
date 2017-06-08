@@ -73,19 +73,19 @@ public class CustomListenerServer extends CustomListener
 			switch(paquet.getCode())
 				{
 				case PacketMessage.SEND_PAQUET_CARD_CLIENT_TO_SERVER:
-					traiterRecuperationTabCarte(paquet.getTabCarte());
+					RecoveryTabCard(paquet.getTabCards());
 					break;
 				case PacketMessage.SEND_CARD_CLIENT_TO_SERVER:
-					traiterEnvoieCarteClientToServeur(paquet.getCarte());
+					sendCardClientToServer(paquet.getCard());
 					break;
 				case PacketMessage.SEND_STATE_CLIENT_TO_SERVER:
-					traiterState(paquet.getState());
+					changeState(paquet.getState());
 					break;
 				case PacketMessage.END_OF_TURN:
-					traiterStateFinDeTour(paquet.getState());
+					changeStateEndOfTour(paquet.getState());
 					break;
 				case PacketMessage.CARD_PLAYED:
-					traiterCartePose(paquet.getCarte());
+					sendCardPosed(paquet.getCard());
 					break;
 				default:
 					break;
@@ -107,39 +107,39 @@ public class CustomListenerServer extends CustomListener
 			}
 		}
 
-	private void traiterRecuperationTabCarte(Card[] tabCartes)
+	private void RecoveryTabCard(Card[] tabCards)
 		{
 		// TODO
 		jPanelInGameServer = (JPanelInGameServer)(JFrameHome.getInstance().getjPanelInGame());
-		jPanelInGameServer.setMAJCarteClient(tabCartes);
+		jPanelInGameServer.setUpdateCardClient(tabCards);
 		}
 
-	private void traiterEnvoieCarteClientToServeur(Card carte)
+	private void sendCardClientToServer(Card card)
 		{
 		// TODO
 		jPanelInGameServer = (JPanelInGameServer)(JFrameHome.getInstance().getjPanelInGame());
-		jPanelInGameServer.setCartePoseParClient(carte);
+		jPanelInGameServer.setCardPosedToClient(card);
 		}
 
-	private void traiterState(GameState state)
+	private void changeState(GameState state)
 		{
 		// TODO
 		jPanelInGameServer = (JPanelInGameServer)(JFrameHome.getInstance().getjPanelInGame());
 		jPanelInGameServer.setStateClientUpdate(state);
 		}
 
-	private void traiterCartePose(Card carte)
+	private void sendCardPosed(Card card)
 		{
 		// TODO
 		jPanelInGameServer = (JPanelInGameServer)(JFrameHome.getInstance().getjPanelInGame());
-		jPanelInGameServer.setCarteAdverse(carte);
+		jPanelInGameServer.setCardAdverse(card);
 		}
 
-	private void traiterStateFinDeTour(GameState state)
+	private void changeStateEndOfTour(GameState state)
 		{
 		// TODO
 		jPanelInGameServer = (JPanelInGameServer)(JFrameHome.getInstance().getjPanelInGame());
-		jPanelInGameServer.setChangementTour(state);
+		jPanelInGameServer.setChangeTour(state);
 		}
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|

@@ -5,7 +5,7 @@ package gui.jpanelingame;
 
 public enum GameState
 {
-DEMMARAGE(1),ECHANGE(2),TOURSERVEUR(3),TOURCLIENT(4),FIN(5);
+DEMMARAGE(1),ECHANGE(2),TOURSERVER(3),TOURCLIENT(4),FIN(5);
 
 	/*------------------------------------------------------------------*\
 	|*							Constructeurs							*|

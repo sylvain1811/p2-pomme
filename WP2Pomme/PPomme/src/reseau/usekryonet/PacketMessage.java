@@ -52,11 +52,11 @@ public class PacketMessage implements Serializable
 		this.code = code;
 		}
 
-	public PacketMessage(String pseudo, int code, Card carte)
+	public PacketMessage(String pseudo, int code, Card card)
 		{
 		this.pseudoFrom = pseudo;
 		this.code = code;
-		this.carte = carte;
+		this.card = card;
 		}
 
 	public PacketMessage(String pseudo, int code, int score)
@@ -66,11 +66,11 @@ public class PacketMessage implements Serializable
 		this.score = score;
 		}
 
-	public PacketMessage(String pseudo, int code, Card[] tabCarte)
+	public PacketMessage(String pseudo, int code, Card[] tabCards)
 		{
 		this.pseudoFrom = pseudo;
 		this.code = code;
-		this.tabCarte = tabCarte;
+		this.cards = tabCards;
 		}
 
 	/*------------------------------*\
@@ -101,14 +101,14 @@ public class PacketMessage implements Serializable
 	|*				Get				*|
 	\*------------------------------*/
 
-	public Card[] getTabCarte()
+	public Card[] getTabCards()
 		{
-		return this.tabCarte;
+		return this.cards;
 		}
 
-	public Card getCarte()
+	public Card getCard()
 		{
-		return this.carte;
+		return this.card;
 		}
 
 	public String getMessage()
@@ -138,8 +138,8 @@ public class PacketMessage implements Serializable
 	private String pseudoFrom;
 	private int code;
 	private int score;
-	private Card[] tabCarte = null;
-	private Card carte = null;
+	private Card[] cards = null;
+	private Card card = null;
 	private GameState state = null;
 
 	/*------------------------------*\

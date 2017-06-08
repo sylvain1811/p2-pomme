@@ -79,7 +79,7 @@ public class ServerProgram
 		//System.out.println(listClient);
 		}
 
-	public void envoiPaquet(PacketMessage paquet)
+	public void sendPackage(PacketMessage paquet)
 		{
 		this.listClient.get(0).sendTCP(paquet);
 		}
