@@ -53,7 +53,7 @@ public class CustomListenerClient extends CustomListener
 		// Si le code est vaut 100 ou plus alors c'est une erruer.
 		if (paquet.getCode() < PacketMessage.ERROR_SERVER_FULL)
 			{
-			clientProgram.log("New message from " + paquet.getPseudoFrom() + " : " + paquet.getMessage());
+			//clientProgram.log("New message from " + paquet.getPseudoFrom() + " : " + paquet.getMessage());
 			//System.out.println("[" + paquet.getPseudoFrom() + " say ]: Message received from server : " + paquet.getMessage());
 			switch(paquet.getCode())
 				{
@@ -81,6 +81,8 @@ public class CustomListenerClient extends CustomListener
 				case PacketMessage.SEND_CARD_ATOUT_SERVER_TO_CLIENT:
 					sendCardAtout(paquet.getCard());
 					break;
+				case PacketMessage.SEND_IS_FIRST_PLAYER:
+					sendIsFirst(paquet.getFirst());
 				default:
 					break;
 				}
@@ -101,6 +103,11 @@ public class CustomListenerClient extends CustomListener
 			}
 		}
 
+	private void sendIsFirst(boolean isFirst)
+	{
+	jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());
+	JPanelInGameClient.setIsFirst(isFirst);
+	}
 	private void endOfGame()
 		{
 		jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());

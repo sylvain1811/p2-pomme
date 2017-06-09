@@ -44,11 +44,22 @@ public class JPanelInGameClient extends JPanelInGame
 					btnEndTour.setEnabled(false);
 					}
 				}
+			else if(stateServer == GameState.ECHANGE)
+				{
+				for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
+					{
+					jPanelMyCard.getTabMyCard()[i].setEnabled(false);
+					}
+				}
 			else
 				{
 				for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
 					{
 					jPanelMyCard.getTabMyCard()[i].setEnabled(true);
+					if(firstPlayer == false && stateServer != GameState.ECHANGE)
+						{
+						canPlayCards();
+						}
 					}
 				}
 			}
@@ -114,6 +125,10 @@ public class JPanelInGameClient extends JPanelInGame
 		//TODO
 		}
 
+	public static void setIsFirst(boolean isFirst)
+	{
+		firstPlayer = isFirst;
+	}
 	public static void setUpdateScoreServer(int score)
 		{
 		scoreServer = score;
@@ -156,6 +171,34 @@ public class JPanelInGameClient extends JPanelInGame
 		{
 		state = stateServer;
 		tourServerOrTourPlayer();
+		}
+
+	private void canPlayCards()
+		{
+		boolean canPlaySuite = false;
+		for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
+			{
+			jPanelMyCard.getTabMyCard()[i].setEnabled(false);
+			//TODO
+			if (jPanelMyCard.getTabMyCard()[i].getCard().getColor() == cardAtout.getColor())
+				{
+				jPanelMyCard.getTabMyCard()[i].setEnabled(true);
+				}
+			if (jPanelMyCard.getTabMyCard()[i].getCard().getColor() == /*Mettre carte adverse couleur*/ cardAtout.getColor() && jPanelMyCard.getTabMyCard()[i].isVisible() == true )
+				{
+				//Peut suivre
+				jPanelMyCard.getTabMyCard()[i].setEnabled(true);
+				canPlaySuite = true;
+				}
+			}
+		System.out.println(canPlaySuite);
+		if (canPlaySuite == false)
+			{
+			for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
+				{
+				jPanelMyCard.getTabMyCard()[i].setEnabled(true);
+				}
+			}
 		}
 
 	private void sendNewCardServeur()
@@ -211,4 +254,5 @@ public class JPanelInGameClient extends JPanelInGame
 	private static int scoreClient;
 	private static int scoreServer;
 	private static Card cardAtout;
+	private static boolean firstPlayer;
 	}

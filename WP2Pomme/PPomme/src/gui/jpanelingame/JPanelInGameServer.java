@@ -30,7 +30,9 @@ public class JPanelInGameServer extends JPanelInGame
 		listCardClientWin = new ArrayList<>();
 		endGame = false;
 		game = new Game();
-		game.distribute(); //Distribution des cartes
+		game.distribute();
+		clientStart = false;
+		//sendIsClientFirst(clientStart);
 		sendDitribute();
 		state = GameState.ECHANGE;
 		sendStateClient();
@@ -68,6 +70,10 @@ public class JPanelInGameServer extends JPanelInGame
 			for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
 				{
 				jPanelMyCard.getTabMyCard()[i].setEnabled(true);
+				if (clientStart == true)
+					{
+					canPlayCards();
+					}
 				}
 			}
 		}
@@ -132,12 +138,16 @@ public class JPanelInGameServer extends JPanelInGame
 		if (jPanelMyCard.getTwoPlayerPlayed() == true)
 			{
 			calculateWinner();
+			//clientStart = true;
 			serverStartTour = true;
 			}
 		else
 			{
+			//TODO
+			canPlayCards();
 			jPanelMyCard.setTwoPlayerPlayed(true);
 			serverStartTour = false;
+			clientStart = false;
 			}
 		}
 	/*------------------------------*\
@@ -162,16 +172,20 @@ public class JPanelInGameServer extends JPanelInGame
 				//Afficher carte du serveur
 				if (jPanelMyCard.getTwoPlayerPlayed() == true)
 					{
+					sendIsClientFirst(clientStart);
 					sendStateClientChangeTour(); //Envoie state du serveur au client et change l'affichage du serveur
 					sendCardToClient();
 					calculateWinner();
 					}
 				else
 					{
+					clientStart = false;
+					sendIsClientFirst(clientStart);
 					state = GameState.TOURCLIENT;
 					stateClient = GameState.TOURCLIENT; // on force pour l'affichage
 					sendStateClientChangeTour(); //Envoie state du serveur au client et change l'affichage du serveur
 					sendCardToClient();
+					serverStartTour = true;
 					jPanelMyCard.setTwoPlayerPlayed(true);
 					}
 				}
@@ -224,8 +238,10 @@ public class JPanelInGameServer extends JPanelInGame
 
 	private void calculateWinner()
 		{
+		System.out.println(serverStartTour);
 		if (serverStartTour == true)
 			{
+			System.out.println("ici");
 			game.setTabCartePose(jPanelMyCard.getTabCardOnBoard());
 			winner = game.calculateWinnerTour();
 			}
@@ -236,9 +252,19 @@ public class JPanelInGameServer extends JPanelInGame
 			jPanelMyCard.setTabCardOnBoard(temp, 1);
 			game.setTabCartePose(jPanelMyCard.getTabCardOnBoard());
 			winner = game.calculateWinnerTour();
+			if (winner == 1)
+				{
+				winner = 0;
+				}
+			else
+				{
+				winner = 1;
+				}
 			}
+		System.out.println(winner);
 		if (winner == 0)
 			{
+			System.out.println("serveur win");
 			listCardServerWin.add(jPanelMyCard.getTabCardOnBoard()[0]);
 			listCardServerWin.add(jPanelMyCard.getTabCardOnBoard()[1]);
 			//TODO Faire disparaitre les cartes après un petit moment
@@ -254,6 +280,8 @@ public class JPanelInGameServer extends JPanelInGame
 			jPanelMyCard.setTabCardOnBoard(null, 0); //Suppression des carte sur le plateau
 			jPanelMyCard.setTabCardOnBoard(null, 1);
 			jPanelMyCard.setTwoPlayerPlayed(false);
+			clientStart = true;
+			sendIsClientFirst(clientStart);
 			state = GameState.TOURCLIENT;
 			stateClient = GameState.TOURCLIENT; // on force pour l'affichage
 			sendStateClientChangeTour(); //Envoie state du serveur au client et change l'affichage du serveur
@@ -283,6 +311,12 @@ public class JPanelInGameServer extends JPanelInGame
 		serverProgram.sendPackage(paquet);
 		}
 
+	private void sendIsClientFirst(boolean isClientFirst)
+		{
+		PacketMessage paquet = new PacketMessage(serverProgram.getPseudo(), PacketMessage.SEND_IS_FIRST_PLAYER, isClientFirst);
+		serverProgram.sendPackage(paquet);
+		}
+
 	private void sendCardAtout(Card carteAtout)
 		{
 		PacketMessage paquet = new PacketMessage(serverProgram.getPseudo(), PacketMessage.SEND_CARD_ATOUT_SERVER_TO_CLIENT, carteAtout);
@@ -302,7 +336,33 @@ public class JPanelInGameServer extends JPanelInGame
 				{
 				jPanelMyCard.getTabMyCard()[i].setEnabled(false);
 				jPanelMyCard.getTabMyCard()[i].setVisible(false);
+				}
+			}
+		}
 
+	private void canPlayCards()
+		{
+		boolean canPlaySuite = false;
+		for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
+			{
+			jPanelMyCard.getTabMyCard()[i].setEnabled(false);
+			//TODO
+			if (jPanelMyCard.getTabMyCard()[i].getCard().getColor() == game.getTabCard()[game.getNumeroAtout()].getColor())
+				{
+				jPanelMyCard.getTabMyCard()[i].setEnabled(true);
+				}
+			if (jPanelMyCard.getTabMyCard()[i].getCard().getColor() == /*Mettre carte adverse couleur*/ game.getTabCard()[game.getNumeroAtout()].getColor() && jPanelMyCard.getTabMyCard()[i].isVisible() == true)
+				{
+				//Peut suivre
+				jPanelMyCard.getTabMyCard()[i].setEnabled(true);
+				canPlaySuite = true;
+				}
+			}
+		if (canPlaySuite == false)
+			{
+			for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
+				{
+				jPanelMyCard.getTabMyCard()[i].setEnabled(true);
 				}
 			}
 		}
@@ -310,6 +370,15 @@ public class JPanelInGameServer extends JPanelInGame
 	private void sendDitribute()
 		{
 		// TODO Auto-generated method stub
+		try
+			{
+			Thread.sleep(200);
+			}
+		catch (InterruptedException e)
+			{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			}
 		PacketMessage paquet = new PacketMessage(serverProgram.getPseudo(), PacketMessage.START_GAME_DISTRIBUTION, game.getTabCardPlayer2());
 		serverProgram.sendPackage(paquet);
 		}
@@ -337,4 +406,5 @@ public class JPanelInGameServer extends JPanelInGame
 	private boolean serverStartTour;
 	private int scoreServer;
 	private int scoreClient;
+	private boolean clientStart;
 	}

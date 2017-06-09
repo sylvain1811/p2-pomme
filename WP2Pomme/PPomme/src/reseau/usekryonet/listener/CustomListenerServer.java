@@ -68,7 +68,7 @@ public class CustomListenerServer extends CustomListener
 		// Si le code est vaut 100 ou plus alors c'est une erruer.
 		if (paquet.getCode() < PacketMessage.ERROR_SERVER_FULL)
 			{
-			serverProgram.log("New message from " + paquet.getPseudoFrom() + " : " + paquet.getMessage());
+			//serverProgram.log("New message from " + paquet.getPseudoFrom() + " : " + paquet.getMessage());
 			//System.out.println("[" + paquet.getPseudoFrom() + " say ]: Message received from server : " + paquet.getMessage());
 			switch(paquet.getCode())
 				{
