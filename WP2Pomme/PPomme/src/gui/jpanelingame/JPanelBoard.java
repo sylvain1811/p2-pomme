@@ -23,9 +23,6 @@ public class JPanelBoard extends JPanel
 		geometry();
 		control();
 		appearance();
-		addMyCard(new Card(1, 2, 3));
-		addOpponentCard(new Card(16, 23, 4));
-		addAtout(new Card(25, 17, 5));
 		}
 
 	/*------------------------------------------------------------------*\
@@ -98,6 +95,17 @@ public class JPanelBoard extends JPanel
 		this.repaint();
 		this.revalidate();
 		}
+	public void clearCards(){
+		opponentCard.clear();
+		myCard.clear();
+		this.repaint();
+		this.revalidate();
+	}
+	public void clearAtout(){
+		atout.clear();
+		this.repaint();
+		this.revalidate();
+	}
 
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
