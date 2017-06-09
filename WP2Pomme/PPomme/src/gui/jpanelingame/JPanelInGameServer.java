@@ -179,6 +179,7 @@ public class JPanelInGameServer extends JPanelInGame
 			@Override
 			public void actionPerformed(ActionEvent e)
 				{
+				btnEndTour.setEnabled(false);
 				PacketMessage paquet = new PacketMessage(serverProgram.getPseudo(), PacketMessage.END_OF_TURN);
 				serverProgram.sendPackage(paquet);
 				sendCardToClient();

@@ -242,6 +242,7 @@ public class JPanelInGameClient extends JPanelInGame
 			@Override
 			public void actionPerformed(ActionEvent e)
 				{
+				btnEndTour.setEnabled(false);
 				//Afficher carte du client
 				PacketMessage paquet = new PacketMessage(clientProgram.getPseudo(), PacketMessage.END_OF_TURN); //envoi paquet fin de tour
 				clientProgram.sendPackage(paquet);
