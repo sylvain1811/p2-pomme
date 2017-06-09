@@ -238,7 +238,6 @@ public class JPanelInGameServer extends JPanelInGame
 
 	private void calculateWinner()
 		{
-		System.out.println(serverStartTour);
 		if (serverStartTour == true)
 			{
 			System.out.println("ici");
@@ -261,10 +260,8 @@ public class JPanelInGameServer extends JPanelInGame
 				winner = 1;
 				}
 			}
-		System.out.println(winner);
 		if (winner == 0)
 			{
-			System.out.println("serveur win");
 			listCardServerWin.add(jPanelMyCard.getTabCardOnBoard()[0]);
 			listCardServerWin.add(jPanelMyCard.getTabCardOnBoard()[1]);
 			//TODO Faire disparaitre les cartes après un petit moment
