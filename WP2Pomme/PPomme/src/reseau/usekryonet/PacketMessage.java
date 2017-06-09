@@ -150,10 +150,10 @@ public class PacketMessage implements Serializable
 	private String pseudoFrom;
 	private int code;
 	private int score;
-	private Card[] cards = null;
-	private Card card = null;
-	private GameState state = null;
-	private boolean isFirst = false;
+	private Card[] cards;
+	private Card card;
+	private GameState state;
+	private boolean isFirst;
 
 	/*------------------------------*\
 	|*			  Static			*|
@@ -168,7 +168,7 @@ public class PacketMessage implements Serializable
 	public static final int SEND_CARD_CLIENT_TO_SERVER = 6; // Envoie de la carte joué au serveur
 	public static final int SEND_STATE_CLIENT_TO_SERVER = 7; // Envoie du state du client au serveur
 	public static final int SEND_STATE_SERVER_TO_CLIENT = 8; // Envoie du state du serveur au client
-	public static final int SEND_CARD_SERVER_TO_CLIENT = 9; // Envoie de la carte joué au client
+	public final static int SEND_CARD_SERVER_TO_CLIENT = 9; // Envoie de la carte joué au client
 	public static final int SEND_PAQUET_CARD_CLIENT_TO_SERVER = 10; // envoie le jeu du client au serveur
 	public static final int SEND_SCORE_SERVER_TO_CLIENT_CLIENT = 11; // Envoie du score au client
 	public static final int SEND_SCORE_SERVER_TO_CLIENT_SERVER = 12; //

@@ -32,6 +32,7 @@ public class JPanelMyCard extends JPanel
 		tabCardOnBoard[0] = null;
 		tabCardOnBoard[1] = null;
 		twoPlayerPlayed = false;
+		jPanelBoard.myCard.setVisible(false);
 		if (JFrameHome.getInstance().getServer() == null)
 			{
 			isServer = false;
@@ -160,6 +161,7 @@ public class JPanelMyCard extends JPanel
 					//cote serveur
 					((JPanelInGameServer)jPanelInGame).exchangeThreeCards(cardToExchange);
 					}
+				jPanelBoard.myCard.setVisible(true);
 				}
 			});
 
@@ -171,6 +173,7 @@ public class JPanelMyCard extends JPanel
 				{
 				JButtonCartes card = (JButtonCartes)e.getSource();
 				cardPosed = card.getCard();
+				jPanelBoard.addMyCard(card.getCard());
 				if (jPanelInGame.state == GameState.ECHANGE)
 					{
 					}
@@ -194,7 +197,6 @@ public class JPanelMyCard extends JPanel
 
 			private void playCard(JButtonCartes card)
 				{
-				jPanelBoard.addMyCard(card.getCard());
 				if (jPanelInGame.getState() == GameState.TOURCLIENT)
 					{
 					jPanelInGame.state = GameState.TOURSERVER;
@@ -289,6 +291,11 @@ public class JPanelMyCard extends JPanel
 			}
 		}
 
+	public JPanelBoard getJPanelBoard()
+		{
+		return this.jPanelBoard;
+		}
+
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
@@ -298,7 +305,7 @@ public class JPanelMyCard extends JPanel
 	private JButton threeCards;
 	private JButtonCartes[] tabCardChange;
 	private JPanelInGame jPanelInGame;
-	public JPanelBoard jPanelBoard;
+	private JPanelBoard jPanelBoard;
 	private Card[] tabCardOnBoard;
 	private Card cardPosed; //On mettra la carte posé
 	private boolean isServer;

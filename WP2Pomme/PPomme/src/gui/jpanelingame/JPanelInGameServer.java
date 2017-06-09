@@ -33,12 +33,13 @@ public class JPanelInGameServer extends JPanelInGame
 		game.distribute();
 		clientStart = false;
 		sendDitribute();
+		sendCardAtout(game.getTabCard()[game.getNumeroAtout()]);
 		state = GameState.ECHANGE;
 		stateClient = GameState.ECHANGE;
 		sendStateClient();
 		changeDisplayButton();
+		jPanelMyCard.getJPanelBoard().addAtout(game.getTabCard()[game.getNumeroAtout()]);
 		controlBtnEndTour();
-		sendCardAtout(game.getTabCard()[game.getNumeroAtout()]);
 		}
 
 	/*------------------------------------------------------------------*\
@@ -77,7 +78,8 @@ public class JPanelInGameServer extends JPanelInGame
 				}
 			}
 		else
-			{for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
+			{
+			for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
 				{
 				jPanelMyCard.getTabMyCard()[i].setEnabled(false);
 				}
@@ -138,6 +140,7 @@ public class JPanelInGameServer extends JPanelInGame
 		{
 		this.cardClient = cardClient;
 		jPanelMyCard.setTabCardOnBoard(this.cardClient, 1);
+		jPanelMyCard.getJPanelBoard().addOpponentCard(this.cardClient);
 		//Afficher carte client sur le serveur
 		//TODO
 		//jPanelMyCard.jPanelBoard.addOpponentCard(cardClient);
@@ -271,6 +274,10 @@ public class JPanelInGameServer extends JPanelInGame
 			jPanelMyCard.setTabCardOnBoard(null, 0);
 			jPanelMyCard.setTabCardOnBoard(null, 1);
 			//TODO Faire disparaitre les cartes après un petit moment
+			/**
+			 * Parti a finir, faire disparaitre après un petit moment
+			 *
+			 */
 			jPanelMyCard.setTwoPlayerPlayed(false);
 			state = GameState.TOURSERVER;
 			stateClient = GameState.TOURSERVER; // on force pour l'affichage
@@ -282,6 +289,11 @@ public class JPanelInGameServer extends JPanelInGame
 			listCardClientWin.add(jPanelMyCard.getTabCardOnBoard()[1]);
 			jPanelMyCard.setTabCardOnBoard(null, 0);
 			jPanelMyCard.setTabCardOnBoard(null, 1);
+			/**
+			 * Parti a finir, faire disparaitre après un petit moment
+			 *
+			 */
+			//jPanelMyCard.jPanelBoard.addMyCard(null);
 			jPanelMyCard.setTwoPlayerPlayed(false);
 			clientStart = true;
 			sendIsClientFirst(clientStart);

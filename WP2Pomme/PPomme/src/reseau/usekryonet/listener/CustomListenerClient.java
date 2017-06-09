@@ -67,7 +67,7 @@ public class CustomListenerClient extends CustomListener
 					changeStateEndOfTour(paquet.getState());
 					break;
 				case PacketMessage.SEND_CARD_SERVER_TO_CLIENT:
-					snedCardServerToClient(paquet.getCard());
+					sendCardServerToClient(paquet.getCard());
 					break;
 				case PacketMessage.SEND_SCORE_SERVER_TO_CLIENT_CLIENT:
 					sendScoreClient(paquet.getScore());
@@ -104,17 +104,18 @@ public class CustomListenerClient extends CustomListener
 		}
 
 	private void sendIsFirst(boolean isFirst)
-	{
-	jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());
-	JPanelInGameClient.setIsFirst(isFirst);
-	}
+		{
+		jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());
+		JPanelInGameClient.setIsFirst(isFirst);
+		}
+
 	private void endOfGame()
 		{
 		jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());
 		JPanelInGameClient.setEndGame();
 		}
 
-	private void snedCardServerToClient(Card card)
+	private void sendCardServerToClient(Card card)
 		{
 		jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());
 		JPanelInGameClient.setCardPosedToServer(card);
