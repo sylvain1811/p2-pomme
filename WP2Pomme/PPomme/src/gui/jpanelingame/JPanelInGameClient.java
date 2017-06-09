@@ -108,7 +108,6 @@ public class JPanelInGameClient extends JPanelInGame
 		sendStateClient();
 		tourServerOrTourPlayer();
 		cleanDisplay();
-
 		}
 
 	public void setStateUpdate(GameState state)
@@ -130,7 +129,6 @@ public class JPanelInGameClient extends JPanelInGame
 	public static void setIsFirst(boolean isFirst)
 		{
 		firstPlayer = isFirst;
-		cleanDisplay();
 		}
 
 	public static void setUpdateScoreServer(int score)
@@ -150,6 +148,18 @@ public class JPanelInGameClient extends JPanelInGame
 		cardPosedToServer = card;
 		//Afficher la carte reçu par le serveur
 		jPanelMyCard.getJPanelBoard().addOpponentCard(cardPosedToServer);
+		if (jPanelMyCard.getJPanelBoard().getMyCard().getHeight() != 0)
+			{
+			try
+				{
+				Thread.sleep(2000);
+				}
+			catch (InterruptedException e1)
+				{
+				e1.printStackTrace();
+				}
+			jPanelMyCard.getJPanelBoard().clearCards(); //Le client avais déjà joué, on attend 3 seconde pour laisser le temps de voir la carte
+			}
 		}
 	/*------------------------------*\
 	|*				Get				*|
@@ -182,7 +192,7 @@ public class JPanelInGameClient extends JPanelInGame
 		boolean canPlaySuite = false;
 		for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
 			{
-			jPanelMyCard.getJPanelBoard().addOpponentCard(cardPosedToServer);
+			//jPanelMyCard.getJPanelBoard().addOpponentCard(cardPosedToServer);
 			jPanelMyCard.getTabMyCard()[i].setEnabled(false);
 			if (jPanelMyCard.getTabMyCard()[i].getCard().getColor() == cardAtout.getColor())
 				{
@@ -204,16 +214,8 @@ public class JPanelInGameClient extends JPanelInGame
 			}
 		}
 
-	private static void cleanDisplay()
+	private void cleanDisplay()
 		{
-		try
-			{
-			Thread.sleep(3000);
-			}
-		catch (InterruptedException e)
-			{
-			e.printStackTrace();
-			}
 		jPanelMyCard.getJPanelBoard().clearCards();
 		}
 
@@ -238,6 +240,19 @@ public class JPanelInGameClient extends JPanelInGame
 				stateServer = GameState.TOURSERVER; // on force pour l'affichage
 				sendStateServerChangementTour();
 				sendCarteToServer();
+				if (jPanelMyCard.getJPanelBoard().getCardOpponent().getHeight() != 0)//le clean ne met a pas a null pour le client WTF
+					{
+					try
+						{
+						System.out.println("ici");
+						Thread.sleep(500);
+						}
+					catch (InterruptedException e1)
+						{
+						e1.printStackTrace();
+						}
+					cleanDisplay(); //Le serveur avais déjà posé, on nettoye après 0,5 seconde
+					}
 				}
 			});
 		}

@@ -89,6 +89,16 @@ public class JPanelBoard extends JPanel
 		this.revalidate();
 		}
 
+	public JLabelCards getMyCard()
+	{
+		return myCard;
+	}
+
+	public JLabelCards getCardOpponent()
+	{
+		return opponentCard;
+	}
+
 	public void addAtout(Card carte)
 		{
 		atout.setCard(carte);
@@ -112,8 +122,8 @@ public class JPanelBoard extends JPanel
 	\*------------------------------------------------------------------*/
 
 	// Tools
-	JLabelCards opponentCard;
-	JLabelCards myCard;
-	JLabelCards atout;
-	GridLayout gridlayout;
+	private JLabelCards opponentCard = null;
+	private JLabelCards myCard = null;
+	private JLabelCards atout;
+	private GridLayout gridlayout;
 	}

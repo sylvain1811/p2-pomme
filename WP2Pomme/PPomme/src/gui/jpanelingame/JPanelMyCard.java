@@ -34,7 +34,7 @@ public class JPanelMyCard extends JPanel
 		tabCardOnBoard[0] = null;
 		tabCardOnBoard[1] = null;
 		twoPlayerPlayed = false;
-		jPanelBoard.myCard.setVisible(false);
+		jPanelBoard.getMyCard().setVisible(false);
 		if (JFrameHome.getInstance().getServer() == null)
 			{
 			isServer = false;
@@ -161,7 +161,7 @@ public class JPanelMyCard extends JPanel
 					//cote serveur
 					((JPanelInGameServer)jPanelInGame).exchangeThreeCards(cardToExchange);
 					}
-				jPanelBoard.myCard.setVisible(true);
+				jPanelBoard.getMyCard().setVisible(true);
 				}
 			});
 
