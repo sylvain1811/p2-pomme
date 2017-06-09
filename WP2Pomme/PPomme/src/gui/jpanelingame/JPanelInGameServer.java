@@ -86,6 +86,12 @@ public class JPanelInGameServer extends JPanelInGame
 			}
 		}
 
+	public void sendCardClientToServeurTwo(Card carteServer)
+		{
+		PacketMessage paquet = new PacketMessage(serverProgram.getPseudo(), PacketMessage.SEND_CARD_SERVER_TO_CLIENT, carteServer);
+		serverProgram.sendPackage(paquet);
+		}
+
 	public void sendStateClient()
 		{
 		PacketMessage paquet = new PacketMessage(serverProgram.getPseudo(), PacketMessage.SEND_STATE_SERVER_TO_CLIENT, state);
@@ -142,8 +148,6 @@ public class JPanelInGameServer extends JPanelInGame
 		jPanelMyCard.setTabCardOnBoard(this.cardClient, 1);
 		jPanelMyCard.getJPanelBoard().addOpponentCard(this.cardClient);
 		//Afficher carte client sur le serveur
-		//TODO
-		//jPanelMyCard.jPanelBoard.addOpponentCard(cardClient);
 		if (jPanelMyCard.getTwoPlayerPlayed() == true)
 			{
 			calculateWinner();
@@ -175,14 +179,12 @@ public class JPanelInGameServer extends JPanelInGame
 				{
 				PacketMessage paquet = new PacketMessage(serverProgram.getPseudo(), PacketMessage.END_OF_TURN);
 				serverProgram.sendPackage(paquet);
+				sendCardToClient();
 				//Si on le serveur est le deuxieme a jouer
-				//Afficher carte du serveur
-				//jPanelMyCard.jPanelBoard.addMyCard(cardClient);
 				if (jPanelMyCard.getTwoPlayerPlayed() == true)
 					{
 					sendIsClientFirst(clientStart);
 					sendStateClientChangeTour(); //Envoie state du serveur au client et change l'affichage du serveur
-					sendCardToClient();
 					calculateWinner();
 					}
 				else
@@ -191,7 +193,6 @@ public class JPanelInGameServer extends JPanelInGame
 					sendIsClientFirst(clientStart);
 					state = GameState.TOURCLIENT;
 					stateClient = GameState.TOURCLIENT; // on force pour l'affichage
-					sendCardToClient();
 					sendStateClientChangeTour(); //Envoie state du serveur au client et change l'affichage du serveur
 					serverStartTour = true;
 					jPanelMyCard.setTwoPlayerPlayed(true);
@@ -273,11 +274,6 @@ public class JPanelInGameServer extends JPanelInGame
 			listCardServerWin.add(jPanelMyCard.getTabCardOnBoard()[1]);
 			jPanelMyCard.setTabCardOnBoard(null, 0);
 			jPanelMyCard.setTabCardOnBoard(null, 1);
-			//TODO Faire disparaitre les cartes après un petit moment
-			/**
-			 * Parti a finir, faire disparaitre après un petit moment
-			 *
-			 */
 			jPanelMyCard.setTwoPlayerPlayed(false);
 			state = GameState.TOURSERVER;
 			stateClient = GameState.TOURSERVER; // on force pour l'affichage
@@ -289,11 +285,6 @@ public class JPanelInGameServer extends JPanelInGame
 			listCardClientWin.add(jPanelMyCard.getTabCardOnBoard()[1]);
 			jPanelMyCard.setTabCardOnBoard(null, 0);
 			jPanelMyCard.setTabCardOnBoard(null, 1);
-			/**
-			 * Parti a finir, faire disparaitre après un petit moment
-			 *
-			 */
-			//jPanelMyCard.jPanelBoard.addMyCard(null);
 			jPanelMyCard.setTwoPlayerPlayed(false);
 			clientStart = true;
 			sendIsClientFirst(clientStart);

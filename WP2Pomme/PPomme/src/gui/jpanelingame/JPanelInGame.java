@@ -40,7 +40,7 @@ public abstract class JPanelInGame extends JPanel
 
 	public JPanelMyCard getjPanelMyCard()
 		{
-		return this.jPanelMyCard;
+		return JPanelInGame.jPanelMyCard;
 		}
 
 	/*------------------------------------------------------------------*\
@@ -108,6 +108,6 @@ public abstract class JPanelInGame extends JPanel
 	protected JButton btnEndTour;
 	protected JButtonCartes[] tabBtnCartes;
 	protected JPanelBoard jPanelBoard;
-	protected JPanelMyCard jPanelMyCard;
+	protected static JPanelMyCard jPanelMyCard;
 	private JPanelOpponentCard jPanelOpponentCard;
 	}

@@ -23,7 +23,6 @@ public class JPanelInGameClient extends JPanelInGame
 		state = GameState.DEMMARAGE;
 		stateServer = GameState.ECHANGE;
 		state = GameState.ECHANGE;
-		//adjusteStateServerToClient();
 		controlBtnEndTour();
 		}
 
@@ -124,10 +123,6 @@ public class JPanelInGameClient extends JPanelInGame
 	public static void setCarteAtout(Card carteAtout2)
 		{
 		cardAtout = carteAtout2;
-		//Afficher l'atout
-		//TODO
-		//jPanelMyCard..addAtout(cardAtout);
-
 		}
 
 	public static void setIsFirst(boolean isFirst)
@@ -150,11 +145,8 @@ public class JPanelInGameClient extends JPanelInGame
 	public static void setCardPosedToServer(Card card)
 		{
 		cardPosedToServer = card;
-		System.out.println(cardPosedToServer.getColor());
 		//Afficher la carte reçu par le serveur
-		//TODO
-		System.out.println(cardPosedToServer.getColor());
-		//jPanelMyCard.jPanelBoard.addOpponentCard(cardPosedToServer);
+		jPanelMyCard.getJPanelBoard().addOpponentCard(cardPosedToServer);
 		}
 	/*------------------------------*\
 	|*				Get				*|
@@ -191,7 +183,6 @@ public class JPanelInGameClient extends JPanelInGame
 			System.out.println(jPanelMyCard.getTabMyCard()[i].getCard().getColor());
 			System.out.println(cardPosedToServer.getColor());
 			jPanelMyCard.getTabMyCard()[i].setEnabled(false);
-			//TODO
 			if (jPanelMyCard.getTabMyCard()[i].getCard().getColor() == cardAtout.getColor())
 				{
 				jPanelMyCard.getTabMyCard()[i].setEnabled(true);
