@@ -30,6 +30,10 @@ public class JLabelCards extends JLabel
 		setVerticalTextPosition(SwingConstants.BOTTOM);
 		setFont (getFont ().deriveFont (32.0f));
 		}
+	public void clear(){
+		carte=null;
+		setIcon(null);
+	}
 	/*------------------------------------------------------------------*\
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
