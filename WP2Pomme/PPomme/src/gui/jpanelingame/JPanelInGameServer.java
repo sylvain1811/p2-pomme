@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import cartes.Card;
 import cartes.Game;
 import reseau.usekryonet.PacketMessage;
@@ -242,7 +244,15 @@ public class JPanelInGameServer extends JPanelInGame
 	private void screenEndOfGame()
 		{
 		//Partie fin du jeu
-		//Afficher fenetre avec score (les deux variable sont rempli, manque juste affichage
+		JOptionPane d = new JOptionPane();
+		int retour = JOptionPane.showConfirmDialog(this,
+		                                 "Score du joueur 1 (serveur) : " + scoreServer + "\n score du joueur 2 (client) : "+ scoreClient,
+		                                 "Fin du jeu : Score",
+		                                 JOptionPane.DEFAULT_OPTION);
+		if(retour == JOptionPane.OK_OPTION)
+			{
+			System.exit(0);
+			}
 		}
 
 	private void calculateWinner()

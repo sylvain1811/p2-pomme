@@ -4,8 +4,11 @@ package gui.jpanelingame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JOptionPane;
+
 import cartes.Card;
 import cartes.Game;
+import gui.JFrameHome;
 import reseau.usekryonet.ClientProgram;
 import reseau.usekryonet.PacketMessage;
 
@@ -93,9 +96,15 @@ public class JPanelInGameClient extends JPanelInGame
 
 	public static void setEndGame()
 		{
-		//TODO
-		//Afficher fenetre avec score (les deux variable sont rempli, manque juste affichage
-
+		JOptionPane d = new JOptionPane();
+		int retour = JOptionPane.showConfirmDialog(JFrameHome.getInstance(),
+		                                 "Score du joueur 1 (serveur) : " + scoreServer + "\n score du joueur 2 (client) : "+ scoreClient,
+		                                 "Fin du jeu : Score",
+		                                 JOptionPane.DEFAULT_OPTION);
+		if(retour == JOptionPane.OK_OPTION)
+			{
+			System.exit(0);
+			}
 		}
 
 	public void exchangeThreeCards(Card[] indexCardsToReplace)
@@ -244,7 +253,6 @@ public class JPanelInGameClient extends JPanelInGame
 					{
 					try
 						{
-						System.out.println("ici");
 						Thread.sleep(500);
 						}
 					catch (InterruptedException e1)
