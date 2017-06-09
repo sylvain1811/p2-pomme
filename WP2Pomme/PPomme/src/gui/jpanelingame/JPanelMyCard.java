@@ -3,10 +3,12 @@ package gui.jpanelingame;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -54,7 +56,6 @@ public class JPanelMyCard extends JPanel
 		{
 		for(int i = 0; i < 9; i++)
 			{
-			tabMyCard[i].setBackground(Color.WHITE);
 			threeCards.setEnabled(false);
 			}
 		}
@@ -145,7 +146,6 @@ public class JPanelMyCard extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 				{
-				// TODO Auto-generated method stub
 				//appeler méthode de changement 3 carte
 				Card[] cardToExchange = new Card[3];
 				for(int i = 0; i < 3; i++)
@@ -211,26 +211,12 @@ public class JPanelMyCard extends JPanel
 					((JPanelInGameServer)jPanelInGame).changeDisplayButton();
 					((JPanelInGameServer)jPanelInGame).tourServerOrTourClient();
 					}
-				if (tabCardOnBoard[0] != null)
-					{
-					}
-				if (tabCardOnBoard[1] != null)
-					{
-					}
-				for(int i = 0; i < 9; i++)
-					{
-					if (tabMyCard[i] == card)
-						{
-						//Supprimer la case du tableau
-						}
-					}
 				resetDisplay();
 				}
 			};
 		for(int i = 0; i < 9; i++)
 			{
 			tabMyCard[i].addActionListener(actionListenerButtonCartes);
-			tabMyCard[i].setBackground(Color.WHITE);
 			}
 		}
 
@@ -255,6 +241,7 @@ public class JPanelMyCard extends JPanel
 					{
 					tabCardChange[i] = null;
 					cardToExchange.setBackground(Color.WHITE);
+					cardToExchange.setBorder(BorderFactory.createLineBorder(Color.BLUE,0));
 					toExchange = true;
 					}
 				i++;
@@ -267,7 +254,9 @@ public class JPanelMyCard extends JPanel
 					if (tabCardChange[y] == null)
 						{
 						tabCardChange[y] = cardToExchange;
-						cardToExchange.setBackground(Color.GRAY);
+						cardToExchange.setBorderPainted(true);
+						cardToExchange.setMargin(new Insets(5, 5, 5, 5));
+						cardToExchange.setBorder(BorderFactory.createLineBorder(Color.BLUE,5));
 						toExchange = true;
 						}
 					}

@@ -107,6 +107,8 @@ public class JPanelInGameClient extends JPanelInGame
 		state = GameState.TOURSERVER;
 		sendStateClient();
 		tourServerOrTourPlayer();
+		cleanDisplay();
+
 		}
 
 	public void setStateUpdate(GameState state)
@@ -128,6 +130,7 @@ public class JPanelInGameClient extends JPanelInGame
 	public static void setIsFirst(boolean isFirst)
 		{
 		firstPlayer = isFirst;
+		cleanDisplay();
 		}
 
 	public static void setUpdateScoreServer(int score)
@@ -180,8 +183,6 @@ public class JPanelInGameClient extends JPanelInGame
 		for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
 			{
 			jPanelMyCard.getJPanelBoard().addOpponentCard(cardPosedToServer);
-			System.out.println(jPanelMyCard.getTabMyCard()[i].getCard().getColor());
-			System.out.println(cardPosedToServer.getColor());
 			jPanelMyCard.getTabMyCard()[i].setEnabled(false);
 			if (jPanelMyCard.getTabMyCard()[i].getCard().getColor() == cardAtout.getColor())
 				{
@@ -201,6 +202,19 @@ public class JPanelInGameClient extends JPanelInGame
 				jPanelMyCard.getTabMyCard()[i].setEnabled(true);
 				}
 			}
+		}
+
+	private static void cleanDisplay()
+		{
+		try
+			{
+			Thread.sleep(3000);
+			}
+		catch (InterruptedException e)
+			{
+			e.printStackTrace();
+			}
+		jPanelMyCard.getJPanelBoard().clearCards();
 		}
 
 	private void sendNewCardServeur()

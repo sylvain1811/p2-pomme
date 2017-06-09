@@ -54,6 +54,7 @@ public class JPanelInGameServer extends JPanelInGame
 		state = GameState.TOURSERVER;
 		sendStateClient();
 		tourServerOrTourClient();
+		cleanDisplay();
 		}
 
 	public void tourServerOrTourClient()
@@ -126,7 +127,6 @@ public class JPanelInGameServer extends JPanelInGame
 		for(int i = 0; i < 9; i++)
 			{
 			jPanelMyCard.getTabMyCard()[i].setCard(cardServer[i]);
-			jPanelMyCard.getTabMyCard()[i].setText(String.valueOf(cardServer[i].getNumber()));
 			}
 		}
 
@@ -292,7 +292,22 @@ public class JPanelInGameServer extends JPanelInGame
 			stateClient = GameState.TOURCLIENT; // on force pour l'affichage
 			sendStateClientChangeTour(); //Envoie state du serveur au client et change l'affichage du serveur
 			}
+		try
+			{
+			Thread.sleep(3000);
+			}
+		catch (InterruptedException e)
+			{
+			e.printStackTrace();
+			}
+		cleanDisplay();
 		endOfGame();
+		}
+
+	private void cleanDisplay()
+		{
+
+		jPanelMyCard.getJPanelBoard().clearCards();
 		}
 
 	private void sendCardToClient()
@@ -374,14 +389,12 @@ public class JPanelInGameServer extends JPanelInGame
 
 	private void sendDitribute()
 		{
-		// TODO Auto-generated method stub
 		try
 			{
 			Thread.sleep(200);
 			}
 		catch (InterruptedException e)
 			{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			}
 		PacketMessage paquet = new PacketMessage(serverProgram.getPseudo(), PacketMessage.START_GAME_DISTRIBUTION, game.getTabCardPlayer2());
