@@ -205,9 +205,6 @@ public class JPanelMyCard extends JPanel
 
 				else if (jPanelInGame.getState() == GameState.TOURSERVER)
 					{
-						{
-						tabCardOnBoard[0] = card.getCard(); //le serveur sera toujours a 0
-						}
 					((JPanelInGameServer)jPanelInGame).sendStateClient();
 					((JPanelInGameServer)jPanelInGame).changeDisplayButton();
 					((JPanelInGameServer)jPanelInGame).tourServerOrTourClient();
@@ -301,7 +298,7 @@ public class JPanelMyCard extends JPanel
 	private JButton threeCards;
 	private JButtonCartes[] tabCardChange;
 	private JPanelInGame jPanelInGame;
-	private JPanelBoard jPanelBoard;
+	public JPanelBoard jPanelBoard;
 	private Card[] tabCardOnBoard;
 	private Card cardPosed; //On mettra la carte posé
 	private boolean isServer;

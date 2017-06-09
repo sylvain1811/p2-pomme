@@ -56,7 +56,7 @@ public class JPanelInGameClient extends JPanelInGame
 				for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
 					{
 					jPanelMyCard.getTabMyCard()[i].setEnabled(true);
-					if(firstPlayer == false && stateServer != GameState.ECHANGE)
+					if(firstPlayer == false && stateServer != GameState.ECHANGE && cardPosedToServer !=null)
 						{
 						canPlayCards();
 						}
@@ -144,7 +144,9 @@ public class JPanelInGameClient extends JPanelInGame
 	public static void setCardPosedToServer(Card card)
 		{
 		cardPosedToServer = card;
+		System.out.println(cardPosedToServer.getColor());
 		//Afficher la carte reçu par le serveur
+
 		//TODO
 		}
 	/*------------------------------*\
@@ -178,20 +180,21 @@ public class JPanelInGameClient extends JPanelInGame
 		boolean canPlaySuite = false;
 		for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
 			{
+			System.out.println(jPanelMyCard.getTabMyCard()[i].getCard().getColor());
+			System.out.println(cardPosedToServer.getColor());
 			jPanelMyCard.getTabMyCard()[i].setEnabled(false);
 			//TODO
 			if (jPanelMyCard.getTabMyCard()[i].getCard().getColor() == cardAtout.getColor())
 				{
 				jPanelMyCard.getTabMyCard()[i].setEnabled(true);
 				}
-			if (jPanelMyCard.getTabMyCard()[i].getCard().getColor() == /*Mettre carte adverse couleur*/ cardAtout.getColor() && jPanelMyCard.getTabMyCard()[i].isVisible() == true )
+			if (jPanelMyCard.getTabMyCard()[i].getCard().getColor() == cardPosedToServer.getColor() && jPanelMyCard.getTabMyCard()[i].isVisible() == true )
 				{
 				//Peut suivre
 				jPanelMyCard.getTabMyCard()[i].setEnabled(true);
 				canPlaySuite = true;
 				}
 			}
-		System.out.println(canPlaySuite);
 		if (canPlaySuite == false)
 			{
 			for(int i = 0; i < jPanelMyCard.getTabMyCard().length; i++)
