@@ -1,5 +1,7 @@
+
 package gui.jpanelingame;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
 import javax.swing.JPanel;
@@ -41,15 +43,18 @@ public class JPanelBoard extends JPanel
 		{
 		// JComponent : Instanciation
 		// Layout : Specification
+		opponentCard = new JLabelCards();
+		myCard = new JLabelCards();
+		atout = new JLabelCards();
 			{
-			gridlayout = new GridLayout(2,1);
-			setLayout(gridlayout);
-
+			BorderLayout borderLayout = new BorderLayout();
+			setLayout(borderLayout);
 			// flowlayout.setHgap(20);
 			// flowlayout.setVgap(20);
 			}
-
-		// JComponent : add
+		add(atout, BorderLayout.WEST);
+		add(opponentCard, BorderLayout.NORTH);
+		add(myCard, BorderLayout.SOUTH);
 		}
 
 	private void control()
@@ -61,22 +66,27 @@ public class JPanelBoard extends JPanel
 		{
 		// rien
 		}
-	public void addMyCard(Card carte){
-		myCard =  new JLabelCards(carte);
-		add(myCard);
+
+	public void addMyCard(Card carte)
+		{
+		myCard.setCard(carte);
 		this.repaint();
 		this.revalidate();
-	}
-	public void addOpponentCard(Card carte){
-		opponentCard =  new JLabelCards(carte);
-		add(opponentCard);
+		}
+
+	public void addOpponentCard(Card carte)
+		{
+		opponentCard.setCard(carte);
 		this.repaint();
 		this.revalidate();
-	}
-	public void addAtout(Card carte){
-		atout =  new JLabelCards(carte);
-		add(atout);
-	}
+		}
+
+	public void addAtout(Card carte)
+		{
+		atout.setCard(carte);
+		this.repaint();
+		this.revalidate();
+		}
 
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|

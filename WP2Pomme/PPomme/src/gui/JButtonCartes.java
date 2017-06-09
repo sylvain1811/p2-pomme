@@ -47,7 +47,6 @@ public class JButtonCartes extends JButton
 		setContentAreaFilled(false);
 		setBorder(null);
 		setIcon(picture);
-
 		}
 
 	/*------------------------------*\
