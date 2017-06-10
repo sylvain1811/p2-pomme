@@ -69,7 +69,7 @@ public class JFrameKryo extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent e)
 				{
-				client.envoiPaquet(new PacketMessage("pseudo", "btnPressed"));
+				client.sendPackage(new PacketMessage("pseudo", "btnPressed"));
 				}
 			});
 		}

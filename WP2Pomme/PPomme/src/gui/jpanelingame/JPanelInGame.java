@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+import cartes.Card;
 import gui.JButtonCartes;
 
 public abstract class JPanelInGame extends JPanel
@@ -39,7 +40,7 @@ public abstract class JPanelInGame extends JPanel
 
 	public JPanelMyCard getjPanelMyCard()
 		{
-		return this.jPanelMyCard;
+		return JPanelInGame.jPanelMyCard;
 		}
 
 	/*------------------------------------------------------------------*\
@@ -49,11 +50,11 @@ public abstract class JPanelInGame extends JPanel
 	private void geometry()
 		{
 		// JComponent : Instanciation
-		this.btnFinTour = new JButton("Fin du tour");
+		this.btnEndTour = new JButton("Fin du tour");
 		blackline = BorderFactory.createLineBorder(Color.black);
 		jPanelBoard = new JPanelBoard();
 		jPanelBoard.setBorder(blackline);
-		jPanelMyCard = new JPanelMyCard(this,jPanelBoard);
+		jPanelMyCard = new JPanelMyCard(this, jPanelBoard);
 		jPanelOpponentCard = new JPanelOpponentCard();
 
 		// Layout : Specification
@@ -66,7 +67,7 @@ public abstract class JPanelInGame extends JPanel
 			}
 
 		// JComponent : add
-		add(this.btnFinTour, BorderLayout.EAST);
+		add(this.btnEndTour, BorderLayout.EAST);
 		add(jPanelBoard, BorderLayout.CENTER);
 		add(jPanelOpponentCard, BorderLayout.NORTH);
 		add(jPanelMyCard, BorderLayout.SOUTH);
@@ -85,19 +86,28 @@ public abstract class JPanelInGame extends JPanel
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
-
+	public JPanelBoard getBoard()
+		{
+		return this.jPanelBoard;
+		}
 
 	public GameState getState()
 		{
 		return this.state;
 		}
 
+	public Card getCard()
+		{
+		return this.card;
+		}
+
 	// Tools
 	protected GameState state;
+	protected Card card;
 	private Border blackline;
-	protected JButton btnFinTour;
+	protected JButton btnEndTour;
 	protected JButtonCartes[] tabBtnCartes;
-	private JPanelBoard jPanelBoard;
-	protected JPanelMyCard jPanelMyCard;
+	protected JPanelBoard jPanelBoard;
+	protected static JPanelMyCard jPanelMyCard;
 	private JPanelOpponentCard jPanelOpponentCard;
 	}

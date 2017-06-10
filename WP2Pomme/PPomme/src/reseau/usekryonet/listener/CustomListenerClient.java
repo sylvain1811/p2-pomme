@@ -5,7 +5,7 @@ import javax.swing.JOptionPane;
 
 import com.esotericsoftware.kryonet.Connection;
 
-import cartes.Carte;
+import cartes.Card;
 import gui.JFrameHome;
 import gui.jpanelingame.GameState;
 import gui.jpanelingame.JPanelInGameClient;
@@ -53,34 +53,36 @@ public class CustomListenerClient extends CustomListener
 		// Si le code est vaut 100 ou plus alors c'est une erruer.
 		if (paquet.getCode() < PacketMessage.ERROR_SERVER_FULL)
 			{
-			clientProgram.log("New message from " + paquet.getPseudoFrom() + " : " + paquet.getMessage());
+			//clientProgram.log("New message from " + paquet.getPseudoFrom() + " : " + paquet.getMessage());
 			//System.out.println("[" + paquet.getPseudoFrom() + " say ]: Message received from server : " + paquet.getMessage());
 			switch(paquet.getCode())
 				{
 				case PacketMessage.START_GAME_DISTRIBUTION:
-					traiterCasDistribution(paquet.getTabCarte());
+					distribute(paquet.getTabCards());
 					break;
 				case PacketMessage.SEND_STATE_SERVER_TO_CLIENT:
-					traiterState(paquet.getState());
+					changeState(paquet.getState());
 					break;
 				case PacketMessage.END_OF_TURN:
-					traiterStateFinDeTour(paquet.getState());
+					changeStateEndOfTour(paquet.getState());
 					break;
 				case PacketMessage.SEND_CARD_SERVER_TO_CLIENT:
-					traiterEnvoieCarteServeurToClient(paquet.getCarte());
+					sendCardServerToClient(paquet.getCard());
 					break;
 				case PacketMessage.SEND_SCORE_SERVER_TO_CLIENT_CLIENT:
-					traiterScoreClient(paquet.getScore());
+					sendScoreClient(paquet.getScore());
 					break;
 				case PacketMessage.SEND_SCORE_SERVER_TO_CLIENT_SERVER:
-					traiterScoreServeur(paquet.getScore());
+					sendScoreServer(paquet.getScore());
 					break;
-				case PacketMessage.FIN_JEU:
-					traiterFinJeu();
+				case PacketMessage.END_GAME:
+					endOfGame();
 					break;
 				case PacketMessage.SEND_CARD_ATOUT_SERVER_TO_CLIENT:
-					traiterCarteAtout(paquet.getCarte());
+					sendCardAtout(paquet.getCard());
 					break;
+				case PacketMessage.SEND_IS_FIRST_PLAYER:
+					sendIsFirst(paquet.getFirst());
 				default:
 					break;
 				}
@@ -101,73 +103,79 @@ public class CustomListenerClient extends CustomListener
 			}
 		}
 
-	private void traiterFinJeu()
+	private void sendIsFirst(boolean isFirst)
 		{
 		jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());
-		JPanelInGameClient.setFinJeu();
+		JPanelInGameClient.setIsFirst(isFirst);
 		}
 
-	private void traiterEnvoieCarteServeurToClient(Carte carte)
+	private void endOfGame()
 		{
 		jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());
-		JPanelInGameClient.setCartePoseParServeur(carte);
+		JPanelInGameClient.setEndGame();
 		}
 
-	private void traiterScoreClient(int score)
+	private void sendCardServerToClient(Card card)
+		{
+		jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());
+		JPanelInGameClient.setCardPosedToServer(card);
+		}
+
+	private void sendScoreClient(int score)
 		{
 		jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());
 		JPanelInGameClient.setUpdateScoreClient(score);
 		}
 
-	private void traiterCarteAtout(Carte carteAtout)
+	private void sendCardAtout(Card cardAtout)
 		{
 		jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());
-		JPanelInGameClient.setCarteAtout(carteAtout);
+		JPanelInGameClient.setCarteAtout(cardAtout);
 		}
 
-	private void traiterScoreServeur(int score)
+	private void sendScoreServer(int score)
 		{
 		jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());
-		JPanelInGameClient.setUpdateScoreServeur(score);
+		JPanelInGameClient.setUpdateScoreServer(score);
 		}
 
-	private void traiterCasDistribution(Carte[] tabCartes)
+	private void distribute(Card[] tabCards)
 		{
-		// TODO Améliorer l'attente du jpanel
+		// TODO
 		jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());
 		while(jPanelInGameClient == null)
 			{
 			try
 				{
 				Thread.sleep(100);
-				jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());
 				}
 			catch (InterruptedException e)
 				{
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 				}
 			}
-		jPanelInGameClient.setCarteJoueurClient(tabCartes);
+		jPanelInGameClient.setCardClient(tabCards);
 		}
 
-	private void traiterState(GameState state)
+	private void changeState(GameState state)
 		{
 		// TODO
 		jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());
 		jPanelInGameClient.setStateUpdate(state);
 		}
 
-	private void traiterStateFinDeTour(GameState state)
+	private void changeStateEndOfTour(GameState state)
 		{
 		// TODO
 		jPanelInGameClient = (JPanelInGameClient)(JFrameHome.getInstance().getjPanelInGame());
-		jPanelInGameClient.setChangementTour(state);
+		jPanelInGameClient.setChangeTour(state);
 		}
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
 
-	// Inputs
+	// Input
 	private ClientProgram clientProgram;
 	private JPanelInGameClient jPanelInGameClient;
 	}

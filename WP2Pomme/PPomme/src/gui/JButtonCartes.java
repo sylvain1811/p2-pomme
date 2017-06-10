@@ -9,7 +9,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-import cartes.Carte;
+import cartes.Card;
 
 public class JButtonCartes extends JButton
 	{
@@ -36,7 +36,7 @@ public class JButtonCartes extends JButton
 	|*				Set				*|
 	\*------------------------------*/
 
-	public void setCarte(Carte carte)
+	public void setCard(Card carte)
 		{
 		this.carte = carte;
 		URL iconURL = getClass().getResource(carte.getImgPath());
@@ -47,14 +47,13 @@ public class JButtonCartes extends JButton
 		setContentAreaFilled(false);
 		setBorder(null);
 		setIcon(picture);
-
 		}
 
 	/*------------------------------*\
 	|*				Get				*|
 	\*------------------------------*/
 
-	public Carte getCarte()
+	public Card getCard()
 		{
 		return this.carte;
 		}
@@ -66,6 +65,6 @@ public class JButtonCartes extends JButton
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
-	private Carte carte;
+	private Card carte;
 
 	}

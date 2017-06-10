@@ -3,7 +3,7 @@ package reseau.usekryonet;
 
 import java.io.Serializable;
 
-import cartes.Carte;
+import cartes.Card;
 import gui.jpanelingame.GameState;
 
 /**
@@ -52,11 +52,11 @@ public class PacketMessage implements Serializable
 		this.code = code;
 		}
 
-	public PacketMessage(String pseudo, int code, Carte carte)
+	public PacketMessage(String pseudo, int code, Card card)
 		{
 		this.pseudoFrom = pseudo;
 		this.code = code;
-		this.carte = carte;
+		this.card = card;
 		}
 
 	public PacketMessage(String pseudo, int code, int score)
@@ -66,17 +66,23 @@ public class PacketMessage implements Serializable
 		this.score = score;
 		}
 
-	public PacketMessage(String pseudo, int code, Carte[] tabCarte)
+	public PacketMessage(String pseudo, int code, Card[] tabCards)
 		{
 		this.pseudoFrom = pseudo;
 		this.code = code;
-		this.tabCarte = tabCarte;
+		this.cards = tabCards;
+		}
+
+	public PacketMessage(String pseudo, int code, boolean isFirst)
+		{
+		this.pseudoFrom = pseudo;
+		this.code = code;
+		this.isFirst = isFirst;
 		}
 
 	/*------------------------------*\
 	|*				Set				*|
 	\*------------------------------*/
-
 
 	public String getPseudoFrom()
 		{
@@ -101,14 +107,14 @@ public class PacketMessage implements Serializable
 	|*				Get				*|
 	\*------------------------------*/
 
-	public Carte[] getTabCarte()
+	public Card[] getTabCards()
 		{
-		return this.tabCarte;
+		return this.cards;
 		}
 
-	public Carte getCarte()
+	public Card getCard()
 		{
-		return this.carte;
+		return this.card;
 		}
 
 	public String getMessage()
@@ -125,9 +131,15 @@ public class PacketMessage implements Serializable
 		{
 		return this.score;
 		}
+
 	public GameState getState()
 		{
 		return this.state;
+		}
+
+	public boolean getFirst()
+		{
+		return this.isFirst;
 		}
 
 	/*------------------------------------------------------------------*\
@@ -138,9 +150,10 @@ public class PacketMessage implements Serializable
 	private String pseudoFrom;
 	private int code;
 	private int score;
-	private Carte[] tabCarte = null;
-	private Carte carte = null;
-	private GameState state = null;
+	private Card[] cards;
+	private Card card;
+	private GameState state;
+	private boolean isFirst;
 
 	/*------------------------------*\
 	|*			  Static			*|
@@ -155,14 +168,13 @@ public class PacketMessage implements Serializable
 	public static final int SEND_CARD_CLIENT_TO_SERVER = 6; // Envoie de la carte joué au serveur
 	public static final int SEND_STATE_CLIENT_TO_SERVER = 7; // Envoie du state du client au serveur
 	public static final int SEND_STATE_SERVER_TO_CLIENT = 8; // Envoie du state du serveur au client
-	public static final int SEND_CARD_SERVER_TO_CLIENT = 9; // Envoie de la carte joué au client
-	public static final int SEND_PAQUET_CARD_CLIENT_TO_SERVER = 10;	// envoie le jeu du client au serveur
+	public final static int SEND_CARD_SERVER_TO_CLIENT = 9; // Envoie de la carte joué au client
+	public static final int SEND_PAQUET_CARD_CLIENT_TO_SERVER = 10; // envoie le jeu du client au serveur
 	public static final int SEND_SCORE_SERVER_TO_CLIENT_CLIENT = 11; // Envoie du score au client
 	public static final int SEND_SCORE_SERVER_TO_CLIENT_SERVER = 12; //
-	public static final int FIN_JEU = 13; //
+	public static final int END_GAME = 13; //fin du jeu
 	public static final int SEND_CARD_ATOUT_SERVER_TO_CLIENT = 14; //Carte Atout
-
-
+	public static final int SEND_IS_FIRST_PLAYER = 15; //Envoie si le client est le premier ou pas
 
 	// Les erreurs ont un code de 100 ou plus
 	public static final int ERROR_SERVER_FULL = 100;

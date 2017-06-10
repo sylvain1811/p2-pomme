@@ -33,8 +33,8 @@ public class ServerProgram
 		server = new Server();
 
 		server.getKryo().register(PacketMessage.class);
-		server.getKryo().register(cartes.Carte[].class);
-		server.getKryo().register(cartes.Carte.class);
+		server.getKryo().register(cartes.Card[].class);
+		server.getKryo().register(cartes.Card.class);
 		server.getKryo().register(GameState.class);
 
 		server.start();
@@ -79,7 +79,7 @@ public class ServerProgram
 		//System.out.println(listClient);
 		}
 
-	public void envoiPaquet(PacketMessage paquet)
+	public void sendPackage(PacketMessage paquet)
 		{
 		this.listClient.get(0).sendTCP(paquet);
 		}

@@ -1,29 +1,39 @@
 
 package gui;
 
-import java.awt.Dimension;
+import java.net.URL;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
-import cartes.Carte;
+import cartes.Card;
 
-public class JLabelCartes extends JLabel
+public class JLabelCards extends JLabel
 	{
 
 	/*------------------------------------------------------------------*\
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
-	public JLabelCartes(Carte carte)
+	public JLabelCards()
 		{
-		super();
+		}
+	public void setCard(Card carte)
+		{
 		this.carte = carte;
-		Dimension size  = new Dimension(100,100);
-		setPreferredSize(size);
-		setMinimumSize(size);
-		setMaximumSize(size);
-		setText(""+carte.getNumber());
+		URL iconURL = getClass().getResource(carte.getImgPath());
+		Icon picture = new ImageIcon(iconURL);
+		setBorder(null);
+		setIcon(picture);
+		setHorizontalTextPosition(SwingConstants.CENTER);
+		setVerticalTextPosition(SwingConstants.BOTTOM);
+		setFont (getFont ().deriveFont (32.0f));
+		}
+	public void clear(){
+		carte=null;
+		setIcon(null);
 	}
-
 	/*------------------------------------------------------------------*\
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
@@ -43,6 +53,6 @@ public class JLabelCartes extends JLabel
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
-	private Carte carte;
+	private Card carte;
 	}
 

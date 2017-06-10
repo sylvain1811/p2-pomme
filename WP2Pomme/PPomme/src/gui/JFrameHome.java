@@ -71,6 +71,7 @@ public class JFrameHome extends JFrame
 		ImageIcon icon = new ImageIcon(iconURL);
 		setIconImage(icon.getImage());
 		setTitle("Jeu de la pomme");
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 

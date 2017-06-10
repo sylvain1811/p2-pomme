@@ -1,11 +1,15 @@
+
 package gui.jpanelingame;
 
+import java.awt.BorderLayout;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
-import cartes.Carte;
-import gui.JLabelCartes;
+import cartes.Card;
+import gui.JLabelCards;
 
 public class JPanelBoard extends JPanel
 	{
@@ -40,17 +44,25 @@ public class JPanelBoard extends JPanel
 	private void geometry()
 		{
 		// JComponent : Instanciation
-		//atout =  new JLabelCartes(carte);
 		// Layout : Specification
-			{
-			gridlayout = new GridLayout(2,1);
-			setLayout(gridlayout);
+		opponentCard = new JLabelCards();
+		myCard = new JLabelCards();
+		atout = new JLabelCards();
+		atout.setText("Atout");
+		JPanel content = new JPanel();
+		GridBagLayout gridBag = new GridBagLayout();
+		setLayout(gridBag);
 
-			// flowlayout.setHgap(20);
-			// flowlayout.setVgap(20);
-			}
+		BorderLayout borderLayout = new BorderLayout();
+		borderLayout.setHgap(20);
+		borderLayout.setVgap(20);
+		content.setLayout(borderLayout);
+		content.setBorder(new EmptyBorder(5, 50, 5, 0) );
+		add(atout);
+		content.add(opponentCard, BorderLayout.NORTH);
+		content.add(myCard, BorderLayout.SOUTH);
+		add(content);
 
-		// JComponent : add
 		}
 
 	private void control()
@@ -62,21 +74,47 @@ public class JPanelBoard extends JPanel
 		{
 		// rien
 		}
-	public void addMyCard(Carte carte){
-		myCard =  new JLabelCartes(carte);
-		add(myCard);
+
+	public void addMyCard(Card carte)
+		{
+		myCard.setCard(carte);
+		this.repaint();
+		this.revalidate();
+		}
+
+	public void addOpponentCard(Card carte)
+		{
+		opponentCard.setCard(carte);
+		this.repaint();
+		this.revalidate();
+		}
+
+	public JLabelCards getMyCard()
+	{
+		return myCard;
+	}
+
+	public JLabelCards getCardOpponent()
+	{
+		return opponentCard;
+	}
+
+	public void addAtout(Card carte)
+		{
+		atout.setCard(carte);
+		this.repaint();
+		this.revalidate();
+		}
+	public void clearCards(){
+		opponentCard.clear();
+		myCard.clear();
 		this.repaint();
 		this.revalidate();
 	}
-	public void addOpponentCard(Carte carte){
-		opponentCard =  new JLabelCartes(carte);
-		add(opponentCard);
+	public void clearAtout(){
+		atout.clear();
 		this.repaint();
 		this.revalidate();
-	}
-	public void addAtout(Carte carte){
-		atout =  new JLabelCartes(carte);
-		add(atout);
 	}
 
 	/*------------------------------------------------------------------*\
@@ -84,8 +122,8 @@ public class JPanelBoard extends JPanel
 	\*------------------------------------------------------------------*/
 
 	// Tools
-	JLabelCartes opponentCard;
-	JLabelCartes myCard;
-	JLabelCartes atout;
-	GridLayout gridlayout;
+	private JLabelCards opponentCard = null;
+	private JLabelCards myCard = null;
+	private JLabelCards atout;
+	private GridLayout gridlayout;
 	}
