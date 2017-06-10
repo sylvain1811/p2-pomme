@@ -41,6 +41,68 @@ public class ClientProgram
 		this(pseudo, addresseServer, ClientProgram.PORT_TCP);
 		}
 
+	/*------------------------------------------------------------------*\
+	|*							Methodes Public							*|
+	\*------------------------------------------------------------------*/
+
+	public boolean isReady()
+		{
+		return isReady;
+		}
+
+	public void sendPackage(PacketMessage paquet)
+		{
+		client.sendTCP(paquet);
+		}
+
+	public List<InetAddress> getListServer()
+		{
+		return listServerDispo;
+		}
+
+	public boolean connectToServer(String addresse)
+		{
+		try
+			{
+			client.connect(ClientProgram.MAX_WAITING_MS, addresse, ClientProgram.PORT_TCP, ClientProgram.PORT_UDP);
+			log("Connected to server at " + addresse);
+			isReady = true;
+			}
+		catch (IOException e)
+			{
+			logErr("Unable to connect to " + addresse);
+			isReady = false;
+			}
+		return isReady;
+		}
+
+	/*------------------------------*\
+	|*				Set				*|
+	\*------------------------------*/
+
+	/*------------------------------*\
+	|*				Get				*|
+	\*------------------------------*/
+
+	public String getPseudo()
+		{
+		return this.pseudo;
+		}
+
+	/*------------------------------------------------------------------*\
+	|*							Methodes Private						*|
+	\*------------------------------------------------------------------*/
+
+	public void log(String message)
+		{
+		System.out.println("[<client> " + this.pseudo + " say ]: " + message);
+		}
+
+	public void logErr(String message)
+		{
+		System.err.println("[<client> " + this.pseudo + " say ]: " + message);
+		}
+
 	private void startKryoClient()
 		{
 		client = new Client();
@@ -57,61 +119,19 @@ public class ClientProgram
 			{
 			this.listServerDispo = client.discoverHosts(ClientProgram.PORT_UDP, ClientProgram.MAX_WAITING_MS);
 			//System.out.println(listServerDispo);
+			isReady = true;
 			}
 		else
 			{
-			connectToServer(this.addresseServer);
+			if (connectToServer(this.addresseServer))
+				{
+				isReady = true;
+				}
+			else
+				{
+				isReady = false;
+				}
 			}
-		}
-
-	/*------------------------------------------------------------------*\
-	|*							Methodes Public							*|
-	\*------------------------------------------------------------------*/
-
-	public void sendPackage(PacketMessage paquet)
-		{
-		client.sendTCP(paquet);
-		}
-
-	public List<InetAddress> getListServer()
-		{
-		return listServerDispo;
-		}
-
-	public void connectToServer(String addresse)
-		{
-		try
-			{
-			client.connect(ClientProgram.MAX_WAITING_MS, addresse, ClientProgram.PORT_TCP, ClientProgram.PORT_UDP);
-			log("Connected to server at " + addresse);
-			}
-		catch (IOException e)
-			{
-			logErr("Unable to connect to " + addresse);
-			e.printStackTrace();
-			}
-		}
-
-	/*------------------------------*\
-	|*				Set				*|
-	\*------------------------------*/
-
-	/*------------------------------*\
-	|*				Get				*|
-	\*------------------------------*/
-
-	/*------------------------------------------------------------------*\
-	|*							Methodes Private						*|
-	\*------------------------------------------------------------------*/
-
-	public void log(String message)
-		{
-		System.out.println("[<client> " + this.pseudo + " say ]: " + message);
-		}
-
-	public void logErr(String message)
-		{
-		System.err.println("[<client> " + this.pseudo + " say ]: " + message);
 		}
 
 	/*------------------------------------------------------------------*\
@@ -120,12 +140,6 @@ public class ClientProgram
 
 	// Inputs
 	private String addresseServer;
-
-	public String getPseudo()
-		{
-		return this.pseudo;
-		}
-
 	private int portTCP;
 	private String pseudo;
 
@@ -133,6 +147,7 @@ public class ClientProgram
 	private Client client;
 	private CustomListener customListener;
 	private List<InetAddress> listServerDispo;
+	private boolean isReady = false;
 
 	/*------------------------------*\
 	|*			  Static			*|

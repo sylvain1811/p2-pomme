@@ -88,10 +88,10 @@ public class JFrameHome extends JFrame
 		jPanelContentPane.add(jPanelMain);
 		jPanelMain.setLayout(new BorderLayout(0, 0));
 
-		lblJeuDeLa = new JLabel("Jeu de la pomme");
-		lblJeuDeLa.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblJeuDeLa.setHorizontalAlignment(SwingConstants.CENTER);
-		jPanelMain.add(lblJeuDeLa, BorderLayout.NORTH);
+		lblJeuDeLaPomme = new JLabel("Jeu de la pomme");
+		lblJeuDeLaPomme.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblJeuDeLaPomme.setHorizontalAlignment(SwingConstants.CENTER);
+		jPanelMain.add(lblJeuDeLaPomme, BorderLayout.NORTH);
 
 		jTabbedPaneCenter = new JTabbedPane(SwingConstants.LEFT);
 		jTabbedPaneCenter.setBackground(Color.WHITE);
@@ -140,6 +140,7 @@ public class JFrameHome extends JFrame
 		jPanelButtonRejoindre.setBackground(Color.WHITE);
 
 		btnRejoindre = new JButton("Rejoindre");
+		btnRejoindre.setEnabled(true);
 
 		jPanelButtonRejoindre.add(btnRejoindre);
 
@@ -194,7 +195,14 @@ public class JFrameHome extends JFrame
 				{
 				String addresseServer = textFieldAddrSrv.getText();
 				demarrerClient(addresseServer);
-				JFrameHome.this.commencerPartie();
+				if (client.isReady())
+					{
+					JFrameHome.this.commencerPartie();
+					}
+				else
+					{
+					JOptionPane.showMessageDialog(null, "Aucun serveur disponible à cette adresse. Impossible de lancer une partie.", "Aucun server trouvé", JOptionPane.ERROR_MESSAGE);
+					}
 				}
 			});
 
@@ -319,7 +327,7 @@ public class JFrameHome extends JFrame
 	private JTabbedPane jTabbedPaneCenter;
 
 	// JLabel
-	private JLabel lblJeuDeLa;
+	private JLabel lblJeuDeLaPomme;
 	private JLabel lblAddrSrv;
 	private JTextField textFieldAddrSrv;
 

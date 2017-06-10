@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
 
@@ -88,8 +89,14 @@ public class JPanelListServer extends JPanel
 				{
 				System.out.println(jList.getSelectedValue().getHostAddress());
 				String addresseServer = jList.getSelectedValue().toString().substring(1);
-				client.connectToServer(addresseServer);
-				JFrameHome.getInstance().commencerPartie();
+				if (client.connectToServer(addresseServer))
+					{
+					JFrameHome.getInstance().commencerPartie();
+					}
+				else
+					{
+					JOptionPane.showMessageDialog(null, "Aucun serveur disponible à cette adresse. Impossible de lancer une partie.", "Aucun server trouvé", JOptionPane.ERROR_MESSAGE);
+					}
 				}
 			});
 
