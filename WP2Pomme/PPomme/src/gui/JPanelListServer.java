@@ -78,7 +78,7 @@ public class JPanelListServer extends JPanel
 		if (listServer.isEmpty())
 			{
 			btnConnect.setEnabled(false);
-			btnConnect.setText("Aucun serveur disponible");
+			btnConnect.setText("Aucun serveur trouvé. Pensez à vérifier les paramètres du pare-feu.");
 			}
 
 		btnConnect.addActionListener(new ActionListener()
