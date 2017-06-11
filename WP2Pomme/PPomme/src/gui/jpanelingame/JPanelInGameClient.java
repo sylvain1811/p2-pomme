@@ -96,9 +96,8 @@ public class JPanelInGameClient extends JPanelInGame
 
 	public static void setEndGame()
 		{
-		JOptionPane d = new JOptionPane();
 		int retour = JOptionPane.showConfirmDialog(JFrameHome.getInstance(),
-		                                 "Score du joueur 1 (serveur) : " + scoreServer + "\n score du joueur 2 (client) : "+ scoreClient,
+		                                 "Score adversaire : " + scoreServer + "\n Votre score : "+ scoreClient,
 		                                 "Fin du jeu : Score",
 		                                 JOptionPane.DEFAULT_OPTION);
 		if(retour == JOptionPane.OK_OPTION)

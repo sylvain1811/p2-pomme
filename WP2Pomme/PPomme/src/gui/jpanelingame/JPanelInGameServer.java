@@ -247,7 +247,7 @@ public class JPanelInGameServer extends JPanelInGame
 		//Partie fin du jeu
 		JOptionPane d = new JOptionPane();
 		int retour = JOptionPane.showConfirmDialog(this,
-		                                 "Score du joueur 1 (serveur) : " + scoreServer + "\n score du joueur 2 (client) : "+ scoreClient,
+		                                 "Votre score: " + scoreServer + "\nScore adversaire : "+ scoreClient,
 		                                 "Fin du jeu : Score",
 		                                 JOptionPane.DEFAULT_OPTION);
 		if(retour == JOptionPane.OK_OPTION)
